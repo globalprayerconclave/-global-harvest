@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLOBAL HARVEST</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafb;
+      color: #333;
+    }
+
+    header {
+      background: purple;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      font-size: 1.9rem;
+    }
+
+    header img {
+      height: 50px;
+      border-radius: 8px;
+    }
+
+    header p {
+      margin: 0.5rem 0 0 0;
+      font-size: 0.8rem;
+      font-weight: 100;
+    }
+
+    /* Adjusted style for About Us button placement */
+    .about-us-button {
+        background: purple;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background 0.2s ease;
+        margin-top: 1rem;
+        float: right;
+        margin-right: 1rem;
+    }
+    .about-us-button:hover {
+        background: #6a0dad; /* Darker purple on hover */
+    }
+
+    /* UPDATED: Style for Daily Reflection Button with gradient and glow */
+    .daily-reflection-button {
+        background: linear-gradient(to right, #0d9488, #20c997); /* Vibrant teal to energetic turquoise */
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600; /* Slightly bolder text */
+        transition: all 0.3s ease; /* Smooth transition for all properties */
+        margin-top: 1rem;
+        float: right; /* Position to the right, next to About Us */
+        margin-right: 1rem; /* Spacing from About Us button */
+        box-shadow: 0 4px 8px rgba(13, 148, 136, 0.3); /* Subtle glow */
+    }
+
+    .daily-reflection-button:hover {
+        background: linear-gradient(to right, #20c997, #0d9488); /* Reverse gradient on hover */
+        box-shadow: 0 6px 12px rgba(32, 201, 151, 0.4); /* Enhanced glow on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+    }
+
+
+    .description {
+      text-align: justify;
+      padding: .5rem;
+      background: #f8fafc;
+      font-size: 0.95rem;
+      color: #444;
+      overflow: hidden; /* Clear floats */
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      background: #f1f5f9;
+      padding: 1rem;
+    }
+
+    .controls input,
+    .controls select {
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      min-width: 200px;
+    }
+
+    .country-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 1rem;
+      justify-content: center;
+    }
+
+    .country-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s ease;
+      display: flex; /* Allow content to align */
+      flex-direction: column; /* Stack name and time */
+      align-items: center; /* Center content */
+      justify-content: center;
+      line-height: 1.2; /* Adjust line spacing */
+    }
+    .country-btn .item-name {
+        font-weight: bold;
+        font-size: 1em;
+    }
+    .country-btn .item-time {
+        font-size: 0.8em;
+        opacity: 0.8;
+    }
+
+
+    .country-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .country-details {
+      max-width: 800px;
+      margin: 1rem auto;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .country-details h2 {
+      margin-top: 0;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .country-details img {
+      width: 40px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .info p {
+      margin: 0.3rem 0;
+    }
+
+    .prayer-category {
+      margin-top: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .prayer-category h3 {
+      margin: 0;
+      padding: 0.5rem 1rem;
+      color: #1d4ed8;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      background: #f1f5f9;
+    }
+
+    .prayer-category h3 span {
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .prayer-category ul {
+      margin: 0;
+      padding: 0.5rem 1.5rem;
+      list-style: disc;
+      display: none;
+    }
+
+    .prayer-category ul li {
+      margin-bottom: 0.3rem;
+      font-size: 1.00rem;
+      color: #444;
+    }
+
+    .schedule-type {
+      background: #f1f5f9;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 8px;
+      margin: 0.5rem auto;
+      max-width: 800px;
+    }
+    
+    .topic-prayer {
+      background: #e0f2fe;
+      border-left: 4px solid #0284c7;
+    }
+    
+    .country-prayer {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+    }
+
+    .upcoming-prayers-container {
+      display: flex;
+      flex-wrap: wrap; 
+      overflow-x: visible; 
+      padding-bottom: 5px; 
+      animation: none; 
+      min-width: unset; 
+    }
+
+    .upcoming-prayer-item {
+      flex: 0 0 auto; 
+      padding: 0.3rem 0.8rem;
+      margin-right: 0.5rem; 
+      margin-bottom: 0.5rem; 
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      white-space: nowrap; 
+      font-size: 0.9em;
+    }
+
+    #scrollingUpcoming {
+        display: flex; 
+        animation: none; 
+    }
+
+    .upcoming-prayers-wrapper {
+        overflow: visible; 
+        white-space: normal; 
+        animation: none; 
+    }
+
+    /* Styles for the About Us Details section */
+    #aboutUsDetails {
+      max-width: 800px;
+      margin: 1rem auto;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: none; /* Hidden by default */
+      animation: fadeIn 0.3s ease-out; /* Simple fade-in animation */
+    }
+
+    /* UPDATED: Daily Reflection Details section with "Divine Radiance" theme */
+    #dailyReflectionDetails {
+      max-width: 800px;
+      margin: 1.5rem auto; /* More margin to stand out */
+      border-radius: 16px; /* Slightly larger rounded corners */
+      padding: 2.5rem; /* More generous padding */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px rgba(255, 215, 0, 0.3); /* Deeper shadow with a golden glow */
+      display: none; /* Hidden by default */
+      animation: fadeIn 0.3s ease-out;
+
+      /* Heavenly Glow Background: Radial gradient with subtle shimmer */
+      background: radial-gradient(circle at top left, #fffde7, #e0e6f8, #f8f0ff); /* Golden-white to lavender to pale purple */
+      color: #2d3748; /* Darker text for readability */
+      border: 1px solid #ffebcd; /* Subtle golden border */
+      position: relative; /* Needed for pseudo-elements */
+      overflow: hidden; /* Contains any background elements */
+    }
+
+    /* Optional: Add a subtle light ray effect if desired for Divine Radiance */
+    #dailyReflectionDetails::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        opacity: 0.5;
+        transform: rotate(20deg);
+        pointer-events: none;
+    }
+
+    /* General styling for headers within content sections */
+    #aboutUsDetails h2, #dailyReflectionDetails h2 {
+      margin-top: 0;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* UPDATED: Title style for Daily Reflection - Divine Radiance */
+    #dailyReflectionDetails h2 {
+        color: #6A0DAD; /* Deep violet */
+        font-size: 1.5rem; /* Even larger title */
+        text-align: center;
+        border-bottom: 2px solid #FFD700; /* Shimmering gold line */
+        padding-bottom: 1rem;
+        margin-bottom: 1.8rem; /* More space below title */
+        font-family: "Georgia", serif; /* Elegant serif font */
+        text-shadow: 1px 1px 3px rgba(106, 13, 173, 0.2); /* Subtle text shadow for depth */
+    }
+
+    /* General paragraph styling within content sections */
+    #aboutUsDetails p, #dailyReflectionDetails p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    /* UPDATED: Paragraph and text styling for Daily Reflection */
+    #dailyReflectionDetails p {
+        font-size: 1.15rem; /* Slightly larger body text */
+        text-align: justify; /* Center align paragraphs */
+        color: #333333; /* Good contrast */
+        margin-bottom: 1.2rem;
+    }
+
+    /* UPDATED: Stronger text for quotes/verses in Daily Reflection */
+    #dailyReflectionDetails p strong {
+        color: #4C1D95; /* Darker purple for emphasis */
+        font-style: italic;
+        font-weight: 700; /* Bolder */
+        display: block; /* Ensure it takes its own line */
+        margin-top: 0.5rem; /* Space from preceding text */
+        font-size: 1.25rem; /* Larger for quotes */
+        text-shadow: 0.5px 0.5px 2px rgba(76, 29, 149, 0.2); /* Subtle shadow for scripture */
+    }
+
+    /* General list styling within content sections */
+    #aboutUsDetails ul, #dailyReflectionDetails ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+
+    #aboutUsDetails ul li, #dailyReflectionDetails ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    #aboutUsDetails ul li a, #dailyReflectionDetails ul li a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+    #aboutUsDetails ul li a:hover, #dailyReflectionDetails ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* General contact info styling within content sections */
+    #aboutUsDetails .contact-info, #dailyReflectionDetails .contact-info {
+        margin-top: 1.5rem;
+        border-top: 1px solid #eee;
+        padding-top: 1rem;
+    }
+
+    /* UPDATED: Contact info styling for Daily Reflection */
+    #dailyReflectionDetails .contact-info {
+        border-top: 1px dashed #FFD700; /* Golden dashed line */
+        padding-top: 1.5rem;
+        margin-top: 2rem;
+    }
+    #aboutUsDetails .contact-info p, #dailyReflectionDetails .contact-info p {
+        font-size: 0.9rem;
+        color: #555;
+        text-align: center; /* Center align contact info in reflection */
+    }
+    /* UPDATED: Icon styling in contact info for Daily Reflection */
+    #dailyReflectionDetails .contact-info p .emoji {
+        font-size: 1.2em; /* Make emoji slightly larger */
+        vertical-align: middle; /* Align with text */
+    }
+
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive YouTube Embed */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+        margin-bottom: 1.5rem;
+        border-radius: 12px; /* Slightly larger rounded corners for video */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.2); /* Soft shadow with a golden hint */
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>
+      <img src="https://ik.imagekit.io/t2jnrvou6/WhatsApp%20Image%202025-09-08%20at%2021.20.14.jpeg" alt="Global Prayer Conclave Logo">
+      GLOBAL HARVEST
+    </h1>
+    <p>IMPACTING THE NATIONS THROUGH THE GOSPEL OF JESUS CHRIST</p>
+  </header>
+
+  <section class="description">
+ 
+   <h3><h3 style="color: purple;">GLOBAL PRAYER CONCLAVE</h3>
+      <strong></strong>
+   
+      <p>Join Global Prayer Conclave for a dedicated 24-hour period of continuous prayer, strategically interceding for all the countries of the world through a structured, rotating schedule.<p> <p>This event unites believers globally to lift up specific nations, seeking God's transformative will and spiritual awakening across every land. Each hour provides an opportunity to connect with God and contribute to a powerful, global movement of targeted intercession.<p>
+    <!-- NEW: Daily Reflection Button (before About Us to appear on left) -->
+    <button id="dailyReflectionBtn" class="daily-reflection-button">Daily Bread: A Moment of Reflection</button>
+    <!-- Existing About Us Button -->
+    <button id="aboutUsBtn" class="about-us-button">About Us</button>
+  </section>
+
+  <!-- About Us Details section -->
+  <div id="aboutUsDetails">
+    <h2>GLOBAL HARVEST</h2>
+    <h3><h3 style="color: darkviolet;">Raising prayer for The Nations</h3>
+      <strong>A Global movement: Standing in the Gap for Every Nation</strong>
+    <ul>
+    <p>Our intercessors are committed to covering every nation, every election, and every crisis in prayer. From Jerusalem to damascus, Burkina faso to Yangon, someone has always been standing in the gap for the nations and their people. As we move forword, our vision is to mobilize 10,000 intercessors worldwide to continue this journey of prayer. Together we will cover the world in prayer, believing that God will continue to move powerfully as men and women stand in the gap.</p>
+      
+      <h3 style="color: darkviolet;">Our Vision:</h3>
+      <strong>RAISING 10,000 INTERCESSORS IN 193 COUNTRIES</strong>
+    <ul>
+    <p>Our vision is to raise 10,000 intercessors worldwide. This is call for those who are passionate about seeing God's kingdom advance through prayer. We are looking for watchmen, prophetic intercessors, for revival and awakening. If you are one of them please sign up at <a href="https://tiny.cc/intercessor" target="_blank" rel="noopener noreferrer">tiny.cc/intercessors</a></li></p>
+    
+    <h3><h3 style="color: darkviolet;">Upcoming Prayer conclaves</h3>
+    <ul>
+      <li><strong>Global Prayer Conclave: Dubai, UAE</strong> Date: September 2025.</li>
+      <li><strong>Eurasia Prayer conclave : Moscow, Russia</strong> Date: TBD.</li>
+      <li><strong>Prayer Mobilization across multiple nations and pastor's meetings :</strong> Planned locations include : Azerbaijan, USA, China, Indonesia, UAE, Iran, Kenya, India, and Others. </li>
+      <li><strong>Special Events:</strong> Stay tuned to our social media channels for announcements!</li>
+    </ul>
+
+    <h3><h3 style="color: darkviolet;">Meeting Links</h3>
+    <ul>
+      <li><a href="https://us02web.zoom.us/j/85784634655?pwd=NmdDTUhwckJ4dE9uTHMvbnBxOGN3UT09">Join Us on Zoom</a></li>
+      
+      
+      </ul>
+      <h3 style="color: darkviolet;">GLOBAL PRAYER HUB - 24/7 INTERCESSION</h3>
+    <ul>
+    <p>If you have a heart for prayer and interceding for the nations, then the Prayer Hub in Dehradun is a place for you.<p>
+      
+      <p>A private place to pray is important  if we want to have a quality prayer time. At the foothills of the Himalayas, the Global Prayer hub in Dehradun is created with the intention to help intercessors find a dedicated place to PRAY, STAY and spend quiet time with God.</p>
+      
+      <p>This is a strategic base for prayer and intercession, welcoming intercession. The hub will also be a center for learning and training, with regular efforts to bring the local community together.</p>
+      
+      <p>The Hub is also an opportunity to meet other intercessors, opportunity to drive over the mountains of Uttarakhand and visit nearby places like haridwar and Rishikesh.</p>
+      
+      <p>We welcome individuals and small group for short stay.</p>
+      
+      <p>For details, please email us at:</p>
+        
+        <a href="mailto:ghchurch@gmail.com?subject=Prayer%20Hub%20Inquiry&body=Hello%20Global%20Harvest%20Team%2C%0D%0A%0D%0AMy%20name%20is%20____.%20I%E2%80%99d%20like%20to%20inquire%20about%20the%20Prayer%20Hub.%0D%0A">ghchurch@gmail.com</a>
+      
+      <h3><h3 style="color: darkviolet;">Stories From the ground!</h3>
+      <strong>INDONESIA</strong>
+    <ul>
+    <p>We pray for Indonesia so that every man, woman,and child in Indonesia would hear the gospel of Jesus. there are still millions of indonesians that do not know the truth about our Saviour. We invite you to join us in praying for Indonesia.<p>
+      <p>Our intecessors and strong network of partner churches in Indonesia are growing. Across Central Kalimantan Island where 300 pastors came together in march 2025 for a two days training and being equipped.<p>
+<p>Several evangelistic meetings were held across Indonesia in March 2025.<p>
+      <strong>RUSSIA</strong>
+    <ul>
+    <p>The gospel continues to spread in Russia, with Christians finding ways to share their faith and experience growth. We have seen a huge surge in our prayer movement in Russia. The Global Harvest partner ministries among Russian and Armenian speakers has expanded. Our intercessors in Moscow and St. Petersburg pray around the clock for regional peace and revival in the CIS nations.<p>
+      
+    
+      </ul>
+      <h3 style="color: darkviolet;">One year Bible School</h3>
+    <ul>
+   
+    <p>The global Harvest School certificate of Theology Program, which aims to equip and train grassroot is held for Hindi and Bengali speakers. We are working on providing this training in various other Indian languages and Indonesian.<p>
+    <ul>
+    </ul>
+      <h3 style="color: darkviolet;">Be a Prayer and Mission partner!</h3>
+    <ul>
+   
+    <p>As we continue to expand and mobilize prayer across the world, we need your support. Whether it's 1000 Rupees or 10,000 a month, your contribution makes a tremendous difference.<p>
+      
+      <p>Our estimated budget for the rest of the year 2025 is approximately 40 Lakhs Indian Rupees, and your prayerful giving will help sustain and grow this vital prayer ministry.</p>
+    <ul>
+      <h3><h3 style="color: darkviolet;">How to Contribute</h3>
+      <li><strong>UPI:</strong> <a href="upi://pay?pa=jimglobaltask@okhdfcbank&pn=Global%20Prayer%20Conclave&mc=0000&tid=YOUR_TRANSACTION_ID&tr=YOUR_TRANSACTION_REF&tn=Donation%20for%20Prayer%20Ministry" target="_blank">Click here to pay</a> </li>
+      <p>Bank Transfers: Global Associates,<p> 
+        <p>Acc.No: 18200 2000 03958, </p>
+<p>Federal Bank, IFSC: FDRL0001820</p>
+ </li>
+    </ul>
+</ul>
+    <h3 style="color: darkviolet;">Book a Prayer Slot</h3>
+    <p>Interested in joining our prayer leadership, suggesting a nation/topic, or collaborating with us?</p>
+    <ul>
+      <li><a href="https://frolicking-biscotti-85feb1.netlify.app/" target="_blank" rel="noopener">Click to Book</a></li>
+      
+      <p>For any info, contact :</p>
+      <p><strong>WhatsApp:</strong> <a href="https://wa.me/919910202164" target="_blank" rel="noopener">+91 9910 20 2164</a></p>
+      <li><a href="mailto:globalprayerconclave@gmail.com?subject=Global%20Harvest%20Info%20Request&body=Hello%20Global%20Harvest%20Team%2C%0D%0A%0D%0AMy%20name%20is%20____.%20I%E2%80%99m%20reaching%20out%20for%20more%20information.%0D%0A">Email: globalprayerconclave@gmail.com</a></li>
+     
+        </ul>
+      
+     
+    <div class="contact-info">
+      <p>Follow us on Social Media!</p>
+      <p>&#169; 2024 Global Prayer Conclave. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- UPDATED: Daily Reflection Details section - Now with stylish "Divine Radiance" background! -->
+  <div id="dailyReflectionDetails">
+    <h2>Daily Bread: A Moment of Reflection</h2>
+    <p>The Old Testament is filled with inspiring and beautiful stories of men and women, which provide joy and depth. Each narrative reveals the mighty actions of the Lord, offering personal inspiration and a greater understanding of faith.</p>
+    <p>
+        "The narrative of Jacob wrestling with God in Genesis 32 highlights the complexity of Jacob's character, reflecting a life filled with struggle and conflict. From his birth, holding onto his brother Esau's heel, Jacob's existence has been marked by battles, culminating in this divine confrontation. This incident symbolizes Jacob's relentless pursuit of purpose and understanding of his faith." 
+        <br><strong>— Genesis 32:26 (NLT)</strong>
+    </p>
+    <p>
+        Jacob's unwavering determination to receive God's blessings exemplifies perseverance and resilience. His declaration, "I will not leave you unless you bless me," reflects a deep hunger for God's love and a refusal to surrender, despite physical struggle. This story underscores that true determination in prayer can lead to profound outcomes, as God honors such relentless pursuit.
+    </p>
+    <p>
+        Jacob's life teaches the importance of determination and perseverance in seeking God's mercy, especially in the quest for forgiveness. His loneliness led him to realize his need for God's grace, recognizing his guilt towards his brother Esau. Until that point, Jacob relied solely on his own strategies, but his encounter underscored the necessity of divine forgiveness.
+    </p>
+    <p>
+        Jacob experiences profound loneliness after losing his support system, realizing that true companionship comes from God alone. In moments of isolation, we often learn that people may fail us, but it is God who remains steadfast and supportive through our darkest times. Trusting in God, especially during our lowest points, enables us to find strength and solace.
+    </p>
+    <p>
+        Jacob's story illustrates the power of perseverance in seeking God's blessings, as demonstrated when he insists, 'I will not let you go unless you bless me.' He learns that true blessings come from God rather than through deceit, and his determination is evident in his commitment to work hard for Rachel. Ultimately, his struggles lead to God renaming him Israel, symbolizing his transformation through persistence.
+    </p>
+    <p>
+        Through Jacob's struggle with God, he received a new identity as Israel, symbolizing the transformation that occurs when one is determined to seek God's touch and blessings. This message encourages listeners to seek their own new identities after facing shame and disappointment, with the promise that they will be lifted and blessed by God.
+    </p>
+    <p>
+        God offers a new identity, transforming Jacob into Israel, and desires an intimate relationship with each of us. He encourages us to move beyond referring to Him through others like Abraham and Isaac, urging us to call Him 'my God' and embrace a personal connection. This closeness, built on humility and personal reflection, can profoundly impact our lives, just as Jacob’s blessing did despite his limp.
+    </p>
+    <p>
+        The dislocation of Jacob's hip symbolized his humility and deepened his relationship with God; rather than questioning God's actions, he accepted his pain with a joyful heart, recognizing the blessings that accompanied his struggles. This example from Jacob's life encourages us to embrace humility and seek an intimate, personal relationship with God, demonstrating determination even in hardship.                      
+    </p>
+    <p>𝒥𝐼𝑀</p>
+    <div class="video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/yVD9Pje2yVs?si=LFI0XBGRzcUn1Zkx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p style="margin-top: 1rem;">
+        𝓜𝓪𝔂 𝔂𝓸𝓾𝓻 𝓱𝓮𝓪𝓻𝓽 𝓫𝓮 𝓯𝓲𝓵𝓵𝓮𝓭 𝔀𝓲𝓽𝓱 𝓹𝓮𝓪𝓬𝓮 𝓪𝓷𝓭 𝓻𝓮𝓷𝓮𝔀𝓮𝓭 𝓼𝓽𝓻𝓮𝓷𝓰𝓽𝓱 𝓪𝓼 𝔂𝓸𝓾 𝔀𝓪𝓵𝓴 𝔀𝓲𝓽𝓱 𝓗𝓲𝓶 𝓽𝓸𝓭𝓪𝔂.
+    </p>
+    <div class="contact-info">
+      <p>Blessings from the Global Harvest Team <span class="emoji">🙏</span></p>
+    </div>
+  </div>
+
+  <!-- Currently Praying + Upcoming -->
+  <section class="current-prayer" id="currentPrayer" style="max-width:800px;margin:1rem auto;padding:0.75rem 1rem;background:#e0f2fe;border-radius:12px;font-weight:500;">
+    Currently Praying: Loading...
+  </section>
+
+  <section class="upcoming-prayers" style="max-width:800px;margin:1rem auto;padding:0.5rem 1rem;background:#fef3c7;border-radius:12px;overflow:hidden;">
+    <strong>Upcoming:</strong>
+    <div class="upcoming-prayers-wrapper">
+        <div id="scrollingUpcoming" class="upcoming-prayers-container">Loading upcoming prayers...</div>
+    </div>
+  </section>
+
+  <!-- URGENT PRAYER REQUESTS: ADDED (only this section + its small script) -->
+  <section id="urgentRequests" style="max-width:800px;margin:1rem auto;padding:0.75rem 1rem;background:skyblue;border-radius:12px;border:1px solid #f87171;">
+    <h3 style="margin:0 0 0.5rem 0;color:#b91c1c;"> Immediate Prayer Needs</h3>
+    <div id="urgentList">Loading urgent requests...</div>
+  </section>
+
+  <section class="controls">
+    <input type="text" id="searchBox" placeholder="Search country or topic..." />
+    <select id="typeFilter">
+      <option value="all">All Types</option>
+      <option value="country">Countries</option>
+      <option value="topic">Topics</option>
+    </select>
+    <select id="regionFilter">
+      <option value="all">All Regions</option>
+      <option value="Central Africa">Central Africa</option>
+      <option value="Central Asia">Central Asia</option>
+      <option value="East Africa">East Africa</option>
+      <option value="East Asia">East Asia</option>
+      <option value="Eastern Europe">Eastern Europe</option>
+      <option value="North America">North America</option>
+      <option value="Northern Europe">Northern Europe</option>
+      <option value="Oceania">Oceania</option>
+      <option value="South Americas">South Americas</option>
+      <option value="South Asia">South Asia</option>
+      <option value="Southeast Asia">Southeast Asia</option>
+      <option value="Southern Africa">Southern Africa</option>
+      <option value="Southern Europe">Southern Europe</option>
+      <option value="West Africa">West Africa</option>
+      <option value="West Asia">West Asia</option>
+      <option value="Western Europe">Western Europe</option>
+    </select>
+    <!-- New Day of Week Filter -->
+    <select id="dayOfWeekFilter">
+      <option value="all">All Days</option>
+      <option value="Sunday">Sunday</option>
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+    </select>
+  </section>
+
+  <section class="country-list" id="countryList"></section>
+  <section class="country-details" id="countryDetails" style="display:none;"></section>
+
+
+  <!-- minimal script for inserting urgent items (uses unique local names; WILL NOT touch or call your existing functions) -->
+  <script>
+    (function(){
+      const urgentRequestsData = [
+        {
+          title: "Earthquake — Afghanistan",
+          description: "A strong earthquake has affected communities. Pray for rescue teams, survivors, and relief efforts.",
+          links: [
+            { text: "Watch: Earthquake Hits Afghanistan", url: "https://www.youtube.com/watch?v=FLriPFyEe4A" },
+            { text: "Read: Relief Updates", url: "https://example.com/earthquake-relief" }
+          ]
+        },
+        {
+          title: "Conflict / Displacement — [Example Country]",
+          description: "Rising conflict has displaced families. Pray for peace, protection, and humanitarian access.",
+          links: [
+            { text: "Watch: Situation Update", url: "https://www.youtube.com/watch?v=EXAMPLE2" },
+            { text: "Read: Humanitarian Report", url: "https://example.com/conflict-update" }
+          ]
+        }
+      ];
+
+      function renderUrgentRequests() {
+        const container = document.getElementById('urgentList');
+        if (!container) return;
+        if (!urgentRequestsData || urgentRequestsData.length === 0) {
+          container.innerHTML = "<p style='margin:0'>No urgent requests at this time.</p>";
+          return;
+        }
+
+        container.innerHTML = urgentRequestsData.map(req => {
+          const linksHtml = (req.links || []).map(l => {
+            return `<a href="${l.url}" target="_blank" rel="noopener" style="display:block;margin-top:6px;color:#2563eb;text-decoration:underline;">${l.text}</a>`;
+          }).join('');
+          return `<div style="margin-bottom:10px;padding:10px;background:#fff;border-left:4px solid #dc2626;border-radius:6px;">
+                    <strong style="display:block;margin-bottom:6px;">${req.title}</strong>
+                    <div style="font-size:0.95rem;color:#333;">${req.description}</div>
+                    ${linksHtml}
+                  </div>`;
+        }).join('');
+      }
+
+      // render immediately; this script is isolated and won't call or modify your other variables/functions
+      renderUrgentRequests();
+    })();
+  </script>
+
+  <!-- moment.js + moment-timezone -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
+
+  <script>
+    // Combined array of countries and topics
+    const prayerItems = [
+      // Countries
+      {
+        type: "country",
+        name: "India",
+        flag: "https://flagcdn.com/w320/in.png",
+        location : "Located in southern Asia. Seventh largest by area. Second largest by population. Shares land borders with Pakistan to the west, China, Nepal, and Bhutan to the north, and Bangladesh and Myanmar to the east. Bordered by the Indian Ocean on the south, the Arabian sea on the southwest, and the Bay of Bengal on the southeast.",
+        capital: "New Delhi",
+        population: "1.4 billion",
+        headOfState: "President Droupadi Murmu",
+        officialLanguage : "Constitutionally there are 22 official languages. The official language is Hindi (spoken by 40% of the population). English is a subsidiary official language",
+        languages : "456",
+        peopleGroups : "2,272",
+        leastReachedPeopleGroups : "2,041",
+        largestReligion: "Hinduism",
+        christianPopulation: "5.8%",
+        dayOfWeek: "Tuesday", // Changed to Tuesday for testing
+        startTime: "07:30", // 7:30 AM IST - Changed for testing
+        durationMinutes: 30,
+        region: "South Asia",
+        prayerPoints: [
+          {
+            category: "Current Concerns",
+            points: [
+              "Poverty and Inequality: Despite rapid economic growth, a significant portion of the population still lives in poverty.",
+              "Religious Freedom and Harmony: Concerns about religious discrimination and interfaith tensions.",
+              "Social Challenges: Addressing issues like caste discrimination, gender inequality, and education gaps.",
+              "Environmental Degradation: Severe issues with air and water pollution, deforestation, and climate change impacts.",
+              "Governance and Corruption: Persistent issues of corruption at various levels of government."
+            ]
+          },
+          {
+            category: "Pray for Government & Political Leaders: 'Righteousness exalts a nation' (Proverbs 14:34)",
+            points: [
+              "Government System: Federal parliamentary democratic republic.",
+              "Pray for President Droupadi Murmu, Prime Minister Narendra Modi, and top political leaders.",
+              "Pray for effective governance: For true accountability, transparency, and just leadership.",
+              "Pray for economic policies: That bring stability, create sustainable jobs, and improve living standards.",
+              "Pray for justice and rule of law: For leaders to strengthen law enforcement and uphold citizens' rights."
+            ]
+          },
+          {
+            category: "People, Peace & Healing: 'Defend the weak and the fatherless…' (Psalm 82:3)",
+            points: [
+              "Literacy : 90%",
+              "Pray for national unity and harmony: Among diverse ethnic, linguistic, and religious groups.",
+              "Pray for victims of discrimination: For healing, protection, and justice.",
+              "Pray for the youth: A very large and dynamic population that needs quality education, mentorship, and spiritual guidance.",
+              "Pray for vulnerable populations: Including the poor, marginalized communities, and differently-abled persons."
+            ]
+          },
+          {
+            category: "Economy: Deuteronomy 28:12",
+            points: [
+              "Main IncomeSources: A large, diverse economy including services (IT, finance), agriculture, and manufacturing.",
+              "GDP (2023): Estimated around $3.7 trillion, one of the fastest-growing major economies.",
+              "Pray for sustained economic growth: That is inclusive and genuinely reduces poverty.",
+              "Pray for job creation: Especially for the youth population, to reduce unemployment.",
+              "Pray for wise stewardship of natural resources: Ensuring that the nation benefits from its resources responsibly.",
+              "Pray for improved infrastructure: To facilitate business, trade, and innovation."
+            ]
+          },
+          {
+            category: "Church Leaders and Church Strengthening and Unity: 'That they may be one…' (John 17:21)",
+            points: [
+              "Religion: Predominantly Hindu (around 80%), with significant Muslim (14%), Christian (2.3%), Sikh (2%), and others.",
+              "Pray for Christian leaders: For wisdom, integrity, and spiritual discernment.",
+              "Pray for unity among denominations: For collaboration and mutual respect.",
+              "Pray for peaceful religious coexistence: For continued harmony and mutual understanding.",
+              "Pray for the Church to address societal issues: To be a prophetic voice in society."
+            ]
+          },
+          {
+            category: "Revival and Awakening: Prophetic Prayer for the Nation",
+            points: [
+              "Declare that India: A nation of immense diversity and spiritual seeking will be touched by God's presence.",
+              "Pray for a fresh outpouring of the Holy Spirit: Across the entire nation.",
+              "Pray for bold witness: For Christians to courageously share their faith.",
+              "Pray for the youth: To be radically touched by the Gospel, empowered with faith and wisdom.",
+              "👉 We declare: India will be transformed by the power of God, experiencing revival and awakening."
+            ]
+          }
+        ]
+      },
+      {
+        type: "country",
+        name: "Germany",
+        flag: "https://flagcdn.com/w320/de.png",
+        location: "Central-Western Europe",
+        capital: "Berlin",
+        population: "83 million",
+        headOfState: "President Frank-Walter Steinmeier",
+        officialLanguage: "German",
+        languages: "16",
+        peopleGroups: "43",
+        leastReachedPeopleGroups: "0",
+        largestReligion: "Christianity",
+        christianPopulation: "60%",
+        dayOfWeek: "Thursday", // Changed to Tuesday for testing
+        startTime: "15:30", // 8:00 AM IST - Changed for testing
+        durationMinutes: 30,
+        region: "Western Europe",
+        prayerPoints: [
+          { category: "Current Concerns", points: ["Integration of refugees", "Secularization", "Economic stability"] },
+          { category: "Pray for Government & Political Leaders", points: ["Chancellor Olaf Scholz", "Wise governance"] },
+          { category: "Revival and Awakening", points: ["Outpouring of Holy Spirit", "Youth revival"] }
+        ]
+      },
+      {
+        type: "country",
+        name: "Belarus",
+        flag: "https://flagcdn.com/w320/by.png",
+        location: "Eastern Europe",
+        capital: "Minsk",
+        population: "9.4 million",
+        headOfState: "President Alexander Lukashenka",
+        officialLanguage: "Belarusian, Russian",
+        languages: "5",
+        peopleGroups : "10",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Orthodox Christianity",
+        christianPopulation: "78%",
+        dayOfWeek: "Thursday", // Changed to Tuesday for testing
+        startTime: "16:30", // 8:30 AM IST - Changed for testing
+        durationMinutes: 30,
+        region: "Eastern Europe",
+        prayerPoints: [
+          { category: "Current Concerns", points: ["Political stability", "Human rights", "Economic development"] },
+          { category: "Pray for Government & Political Leaders", points: ["President Lukashenka", "Justice and freedom"] },
+          { category: "Revival and Awakening", points: ["Church growth", "Spiritual freedom"] }
+        ]
+      },
+      
+      // Topics (rest of your items, keeping original times for now)
+      {
+        type: "topic",
+        name: "Global Church Unity",
+        icon: "✝️",
+        description: "Praying for unity among Christian denominations worldwide",
+        dayOfWeek: "Saturday",
+        startTime: "23:30", // 11:30 PM IST
+        durationMinutes: 60,
+        prayerPoints: [
+          {
+            category: "Biblical Foundation",
+            points: [
+              "Pray for the fulfillment of Jesus' prayer in John 17:21 'that all of them may be one'",
+              "Ask God to break down denominational barriers that hinder the Gospel",
+              "Pray for greater collaboration in missions and outreach efforts",
+              "Intercede for church leaders to prioritize unity over doctrinal differences"
+            ]
+          },
+          {
+            category: "Practical Steps",
+            points: [
+              "Pray for joint worship services and prayer gatherings across denominations",
+              "Ask God to help churches share resources to advance His Kingdom",
+              "Pray for unity in essential doctrines while allowing diversity in non-essentials",
+              "Intercede for reconciliation where there have been divisions and conflicts"
+            ]
+          }
+        ]
+      },
+      // Example for Tuesday
+      {
+        type: "country",
+        name: "Japan",
+        flag: "https://flagcdn.com/w320/jp.png",
+        location: "East Asia",
+        capital: "Tokyo",
+        population: "125 million",
+        headOfState: "Emperor Naruhito",
+        officialLanguage: "Japanese",
+        languages: "14",
+        peopleGroups: "1",
+        leastReachedPeopleGroups: "0",
+        largestReligion: "Shintoism, Buddhism",
+        christianPopulation: "1.5%",
+        dayOfWeek: "Tuesday",
+        startTime: "09:00", // 9 AM IST
+        durationMinutes: 45,
+        region: "East Asia",
+        prayerPoints: [
+          { category: "Current Concerns", points: ["Aging population", "Disaster preparedness", "Spiritual openness"] },
+          { category: "Revival and Awakening", points: ["Church growth", "Youth engaging with faith"] }
+        ]
+      },
+      {
+        type: "topic",
+        name: "Persecuted Church",
+        icon: "🙏",
+        description: "Praying for persecuted Christians worldwide",
+        dayOfWeek: "Tuesday",
+        startTime: "09:45", // Starts immediately after Japan (9:45 AM IST)
+        durationMinutes: 45,
+        region: "Global", // Add region for completeness
+        prayerPoints: [
+          { category: "Protection", points: ["Safety for believers in hostile regions", "Deliverance from oppression"] },
+          { category: "Strength & Faith", points: ["Resilience for those suffering", "Boldness to witness"] },
+          { category: "Justice", points: ["End to persecution", "Religious freedom for all"] }
+        ]
+      },
+       {
+        type: "country",
+        name: "Australia",
+        flag: "https://flagcdn.com/w320/au.png",
+        location : "Oceania",
+        capital: "Canberra",
+        population: "26 million",
+        headOfState: "King Charles III (represented by Governor-General)",
+        officialLanguage : "English",
+        languages : "317",
+        peopleGroups : "10",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "44%",
+        dayOfWeek: "Tuesday",
+        startTime: "10:30", // 10:30 AM IST
+        durationMinutes: 60,
+        region: "Oceania",
+        prayerPoints: []
+      },
+       {
+        type: "country",
+        name: "Brazil",
+        flag: "https://flagcdn.com/w320/br.png",
+        location : "South America",
+        capital: "Brasília",
+        population: "216 million",
+        headOfState: "President Luiz Inácio Lula da Silva",
+        officialLanguage : "Portuguese",
+        languages : "218",
+        peopleGroups : "110",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "88%",
+        dayOfWeek: "Tuesday",
+        startTime: "11:30", // 11:30 AM IST
+        durationMinutes: 60,
+        region: "South Americas",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Canada",
+        flag: "https://flagcdn.com/w320/ca.png",
+        location : "North America",
+        capital: "Ottawa",
+        population: "40 million",
+        headOfState: "President King Charles III (represented by Governor General)",
+        officialLanguage : "English, French",
+        languages : "147",
+        peopleGroups : "15",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "63%",
+        dayOfWeek: "Tuesday",
+        startTime: "12:30", // 12:30 PM IST
+        durationMinutes: 60,
+        region: "North America",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "China",
+        flag: "https://flagcdn.com/w320/cn.png",
+        location : "East Asia",
+        capital: "Beijing",
+        population: "1.4 billion",
+        headOfState: "President Xi Jinping",
+        officialLanguage : "Standard Chinese",
+        languages : "300",
+        peopleGroups : "488",
+        leastReachedPeopleGroups : "424",
+        largestReligion: "Folk religions, Buddhism",
+        christianPopulation: "5.1%",
+        dayOfWeek: "Tuesday",
+        startTime: "13:30", // 1:30 PM IST
+        durationMinutes: 60,
+        region: "East Asia",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Egypt",
+        flag: "https://flagcdn.com/w320/eg.png",
+        location : "North Africa and West Asia",
+        capital: "Cairo",
+        population: "109 million",
+        headOfState: "President Abdel Fattah el-Sisi",
+        officialLanguage : "Arabic",
+        languages : "12",
+        peopleGroups : "15",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Islam",
+        christianPopulation: "10%",
+        dayOfWeek: "Tuesday",
+        startTime: "14:30", // 2:30 PM IST
+        durationMinutes: 60,
+        region: "North Africa",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "France",
+        flag: "https://flagcdn.com/w320/fr.png",
+        location : "Western Europe",
+        capital: "Paris",
+        population: "68 million",
+        headOfState: "President Emmanuel Macron",
+        officialLanguage : "French",
+        languages : "26",
+        peopleGroups : "20",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "47%",
+        dayOfWeek: "Tuesday",
+        startTime: "15:30", // 3:30 PM IST
+        durationMinutes: 60,
+        region: "Western Europe",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Indonesia",
+        flag: "https://flagcdn.com/w320/id.png",
+        location : "Southeast Asia",
+        capital: "Jakarta",
+        population: "277 million",
+        headOfState: "President Joko Widodo",
+        officialLanguage : "Indonesian",
+        languages : "711",
+        peopleGroups : "106",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Islam",
+        christianPopulation: "10%",
+        dayOfWeek: "Tuesday",
+        startTime: "16:30", // 4:30 PM IST
+        durationMinutes: 60,
+        region: "Southeast Asia",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Mexico",
+        flag: "https://flagcdn.com/w320/mx.png",
+        location : "North America",
+        capital: "Mexico City",
+        population: "128 million",
+        headOfState: "President Andrés Manuel López Obrador",
+        officialLanguage : "Spanish",
+        languages : "291",
+        peopleGroups : "35",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "88%",
+        dayOfWeek: "Tuesday",
+        startTime: "17:30", // 5:30 PM IST
+        durationMinutes: 60,
+        region: "North America",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Nigeria",
+        flag: "https://flagcdn.com/w320/ng.png",
+        location : "West Africa",
+        capital: "Abuja",
+        population: "223 million",
+        headOfState: "President Bola Ahmed Tinubu",
+        officialLanguage : "English",
+        languages : "522",
+        peopleGroups : "44",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "50%",
+        dayOfWeek: "Tuesday",
+        startTime: "18:30", // 6:30 PM IST
+        durationMinutes: 60,
+        region: "West Africa",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Pakistan",
+        flag: "https://flagcdn.com/w320/pk.png",
+        location : "South Asia",
+        capital: "Islamabad",
+        population: "240 million",
+        headOfState: "President Asif Ali Zardari",
+        officialLanguage : "Urdu, English",
+        languages : "77",
+        peopleGroups : "162",
+        leastReachedPeopleGroups : "147",
+        largestReligion: "Islam",
+        christianPopulation: "1.6%",
+        dayOfWeek: "Tuesday",
+        startTime: "19:30", // 7:30 PM IST
+        durationMinutes: 60,
+        region: "South Asia",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Russia",
+        flag: "https://flagcdn.com/w320/ru.png",
+        location : "Eastern Europe / North Asia",
+        capital: "Moscow",
+        population: "144 million",
+        headOfState: "President Vladimir Putin",
+        officialLanguage : "Russian",
+        languages : "100",
+        peopleGroups : "110",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Orthodox Christianity",
+        christianPopulation: "70%",
+        dayOfWeek: "Tuesday",
+        startTime: "20:30", // 8:30 PM IST
+        durationMinutes: 60,
+        region: "Eastern Europe",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "South Africa",
+        flag: "https://flagcdn.com/w320/za.png",
+        location : "Southern Africa",
+        capital: "Pretoria (executive), Bloemfontein (judicial), Cape Town (legislative)",
+        population: "60 million",
+        headOfState: "President Cyril Ramaphosa",
+        officialLanguage : "12 official languages including Afrikaans, English, isiXhosa, isiZulu",
+        languages : "34",
+        peopleGroups : "27",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "80%",
+        dayOfWeek: "Tuesday",
+        startTime: "21:30", // 9:30 PM IST
+        durationMinutes: 60,
+        region: "Southern Africa",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "United Kingdom",
+        flag: "https://flagcdn.com/w320/gb.png",
+        location : "Northern Europe",
+        capital: "London",
+        population: "67 million",
+        headOfState: "King Charles III",
+        officialLanguage : "English",
+        languages : "56",
+        peopleGroups : "25",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "59%",
+        dayOfWeek: "Tuesday",
+        startTime: "22:30", // 10:30 PM IST
+        durationMinutes: 60,
+        region: "Northern Europe",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "United States",
+        flag: "https://flagcdn.com/w320/us.png",
+        location : "North America",
+        capital: "Washington, D.C.",
+        population: "335 million",
+        headOfState: "President Joe Biden",
+        officialLanguage : "English (de facto)",
+        languages : "337",
+        peopleGroups : "120",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Christianity",
+        christianPopulation: "63%",
+        dayOfWeek: "Tuesday",
+        startTime: "23:30", // 11:30 PM IST
+        durationMinutes: 60,
+        region: "North America",
+        prayerPoints: []
+      },
+      {
+        type: "country",
+        name: "Vietnam",
+        flag: "https://flagcdn.com/w320/vn.png",
+        location : "Southeast Asia",
+        capital: "Hanoi",
+        population: "99 million",
+        headOfState: "President Tô Lâm",
+        officialLanguage : "Vietnamese",
+        languages : "108",
+        peopleGroups : "26",
+        leastReachedPeopleGroups : "0",
+        largestReligion: "Folk religions, Buddhism",
+        christianPopulation: "8%",
+        dayOfWeek: "Wednesday", // Starts on Wednesday
+        startTime: "00:30", // 12:30 AM IST
+        durationMinutes: 60,
+        region: "Southeast Asia",
+        prayerPoints: []
+      }
+    ];
+
+    // --- Start of FINAL REVISED (most robust) parsePrayerSlot function ---
+    // This function ensures the `startMoment` is always the *next upcoming*
+    // occurrence of the weekly scheduled event, or the current one if active.
+    function parsePrayerSlot(item) {
+        try {
+            const { dayOfWeek, startTime, durationMinutes } = item;
+            const [hour, minute] = startTime.split(':').map(Number);
+
+            const now = moment.tz("Asia/Kolkata"); 
+
+            // Map day string to Moment.js day index (0=Sunday, 1=Monday, ...)
+            const dayMap = {
+                "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+                "Thursday": 4, "Friday": 5, "Saturday": 6
+            };
+            const targetDayIndex = dayMap[dayOfWeek];
+
+            // 1. Calculate the scheduled moment for the current calendar week.
+            // .startOf('week') defaults to Sunday.
+            let scheduledMoment = now.clone()
+                .startOf('week') 
+                .add(targetDayIndex, 'days') // Add days to get to the correct day of the week
+                .hour(hour) // Set the configured hour
+                .minute(minute) // Set the configured minute
+                .second(0).millisecond(0); // Reset seconds and milliseconds for precision
+
+            // 2. If this `scheduledMoment` (which is this week's occurrence of the event)
+            // has already ended compared to 'now', then add 1 week to get the next occurrence.
+            // This is the critical change: check the *end* of the slot.
+            let scheduledEndMomentCandidate = scheduledMoment.clone().add(durationMinutes, 'minutes');
+
+            if (scheduledEndMomentCandidate.isBefore(now)) {
+                scheduledMoment.add(1, 'week');
+            }
+
+            const finalStartMoment = scheduledMoment;
+            const finalEndMoment = finalStartMoment.clone().add(durationMinutes, 'minutes');
+
+            // --- DEEPER DEBUG LOGGING FOR INDIVIDUAL SLOTS ---
+            console.groupCollapsed(`[parsePrayerSlot] Item: ${item.name}`); // Collapsed for cleaner console
+            console.log(`    now (IST): ${now.format("YYYY-MM-DD HH:mm:ss.SSS Z")}`);
+            console.log(`    targetDayIndex: ${targetDayIndex} (${dayOfWeek})`);
+            console.log(`    configured startTime: ${startTime}`);
+            console.log(`    calculated startMoment (final): ${finalStartMoment.format("YYYY-MM-DD HH:mm:ss.SSS Z")}`);
+            console.log(`    calculated endMoment (final): ${finalEndMoment.format("YYYY-MM-DD HH:mm:ss.SSS Z")}`);
+            console.log(`    Is finalStartMoment before now? ${finalStartMoment.isBefore(now)}`);
+            console.log(`    Is finalEndMoment before now? ${finalEndMoment.isBefore(now)}`); // New check
+            console.groupEnd(); // End group
+            // --- END DEEPER DEBUGGING ---
+
+            return { ...item, startMoment: finalStartMoment, endMoment: finalEndMoment };
+
+        } catch (e) {
+            console.error("Error in parsePrayerSlot for item:", item.name, e);
+            const defaultStart = moment.tz("Asia/Kolkata").add(1, 'hour');
+            return { ...item, startMoment: defaultStart, endMoment: defaultStart.clone().add(30, 'minutes') };
+        }
+    }
+    // --- End of FINAL REVISED (most robust) parsePrayerSlot function ---
+
+
+    const searchBox = document.getElementById("searchBox");
+    const typeFilter = document.getElementById("typeFilter");
+    const regionFilter = document.getElementById("regionFilter");
+    const dayOfWeekFilter = document.getElementById("dayOfWeekFilter"); // New filter element
+    const countryList = document.getElementById("countryList");
+    const countryDetails = document.getElementById("countryDetails");
+    const currentPrayer = document.getElementById("currentPrayer");
+    const scrollingUpcoming = document.getElementById("scrollingUpcoming");
+
+    let activeItemId = null;
+
+    // Helper to get formatted local time for display on buttons
+    function getItemDisplayTime(item) {
+        const [hour, minute] = item.startTime.split(':').map(Number);
+        const dayMap = {
+            "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+            "Thursday": 4, "Friday": 5, "Saturday": 6
+        };
+        const targetDayIndex = dayMap[item.dayOfWeek];
+
+        // Create a Moment object for the item's schedule in IST for the *current week*
+        // We don't need to check for "next upcoming" here, just the scheduled day/time for display
+        let scheduledMomentIST = moment.tz("Asia/Kolkata")
+            .startOf('week')
+            .add(targetDayIndex, 'days')
+            .hour(hour)
+            .minute(minute)
+            .second(0).millisecond(0);
+
+        // Convert to local timezone
+        const localTime = scheduledMomentIST.clone().tz(moment.tz.guess());
+        
+        // Determine format based on whether 'All Days' is selected
+        const format = dayOfWeekFilter.value === "all" ? "ddd, hh:mm A" : "hh:mm A";
+        
+        return localTime.format(format);
+    }
+
+
+    function renderItemList(data) {
+      countryList.innerHTML = "";
+      countryDetails.style.display = "none";
+
+      if (data.length === 0) {
+        countryList.innerHTML = "<p>No items found matching your criteria.</p>";
+        return;
+      }
+
+      data.forEach((item) => {
+        const btn = document.createElement("button");
+        btn.className = "country-btn";
+        
+        // Construct the content for the button to include name and time
+        const itemNameSpan = document.createElement('span');
+        itemNameSpan.className = 'item-name';
+        itemNameSpan.textContent = item.name;
+
+        const itemTimeSpan = document.createElement('span');
+        itemTimeSpan.className = 'item-time';
+        itemTimeSpan.textContent = getItemDisplayTime(item);
+
+        btn.appendChild(itemNameSpan);
+        btn.appendChild(itemTimeSpan);
+
+        btn.addEventListener("click", () => toggleItemDetails(item));
+        countryList.appendChild(btn);
+      });
+    }
+
+    // Function to convert IST to local time for display in country details
+    function convertISTtoLocalForDetails(dayOfWeek, startTime, durationMinutes, format = "ddd, hh:mm A") {
+      try {
+        const tempItem = { dayOfWeek, startTime, durationMinutes, name: "Temporary Item", type: "temp"};
+        const { startMoment, endMoment } = parsePrayerSlot(tempItem); 
+
+        const localStart = startMoment.clone().tz(moment.tz.guess());
+        const localEnd = endMoment.clone().tz(moment.tz.guess());
+
+        return `${localStart.format(format)} - ${localEnd.format("hh:mm A z")}`;
+      } catch (e) {
+        console.error("Error converting time for details:", e);
+        return `${dayOfWeek}, ${startTime} IST`; 
+      }
+    }
+
+    function toggleItemDetails(item) {
+      if (activeItemId === item.name) {
+        countryDetails.style.display = "none";
+        activeItemId = null;
+        return;
+      }
+
+      let detailsHTML = "";
+      
+      let prayerScheduleLocalDisplay = convertISTtoLocalForDetails(item.dayOfWeek, item.startTime, item.durationMinutes);
+
+      if (item.type === "country") {
+        detailsHTML = `
+          <div class="schedule-type country-prayer">Country Prayer Focus</div>
+          <h2><img src="${item.flag}" alt="flag"/> ${item.name}</h2>
+          <div class="info">
+            <p><strong>Location:</strong> ${item.location}</p>
+            <p><strong>Capital:</strong> ${item.capital}</p>
+            <p><strong>Population:</strong> ${item.population}</p>
+            <p><strong>Head of State:</strong> ${item.headOfState}</p>
+            <p><strong>Official Language:</strong> ${item.officialLanguage}</p>
+            <p><strong>Languages:</strong> ${item.languages}</p>
+            <p><strong>People Groups:</strong> ${item.peopleGroups}</p>
+            <p><strong>Least Reached People Groups:</strong> ${item.leastReachedPeopleGroups}</p>
+            <p><strong>Largest Religion:</strong> ${item.largestReligion}</p>
+            <p><strong>Christian Population:</strong> ${item.christianPopulation}</p>
+            <p><strong>Prayer Slot:</strong> ${prayerScheduleLocalDisplay}</p> <!-- Updated here -->
+            <p><strong>Region:</strong> ${item.region}</p>
+          </div>
+          <iframe 
+            width="100%" 
+            height="300" 
+            style="border:0; border-radius:8px; margin-top:1rem;"
+            src="https://www.google.com/maps?q=${encodeURIComponent(item.name)}&output=embed" 
+            allowfullscreen 
+            loading="lazy">
+          </iframe>
+        `;
+      } else if (item.type === "topic") {
+        detailsHTML = `
+          <div class="schedule-type topic-prayer">Topic Prayer Focus</div>
+          <h2>${item.icon || "📌"} ${item.name}</h2>
+          <div class="info">
+            <p><strong>Description:</strong> ${item.description}</p>
+            <p><strong>Prayer Slot:</strong> ${prayerScheduleLocalDisplay}</p> <!-- Updated here -->
+          </div>
+        `;
+      }
+
+      item.prayerPoints.forEach((pp, i) => {
+        detailsHTML += `
+          <div class="prayer-category">
+            <h3>${pp.category} <span>&#9656;</span></h3>
+            <ul>
+              ${pp.points.map(p => `<li>${p}</li>`).join("")}
+            </ul>
+          </div>
+        `;
+      });
+
+      countryDetails.innerHTML = detailsHTML;
+      countryDetails.style.display = "block";
+      countryDetails.scrollIntoView({ behavior: "smooth" });
+      activeItemId = item.name;
+
+      // Collapsible
+      document.querySelectorAll(".prayer-category h3").forEach(h3 => {
+        h3.onclick = () => {
+          const ul = h3.nextElementSibling;
+          const arrow = h3.querySelector("span");
+          if (ul.style.display === "block") {
+            ul.style.display = "none";
+            arrow.style.transform = "rotate(0deg)";
+          } else {
+            ul.style.display = "block";
+            arrow.style.transform = "rotate(90deg)";
+          }
+        };
+      });
+    }
+
+    function filterItems() {
+      const searchTerm = searchBox.value.toLowerCase();
+      const selectedType = typeFilter.value;
+      const selectedRegion = regionFilter.value;
+      const selectedDay = dayOfWeekFilter.value; // Get selected day
+
+      const filtered = prayerItems.filter((item) => {
+        const matchesType = selectedType === "all" || item.type === selectedType;
+        const matchesRegion = selectedRegion === "all" || 
+                             (item.type === "country" && item.region === selectedRegion) ||
+                             item.type === "topic"; // Topics don't always have regions, but can be global
+        const matchesDay = selectedDay === "all" || item.dayOfWeek === selectedDay; // Filter by day of week
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
+                             (item.description && item.description.toLowerCase().includes(searchTerm));
+        
+        return matchesType && matchesRegion && matchesDay && matchesSearch; // Include day filter
+      });
+
+      renderItemList(filtered);
+    }
+
+    searchBox.addEventListener("input", filterItems);
+    typeFilter.addEventListener("change", filterItems);
+    regionFilter.addEventListener("change", filterItems);
+    dayOfWeekFilter.addEventListener("change", filterItems); // Listen for changes on new filter
+
+    function updatePrayerDisplay() {
+      const now = moment.tz("Asia/Kolkata");
+      console.log("--- updatePrayerDisplay START ---");
+      console.log("Current IST time (now):", now.format("YYYY-MM-DD HH:mm:ss.SSS Z")); 
+
+      const allUpcomingPrayerSlots = prayerItems.map(item => parsePrayerSlot(item));
+
+      const relevantSlots = allUpcomingPrayerSlots
+        .filter(slot => {
+            const isAfterNow = slot.endMoment.isAfter(now);
+            // console.log(`[updatePrayerDisplay] Filtering: ${slot.name} (End: ${slot.endMoment.format("HH:mm")}) vs Now (${now.format("HH:mm")}) -> isAfterNow: ${isAfterNow}`);
+            return isAfterNow;
+        })
+        .sort((a, b) => a.startMoment - b.startMoment);
+      
+      console.log("[updatePrayerDisplay] Relevant (future/current) slots after filtering/sorting:", relevantSlots.map(s => ({
+          name: s.name,
+          start: s.startMoment.format("YYYY-MM-DD HH:mm:ss.SSS"), 
+          end: s.endMoment.format("YYYY-MM-DD HH:mm:ss.SSS")       
+      })));
+
+      let currentPrayers = [];
+      let upcomingPrayers = [];
+
+      relevantSlots.forEach(slot => {
+        // Use isSameOrAfter for start time (inclusive) and isBefore for end time (exclusive)
+        const isCurrentlyActive = now.isSameOrAfter(slot.startMoment) && now.isBefore(slot.endMoment);
+        console.log(`[updatePrayerDisplay] Checking current: ${slot.name} (Start: ${slot.startMoment.format("HH:mm:ss.SSS")}, End: ${slot.endMoment.format("HH:mm:ss.SSS")}) vs Now (${now.format("HH:mm:ss.SSS")}) -> isCurrentlyActive: ${isCurrentlyActive}`);
+        if (isCurrentlyActive) {
+          currentPrayers.push(slot);
+        }
+      });
+      console.log("[updatePrayerDisplay] Current Prayers (found):", currentPrayers.map(s => s.name + " (Start:" + s.startMoment.format("HH:mm") + ", End:" + s.endMoment.format("HH:mm") + ")"));
+
+
+      // --- Determine Upcoming Prayers (Showing all remaining for current day, excluding currently active) ---
+      upcomingPrayers = relevantSlots
+                          .filter(slot => 
+                            slot.startMoment.isSame(now, 'day') && // Must be on the current day
+                            slot.startMoment.isAfter(now)         // Must not have started yet (strictly after 'now')
+                          ); 
+      
+      console.log("[updatePrayerDisplay] Upcoming Prayers (found):", upcomingPrayers.map(s => s.name + " (Start:" + s.startMoment.format("HH:mm") + ", End:" + s.endMoment.format("HH:mm") + ")"));
+
+
+      // 5. Update Current Prayer Display
+      if (currentPrayers.length > 0) {
+        const currentPrayerNames = currentPrayers.map(item => {
+          const typeLabel = item.type === "country" ? "" : item.icon;
+          return `${typeLabel} ${item.name}`.trim();
+        }).join(', ');
+        
+        const latestCurrentEndTimeDisplay = currentPrayers.reduce((latest, item) => moment.max(latest, item.endMoment), now);
+
+        currentPrayer.innerHTML = `
+          <strong>Currently Praying:</strong> ${currentPrayerNames} 
+          (Until ${latestCurrentEndTimeDisplay.clone().tz(moment.tz.guess()).format("hh:mm A z")})
+        `;
+      } else {
+        currentPrayer.innerHTML = "<strong>Currently Praying:</strong> No active prayer session";
+      }
+      
+      // 6. Update Upcoming Prayers Display
+      if (upcomingPrayers.length > 0) {
+        const upcomingHtml = upcomingPrayers.map(item => {
+          const typeLabel = item.type === "country" ? "" : item.icon;
+          const localStart = item.startMoment.clone().tz(moment.tz.guess());
+          const localEnd = item.endMoment.clone().tz(moment.tz.guess());
+          return `<div class="upcoming-prayer-item">${typeLabel} ${item.name} (${localStart.format("ddd, hh:mm A")} - ${localEnd.format("hh:mm A z")})</div>`;
+        }).join('');
+        
+        scrollingUpcoming.innerHTML = upcomingHtml;
+
+        // Removed the animation restart logic as flex-wrap will show all items
+        const upcomingWrapper = document.querySelector('.upcoming-prayers-wrapper');
+        upcomingWrapper.style.animation = 'none'; // Ensure no animation
+        void upcomingWrapper.offsetWidth; // Trigger reflow if needed
+      } else {
+        scrollingUpcoming.innerHTML = `<div class="upcoming-prayer-item">No upcoming prayer sessions</div>`;
+        const upcomingWrapper = document.querySelector('.upcoming-prayers-wrapper');
+        upcomingWrapper.style.animation = 'none';
+      }
+      console.log("--- updatePrayerDisplay END ---");
+    }
+
+   
+    updatePrayerDisplay();
+    setInterval(updatePrayerDisplay, 30000);
+  </script>
+
+  <!-- About Us and Daily Reflection Details Toggle Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const aboutUsBtn = document.getElementById('aboutUsBtn');
+        const aboutUsDetails = document.getElementById('aboutUsDetails');
+        const dailyReflectionBtn = document.getElementById('dailyReflectionBtn'); 
+        const dailyReflectionDetails = document.getElementById('dailyReflectionDetails');
+
+        function toggleVisibility(button, detailsDiv) {
+            // Hide other detail sections if open
+            if (detailsDiv.id === 'aboutUsDetails' && dailyReflectionDetails.style.display === 'block') {
+                dailyReflectionDetails.style.display = 'none';
+            } else if (detailsDiv.id === 'dailyReflectionDetails' && aboutUsDetails.style.display === 'block') {
+                aboutUsDetails.style.display = 'none';
+            }
+
+            // Toggle current detail section
+            if (detailsDiv.style.display === 'none' || detailsDiv.style.display === '') {
+                detailsDiv.style.display = 'block';
+                detailsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                detailsDiv.style.display = 'none';
+            }
+        }
+
+        if (aboutUsBtn && aboutUsDetails) {
+            aboutUsBtn.addEventListener('click', function() {
+                toggleVisibility(aboutUsBtn, aboutUsDetails);
+            });
+        }
+        
+        if (dailyReflectionBtn && dailyReflectionDetails) {
+            dailyReflectionBtn.addEventListener('click', function() {
+                toggleVisibility(dailyReflectionBtn, dailyReflectionDetails);
+            });
+        }
+    });
+  </script>
+</body>
+</html>

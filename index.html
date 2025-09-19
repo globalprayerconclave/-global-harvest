@@ -1359,7 +1359,7 @@
         el.id = "backend-status";
         el.style.cssText =
           "max-width:800px;margin:0.5rem auto;padding:0.5rem 1rem;border-radius:8px;font-size:0.9rem;";
-        document.body.insertBefore(el, document.body.firstChild);
+        document.querySelector('header').insertAdjacentElement('afterend', el);
       }
       el.style.background = bg;
       el.style.borderLeft = "4px solid " + border;

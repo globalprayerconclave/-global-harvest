@@ -53,9 +53,7 @@
       float: right;
       margin-right: 1rem;
     }
-    .about-us-button:hover {
-      background: #6a0dad;
-    }
+    .about-us-button:hover { background: #6a0dad; }
 
     .daily-reflection-button {
       background: linear-gradient(to right, #0d9488, #20c997);
@@ -399,6 +397,7 @@
     </div>
   </div>
 
+  <!-- Currently Praying + Upcoming -->
   <section class="current-prayer" id="currentPrayer" style="max-width:800px;margin:1rem auto;padding:0.75rem 1rem;background:#e0f2fe;border-radius:12px;font-weight:500;">
     Currently Praying: Loading...
   </section>
@@ -410,6 +409,7 @@
     </div>
   </section>
 
+  <!-- URGENT PRAYER REQUESTS -->
   <section id="urgentRequests" style="max-width:800px;margin:1rem auto;padding:0.75rem 1rem;background:skyblue;border-radius:12px;border:1px solid #f87171;">
     <h3 style="margin:0 0 0.5rem 0;color:#b91c1c;">Immediate Prayer Needs</h3>
     <div id="urgentList">Loading urgent requests...</div>
@@ -506,13 +506,13 @@
   <!-- Main app logic -->
   <script>
     // Now API-driven
-    const prayerItems = []; // will be filled from API
+    const prayerItems = []; // filled from API
 
     function parsePrayerSlot(item) {
       try {
         const { dayOfWeek, startTime, durationMinutes } = item;
         const [hour, minute] = startTime.split(':').map(Number);
-        const now = moment.tz("Asia/Kolkata"); 
+        const now = moment.tz("Asia/Kolkata");
         const dayMap = {
           "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
           "Thursday": 4, "Friday": 5, "Saturday": 6
@@ -593,13 +593,13 @@
     function convertISTtoLocalForDetails(dayOfWeek, startTime, durationMinutes, format = "ddd, hh:mm A") {
       try {
         const tempItem = { dayOfWeek, startTime, durationMinutes, name: "Temporary Item", type: "temp"};
-        const { startMoment, endMoment } = parsePrayerSlot(tempItem); 
+        const { startMoment, endMoment } = parsePrayerSlot(tempItem);
         const localStart = startMoment.clone().tz(moment.tz.guess());
         const localEnd = endMoment.clone().tz(moment.tz.guess());
         return `${localStart.format(format)} - ${localEnd.format("hh:mm A z")}`;
       } catch (e) {
         console.error("Error converting time for details:", e);
-        return `${dayOfWeek}, ${startTime} IST`; 
+        return `${dayOfWeek}, ${startTime} IST`;
       }
     }
 
@@ -684,7 +684,27 @@
       });
     }
 
+    // Helper: has the user interacted with search/filters?
+    function isUserFiltering() {
+      return (
+        (searchBox.value || "").trim().length > 0 ||
+        typeFilter.value !== "all" ||
+        regionFilter.value !== "all" ||
+        dayOfWeekFilter.value !== "all"
+      );
+    }
+
+    // Show nothing (just a hint) until the user interacts
     function filterItems() {
+      if (!isUserFiltering()) {
+        countryList.innerHTML = `
+          <p style="margin:0.5rem 0; opacity:0.8;">
+            Type in the search box or use the filters to see items.
+          </p>`;
+        countryDetails.style.display = "none";
+        return;
+      }
+
       const searchTerm = (searchBox.value || "").toLowerCase();
       const selectedType = typeFilter.value;
       const selectedRegion = regionFilter.value;
@@ -692,14 +712,17 @@
 
       const filtered = prayerItems.filter((item) => {
         const matchesType = selectedType === "all" || item.type === selectedType;
-        const matchesRegion = selectedRegion === "all" || 
-                             (item.type === "country" && item.region === selectedRegion) ||
-                             item.type === "topic";
+        const matchesRegion =
+          selectedRegion === "all" ||
+          (item.type === "country" && item.region === selectedRegion) ||
+          item.type === "topic";
         const matchesDay = selectedDay === "all" || item.dayOfWeek === selectedDay;
-        const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
-                             (item.description && item.description.toLowerCase().includes(searchTerm));
+        const matchesSearch =
+          item.name.toLowerCase().includes(searchTerm) ||
+          (item.description && item.description.toLowerCase().includes(searchTerm));
         return matchesType && matchesRegion && matchesDay && matchesSearch;
       });
+
       renderItemList(filtered);
     }
 
@@ -750,7 +773,8 @@
       }
     }
 
-    // Initial render (empty), then update periodically
+    // Initial: show hint, then schedule updates periodically
+    filterItems();
     updatePrayerDisplay();
     setInterval(updatePrayerDisplay, 30000);
   </script>
@@ -761,26 +785,26 @@
     async function loadItemsFromApi() {
       try {
         const list = document.getElementById("countryList");
-        if (list) list.innerHTML = "<p>Loading items…</p>";
+        // Only show a loading message if the user already interacted
+        if (list && isUserFiltering()) list.innerHTML = "<p>Loading items…</p>";
+
         const res = await fetch(API_ITEMS_URL, { cache: "no-store" });
         const data = await res.json();
         if (data.ok && Array.isArray(data.items)) {
           prayerItems.length = 0;
           prayerItems.push(...data.items);
-          filterItems();
-          updatePrayerDisplay();
+          filterItems();         // will still show hint until user interacts
+          updatePrayerDisplay(); // schedule continues to work
         } else {
-          if (list) list.innerHTML = "<p>Could not load items</p>";
+          if (list && isUserFiltering()) list.innerHTML = "<p>Could not load items</p>";
           console.warn("Unexpected /api/items response:", data);
         }
       } catch (e) {
         const list = document.getElementById("countryList");
-        if (list) list.innerHTML = "<p>Failed to load items</p>";
+        if (list && isUserFiltering()) list.innerHTML = "<p>Failed to load items</p>";
         console.warn("Failed to load items:", e);
       }
     }
-    // Render empty state and then load from API
-    filterItems();
     loadItemsFromApi();
   </script>
 

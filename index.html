@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GLOBAL HARVEST</title>
   <style>
-    /* Your existing CSS code remains unchanged */
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -77,45 +76,14 @@
       transform: translateY(-2px);
     }
 
-    /* UPDATED: contemporary colors + typography for description ONLY (no layout changes) */
     .description {
-      /* subtle layered gradient with soft violet/indigo accents */
-      background:
-        radial-gradient(1200px 280px at 0% 0%, rgba(124, 58, 237, 0.06), transparent 60%),
-        radial-gradient(1000px 240px at 100% 100%, rgba(99, 102, 241, 0.06), transparent 60%),
-        linear-gradient(180deg, #faf8ff 0%, #f6f7ff 100%);
-      /* refined type (safe fallbacks) */
-      font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      color: #0f172a;   /* slate-900 */
-      line-height: 1.7;
-      /* preserve your original layout properties */
       text-align: justify;
       padding: 0.5rem;
+      background: #f8fafc;
+      font-size: 0.95rem;
+      color: #444;
       overflow: hidden;
     }
-    .description h3 {
-      margin: 0 0 0.25rem 0;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      background-image: linear-gradient(90deg, #7c3aed, #2563eb); /* violet → blue */
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent !important; /* overrides inline purple to show gradient text */
-    }
-    .description p {
-      color: #334155;        /* slate-700 */
-      font-size: 1.05rem;    /* subtle polish */
-      letter-spacing: 0.1px; /* micro-tracking */
-      text-align: justify;
-      margin: 0 0 0.8rem 0;
-    }
-    .description a {
-      color: #6d28d9; /* violet-700 */
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1.5px;
-    }
-    /* END description polish */
 
     .controls {
       display: flex;
@@ -317,216 +285,9 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.2);
     }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-    /* NEW: Updated Immediate Prayer Needs section with contemporary styling */
-    #urgentRequests {
-      max-width: 800px;
-      margin: 1rem auto;
-      padding: 1.5rem;
-      border-radius: 16px;
-      background: 
-        radial-gradient(600px 140px at 0% 0%, rgba(220, 38, 38, 0.08), transparent 70%),
-        radial-gradient(600px 140px at 100% 100%, rgba(244, 63, 94, 0.08), transparent 70%),
-        linear-gradient(180deg, #fff8f8 0%, #fff1f2 100%);
-      border-left: 6px solid #dc2626;
-      box-shadow: 
-        0 6px 20px rgba(220, 38, 38, 0.12),
-        0 0 0 1px rgba(220, 38, 38, 0.08);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    #urgentRequests::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    
-    #urgentRequests h3 {
-      margin: 0 0 1rem 0;
-      color: #991b1b;
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    #urgentRequests h3::before {
-      content: '❗';
-      font-size: 1.2em;
-    }
-    
-    #urgentList {
-      position: relative;
-      z-index: 1;
-    }
-    
-    #urgentList > div {
-      margin-bottom: 1rem;
-      padding: 1.25rem;
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 12px;
-      border-left: 4px solid #ef4444;
-      box-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.05),
-        0 1px 0 rgba(255, 255, 255, 0.8) inset;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-    
-    #urgentList > div:hover {
-      transform: translateY(-2px);
-      box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.08),
-        0 1px 0 rgba(255, 255, 255, 0.8) inset;
-    }
-    
-    #urgentList > div:last-child {
-      margin-bottom: 0;
-    }
-    
-    #urgentList strong {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #dc2626;
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-    
-    #urgentList div div {
-      font-size: 0.95rem;
-      color: #444;
-      line-height: 1.5;
-    }
-    
-    #urgentList a {
-      display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.4rem 0.8rem;
-      background: rgba(220, 38, 38, 0.1);
-      color: #dc2626;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      border: 1px solid rgba(220, 38, 38, 0.2);
-    }
-    
-    #urgentList a:hover {
-      background: rgba(220, 38, 38, 0.15);
-      text-decoration: none;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
-    }
-    
-    #urgentList a + a {
-      margin-left: 0.5rem;
-    }
-
-    /* Your existing palette helpers remain unchanged */
-    :root{ 
-      --gh-slate-900:#0f172a; 
-      --gh-slate-700:#334155; 
-      --gh-violet:#7c3aed; 
-      --gh-indigo:#2563eb; 
-      --gh-amber:#f59e0b; 
-      --gh-rose:#dc2626; 
-    }
-    
-    /* Description: refined gradient + typography (no layout changes) */
-    .description{ 
-      background: radial-gradient(1200px 280px at 0% 0%, rgba(124,58,237,0.06), transparent 60%), radial-gradient(1000px 240px at 100% 100%, rgba(37,99,235,0.06), transparent 60%), linear-gradient(180deg,#faf8ff 0%,#f6f7ff 100%); 
-      font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji"; 
-      color:var(--gh-slate-900); 
-      line-height:1.7; 
-    } 
-    
-    .description h3{ 
-      margin:0 0 .25rem 0; 
-      font-weight:800; 
-      letter-spacing:.02em; 
-      background-image:linear-gradient(90deg,var(--gh-violet),var(--gh-indigo)); 
-      -webkit-background-clip:text;
-      background-clip:text; 
-      color:transparent !important; 
-    } 
-    
-    .description p{ 
-      color:var(--gh-slate-700); 
-      font-size:1.05rem; 
-      letter-spacing:.1px; 
-      text-align:justify; 
-      margin:0 0 .8rem 0; 
-    } 
-    
-    .description a{ 
-      color:#6d28d9; 
-      text-decoration:underline; 
-      text-underline-offset:3px; 
-      text-decoration-thickness:1.5px; 
-    } 
-    
-    /* Currently Praying: soft indigo/violet wash */
-    .current-prayer{ 
-      background: radial-gradient(500px 120px at 0% 0%, rgba(124,58,237,0.10), transparent 70%), radial-gradient(600px 140px at 100% 100%, rgba(37,99,235,0.10), transparent 70%), linear-gradient(180deg,#eef2ff 0%,#f5f3ff 100%) !important; 
-      color:var(--gh-slate-900); 
-      border-left:4px solid var(--gh-violet); 
-      box-shadow:0 6px 20px rgba(79,70,229,0.12); 
-    } 
-    
-    /* Upcoming: warm, subtle amber texture + refined chips */
-    .upcoming-prayers{ 
-      background: radial-gradient(600px 140px at 0% 100%, rgba(245,158,11,0.08), transparent 70%), radial-gradient(600px 140px at 100% 0%, rgba(251,191,36,0.08), transparent 70%), linear-gradient(180deg,#fffbeb 0%,#fff7ed 100%) !important; 
-      border-left:4px solid var(--gh-amber); 
-      box-shadow:0 6px 20px rgba(245,158,11,0.10); 
-    } 
-    
-    .upcoming-prayer-item{ 
-      background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); 
-      border:1px solid rgba(15,23,42,0.06); 
-      box-shadow:0 1px 2px rgba(15,23,42,0.06); 
-    } 
-    
-    /* Search area (controls): soft glassy panel and polished inputs */
-    .controls{ 
-      background: radial-gradient(700px 160px at 0% 0%, rgba(124,58,237,0.05), transparent 70%), radial-gradient(700px 160px at 100% 100%, rgba(37,99,235,0.05), transparent 70%), linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%); 
-      border-top:1px solid rgba(15,23,42,0.05); 
-      border-bottom:1px solid rgba(15,23,42,0.05); 
-    } 
-    
-    .controls input, .controls select{ 
-      background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); 
-      border:1px solid rgba(99,102,241,0.25); 
-      box-shadow: 0 1px 2px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.6); 
-      color:var(--gh-slate-900); 
-      transition:box-shadow .2s ease, border-color .2s ease, background .2s ease; 
-    } 
-    
-    .controls input::placeholder{ 
-      color:#64748b; 
-    } 
-    
-    .controls input:focus, .controls select:focus{ 
-      outline:none; 
-      border-color:var(--gh-violet); 
-      box-shadow: 0 0 0 3px rgba(124,58,237,0.20), 0 1px 2px rgba(15,23,42,0.06); 
-      background:linear-gradient(180deg,#ffffff 0%,#f9fafb 100%); 
-    }
   </style>
 </head>
 <body>
-  <!-- Your existing HTML content remains unchanged -->
   <header>
     <h1>
       <img src="https://ik.imagekit.io/t2jnrvou6/WhatsApp%20Image%202025-09-08%20at%2021.20.14.jpeg" alt="Global Prayer Conclave Logo">
@@ -544,11 +305,96 @@
   </section>
 
   <div id="aboutUsDetails">
-    <!-- About Us content remains unchanged -->
+    <h2>GLOBAL HARVEST</h2>
+    <h3 style="color: darkviolet;">Raising prayer for The Nations</h3>
+    <strong>A Global movement: Standing in the Gap for Every Nation</strong>
+    <p>Our intercessors are committed to covering every nation, every election, and every crisis in prayer. From Jerusalem to Damascus, Burkina Faso to Yangon, someone has always been standing in the gap for the nations and their people. As we move forward, our vision is to mobilize 10,000 intercessors worldwide to continue this journey of prayer. Together we will cover the world in prayer, believing that God will continue to move powerfully as men and women stand in the gap.</p>
+
+    <h3 style="color: darkviolet;">Our Vision:</h3>
+    <strong>RAISING 10,000 INTERCESSORS IN 193 COUNTRIES</strong>
+    <p>Our vision is to raise 10,000 intercessors worldwide. This is a call for those who are passionate about seeing God's kingdom advance through prayer. We are looking for watchmen, prophetic intercessors, for revival and awakening. If you are one of them please sign up at <a href="https://tiny.cc/intercessor" target="_blank" rel="noopener noreferrer">tiny.cc/intercessor</a>.</p>
+
+    <h3 style="color: darkviolet;">Upcoming Prayer conclaves</h3>
+    <ul>
+      <li><strong>Global Prayer Conclave: Dubai, UAE</strong> Date: September 2025.</li>
+      <li><strong>Eurasia Prayer conclave : Moscow, Russia</strong> Date: TBD.</li>
+      <li><strong>Prayer Mobilization across multiple nations and pastor's meetings :</strong> Planned locations include: Azerbaijan, USA, China, Indonesia, UAE, Iran, Kenya, India, and Others.</li>
+      <li><strong>Special Events:</strong> Stay tuned to our social media channels for announcements!</li>
+    </ul>
+
+    <h3 style="color: darkviolet;">Meeting Links</h3>
+    <ul>
+      <li><a href="https://us02web.zoom.us/j/85784634655?pwd=NmdDTUhwckJ4dE9uTHMvbnBxOGN3UT09" target="_blank" rel="noopener">Join Us on Zoom</a></li>
+    </ul>
+
+    <h3 style="color: darkviolet;">GLOBAL PRAYER HUB - 24/7 INTERCESSION</h3>
+    <p>If you have a heart for prayer and interceding for the nations, then the Prayer Hub in Dehradun is a place for you.</p>
+    <p>A private place to pray is important if we want to have a quality prayer time. At the foothills of the Himalayas, the Global Prayer hub in Dehradun is created with the intention to help intercessors find a dedicated place to PRAY, STAY and spend quiet time with God.</p>
+    <p>This is a strategic base for prayer and intercession, welcoming intercessors. The hub will also be a center for learning and training, with regular efforts to bring the local community together.</p>
+    <p>The Hub is also an opportunity to meet other intercessors, opportunity to drive over the mountains of Uttarakhand and visit nearby places like Haridwar and Rishikesh.</p>
+    <p>We welcome individuals and small groups for short stay.</p>
+    <p>For details, please email us at: <a href="mailto:ghchurch@gmail.com?subject=Prayer%20Hub%20Inquiry&body=Hello%20Global%20Harvest%20Team%2C%0D%0A%0D%0AMy%20name%20is%20____.%20I%E2%80%99d%20like%20to%20inquire%20about%20the%20Prayer%20Hub.%0D%0A">ghchurch@gmail.com</a></p>
+
+    <h3 style="color: darkviolet;">Stories From the ground!</h3>
+    <strong>INDONESIA</strong>
+    <p>We pray for Indonesia so that every man, woman, and child in Indonesia would hear the gospel of Jesus. There are still millions of Indonesians that do not know the truth about our Saviour. We invite you to join us in praying for Indonesia.</p>
+    <p>Our intercessors and strong network of partner churches in Indonesia are growing. Across Central Kalimantan Island where 300 pastors came together in March 2025 for a two-day training and being equipped.</p>
+    <p>Several evangelistic meetings were held across Indonesia in March 2025.</p>
+
+    <strong>RUSSIA</strong>
+    <p>The gospel continues to spread in Russia, with Christians finding ways to share their faith and experience growth. We have seen a huge surge in our prayer movement in Russia. The Global Harvest partner ministries among Russian and Armenian speakers has expanded. Our intercessors in Moscow and St. Petersburg pray around the clock for regional peace and revival in the CIS nations.</p>
+
+    <h3 style="color: darkviolet;">One year Bible School</h3>
+    <p>The Global Harvest School certificate of Theology Program, which aims to equip and train grassroot, is held for Hindi and Bengali speakers. We are working on providing this training in various other Indian languages and Indonesian.</p>
+
+    <h3 style="color: darkviolet;">Be a Prayer and Mission partner!</h3>
+    <p>As we continue to expand and mobilize prayer across the world, we need your support. Whether it's 1000 Rupees or 10,000 a month, your contribution makes a tremendous difference.</p>
+    <p>Our estimated budget for the rest of the year 2025 is approximately 40 Lakhs Indian Rupees, and your prayerful giving will help sustain and grow this vital prayer ministry.</p>
+
+    <h3 style="color: darkviolet;">How to Contribute</h3>
+    <ul>
+      <li><strong>UPI:</strong> <a href="upi://pay?pa=jimglobaltask@okhdfcbank&pn=Global%20Prayer%20Conclave&mc=0000&tid=YOUR_TRANSACTION_ID&tr=YOUR_TRANSACTION_REF&tn=Donation%20for%20Prayer%20Ministry">Click here to pay</a></li>
+      <li>Bank Transfers: Global Associates, Acc.No: 18200 2000 03958, Federal Bank, IFSC: FDRL0001820</li>
+    </ul>
+
+    <h3 style="color: darkviolet;">Book a Prayer Slot</h3>
+    <p>Interested in joining our prayer leadership, suggesting a nation/topic, or collaborating with us?</p>
+    <ul>
+      <li><a href="https://frolicking-biscotti-85feb1.netlify.app/" target="_blank" rel="noopener">Click to Book</a></li>
+      <li>WhatsApp: <a href="https://wa.me/919910202164" target="_blank" rel="noopener">+91 9910 20 2164</a></li>
+      <li><a href="mailto:globalprayerconclave@gmail.com?subject=Global%20Harvest%20Info%20Request&body=Hello%20Global%20Harvest%20Team%2C%0D%0A%0D%0AMy%20name%20is%20____.%20I%E2%80%99m%20reaching%20out%20for%20more%20information.%0D%0A">Email: globalprayerconclave@gmail.com</a></li>
+    </ul>
+
+    <div class="contact-info">
+      <p>Follow us on Social Media!</p>
+      <p>&#169; 2024 Global Prayer Conclave. All rights reserved.</p>
+    </div>
   </div>
 
   <div id="dailyReflectionDetails">
-    <!-- Daily Reflection content remains unchanged -->
+    <h2>Daily Bread: A Moment of Reflection</h2>
+    <p>The Old Testament is filled with inspiring and beautiful stories of men and women, which provide joy and depth. Each narrative reveals the mighty actions of the Lord, offering personal inspiration and a greater understanding of faith.</p>
+    <p>
+      "The narrative of Jacob wrestling with God in Genesis 32 highlights the complexity of Jacob's character, reflecting a life filled with struggle and conflict. From his birth, holding onto his brother Esau's heel, Jacob's existence has been marked by battles, culminating in this divine confrontation. This incident symbolizes Jacob's relentless pursuit of purpose and understanding of his faith."
+      <br><strong>— Genesis 32:26 (NLT)</strong>
+    </p>
+    <p>Jacob's unwavering determination to receive God's blessings exemplifies perseverance and resilience. His declaration, "I will not leave you unless you bless me," reflects a deep hunger for God's love and a refusal to surrender, despite physical struggle. This story underscores that true determination in prayer can lead to profound outcomes, as God honors such relentless pursuit.</p>
+    <p>Jacob's life teaches the importance of determination and perseverance in seeking God's mercy, especially in the quest for forgiveness. His loneliness led him to realize his need for God's grace, recognizing his guilt towards his brother Esau. Until that point, Jacob relied solely on his own strategies, but his encounter underscored the necessity of divine forgiveness.</p>
+    <p>Jacob experiences profound loneliness after losing his support system, realizing that true companionship comes from God alone. In moments of isolation, we often learn that people may fail us, but it is God who remains steadfast and supportive through our darkest times. Trusting in God, especially during our lowest points, enables us to find strength and solace.</p>
+    <p>Jacob's story illustrates the power of perseverance in seeking God's blessings, as demonstrated when he insists, 'I will not let you go unless you bless me.' He learns that true blessings come from God rather than through deceit, and his determination is evident in his commitment to work hard for Rachel. Ultimately, his struggles lead to God renaming him Israel, symbolizing his transformation through persistence.</p>
+    <p>Through Jacob's struggle with God, he received a new identity as Israel, symbolizing the transformation that occurs when one is determined to seek God's touch and blessings. This message encourages listeners to seek their own new identities after facing shame and disappointment, with the promise that they will be lifted and blessed by God.</p>
+    <p>God offers a new identity, transforming Jacob into Israel, and desires an intimate relationship with each of us. He encourages us to move beyond referring to Him through others like Abraham and Isaac, urging us to call Him 'my God' and embrace a personal connection. This closeness, built on humility and personal reflection, can profoundly impact our lives, just as Jacob’s blessing did despite his limp.</p>
+    <p>The dislocation of Jacob's hip symbolized his humility and deepened his relationship with God; rather than questioning God's actions, he accepted his pain with a joyful heart, recognizing the blessings that accompanied his struggles. This example from Jacob's life encourages us to embrace humility and seek an intimate, personal relationship with God, demonstrating determination even in hardship.</p>
+    <p>𝒥𝐼𝑀</p>
+    <div class="video-container">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/yVD9Pje2yVs?si=LFI0XBGRzcUn1Zkx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p style="margin-top: 1rem;">
+      𝓜𝓪𝔂 𝔂𝓸𝓾𝓻 𝓱𝓮𝓪𝓻𝓽 𝓫𝓮 𝓯𝓲𝓵𝓵𝓮𝓭 𝔀𝓲𝓽𝓱 𝓹𝓮𝓪𝓬𝓮 𝓪𝓷𝓭 𝓻𝓮𝓷𝓮𝔀𝓮𝓭 𝓼𝓽𝓻𝓮𝝰𝓰𝓽𝓱 𝓪𝓼 𝔂𝓸𝓾 𝔀𝓪𝓵𝓴 𝔀𝓲𝓽𝓱 𝓗𝓲𝓶 𝓽𝓸𝓭𝓪𝔂.
+    </p>
+    <div class="contact-info">
+      <p>Blessings from the Global Harvest Team <span class="emoji">🙏</span></p>
+    </div>
   </div>
 
   <!-- Currently Praying + Upcoming -->
@@ -563,9 +409,9 @@
     </div>
   </section>
 
-  <!-- UPDATED: Immediate Prayer Needs with new contemporary styling -->
-  <section id="urgentRequests">
-    <h3>Immediate Prayer Needs</h3>
+  <!-- URGENT PRAYER REQUESTS -->
+  <section id="urgentRequests" style="max-width:800px;margin:1rem auto;padding:0.75rem 1rem;background:skyblue;border-radius:12px;border:1px solid #f87171;">
+    <h3 style="margin:0 0 0.5rem 0;color:#b91c1c;">Immediate Prayer Needs</h3>
     <div id="urgentList">Loading urgent requests...</div>
   </section>
 
@@ -610,9 +456,8 @@
   <section class="country-list" id="countryList"></section>
   <section class="country-details" id="countryDetails" style="display:none;"></section>
 
-  <!-- Your existing JavaScript remains unchanged -->
+  <!-- Urgent requests (static for now) -->
   <script>
-    // Urgent requests script
     (function(){
       const urgentRequestsData = [
         {
@@ -641,11 +486,11 @@
         }
         container.innerHTML = urgentRequestsData.map(req => {
           const linksHtml = (req.links || []).map(l => {
-            return `<a href="${l.url}" target="_blank" rel="noopener">${l.text}</a>`;
+            return `<a href="${l.url}" target="_blank" rel="noopener" style="display:block;margin-top:6px;color:#2563eb;text-decoration:underline;">${l.text}</a>`;
           }).join('');
-          return `<div>
-                    <strong>${req.title}</strong>
-                    <div>${req.description}</div>
+          return `<div style="margin-bottom:10px;padding:10px;background:#fff;border-left:4px solid #dc2626;border-radius:6px;">
+                    <strong style="display:block;margin-bottom:6px;">${req.title}</strong>
+                    <div style="font-size:0.95rem;color:#333;">${req.description}</div>
                     ${linksHtml}
                   </div>`;
         }).join('');
@@ -654,28 +499,395 @@
     })();
   </script>
 
-  <!-- Rest of your JavaScript remains unchanged -->
+  <!-- moment.js + moment-timezone -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
 
   <!-- Main app logic -->
   <script>
-    // Your existing JavaScript code remains unchanged
+    // Now API-driven
+    const prayerItems = []; // filled from API
+
+    function parsePrayerSlot(item) {
+      try {
+        const { dayOfWeek, startTime, durationMinutes } = item;
+        const [hour, minute] = startTime.split(':').map(Number);
+        const now = moment.tz("Asia/Kolkata");
+        const dayMap = {
+          "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+          "Thursday": 4, "Friday": 5, "Saturday": 6
+        };
+        const targetDayIndex = dayMap[dayOfWeek];
+        let scheduledMoment = now.clone()
+          .startOf('week')
+          .add(targetDayIndex, 'days')
+          .hour(hour)
+          .minute(minute)
+          .second(0).millisecond(0);
+        const scheduledEndMomentCandidate = scheduledMoment.clone().add(durationMinutes || 60, 'minutes');
+        if (scheduledEndMomentCandidate.isBefore(now)) {
+          scheduledMoment.add(1, 'week');
+        }
+        const finalStartMoment = scheduledMoment;
+        const finalEndMoment = finalStartMoment.clone().add(durationMinutes || 60, 'minutes');
+        return { ...item, startMoment: finalStartMoment, endMoment: finalEndMoment };
+      } catch (e) {
+        console.error("Error in parsePrayerSlot for item:", item?.name, e);
+        const defaultStart = moment.tz("Asia/Kolkata").add(1, 'hour');
+        return { ...item, startMoment: defaultStart, endMoment: defaultStart.clone().add(30, 'minutes') };
+      }
+    }
+
+    const searchBox = document.getElementById("searchBox");
+    const typeFilter = document.getElementById("typeFilter");
+    const regionFilter = document.getElementById("regionFilter");
+    const dayOfWeekFilter = document.getElementById("dayOfWeekFilter");
+    const countryList = document.getElementById("countryList");
+    const countryDetails = document.getElementById("countryDetails");
+    const currentPrayer = document.getElementById("currentPrayer");
+    const scrollingUpcoming = document.getElementById("scrollingUpcoming");
+
+    let activeItemId = null;
+
+    function getItemDisplayTime(item) {
+      const [hour, minute] = (item.startTime || "00:00").split(':').map(Number);
+      const dayMap = {
+        "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+        "Thursday": 4, "Friday": 5, "Saturday": 6
+      };
+      const targetDayIndex = dayMap[item.dayOfWeek || "Sunday"];
+      let scheduledMomentIST = moment.tz("Asia/Kolkata")
+        .startOf('week')
+        .add(targetDayIndex, 'days')
+        .hour(hour)
+        .minute(minute)
+        .second(0).millisecond(0);
+      const localTime = scheduledMomentIST.clone().tz(moment.tz.guess());
+      const format = dayOfWeekFilter.value === "all" ? "ddd, hh:mm A" : "hh:mm A";
+      return localTime.format(format);
+    }
+
+    function renderItemList(data) {
+      countryList.innerHTML = "";
+      countryDetails.style.display = "none";
+      if (!data || data.length === 0) {
+        countryList.innerHTML = "<p>No items found matching your criteria.</p>";
+        return;
+      }
+      data.forEach((item) => {
+        const btn = document.createElement("button");
+        btn.className = "country-btn";
+        const itemNameSpan = document.createElement('span');
+        itemNameSpan.className = 'item-name';
+        itemNameSpan.textContent = item.name;
+        const itemTimeSpan = document.createElement('span');
+        itemTimeSpan.className = 'item-time';
+        itemTimeSpan.textContent = getItemDisplayTime(item);
+        btn.appendChild(itemNameSpan);
+        btn.appendChild(itemTimeSpan);
+        btn.addEventListener("click", () => toggleItemDetails(item));
+        countryList.appendChild(btn);
+      });
+    }
+
+    function convertISTtoLocalForDetails(dayOfWeek, startTime, durationMinutes, format = "ddd, hh:mm A") {
+      try {
+        const tempItem = { dayOfWeek, startTime, durationMinutes, name: "Temporary Item", type: "temp"};
+        const { startMoment, endMoment } = parsePrayerSlot(tempItem);
+        const localStart = startMoment.clone().tz(moment.tz.guess());
+        const localEnd = endMoment.clone().tz(moment.tz.guess());
+        return `${localStart.format(format)} - ${localEnd.format("hh:mm A z")}`;
+      } catch (e) {
+        console.error("Error converting time for details:", e);
+        return `${dayOfWeek}, ${startTime} IST`;
+      }
+    }
+
+    function safe(val, fallback = "—") {
+      return (val === undefined || val === null || val === "") ? fallback : val;
+    }
+
+    function toggleItemDetails(item) {
+      if (activeItemId === item.name) {
+        countryDetails.style.display = "none";
+        activeItemId = null;
+        return;
+      }
+      let detailsHTML = "";
+      const prayerScheduleLocalDisplay = convertISTtoLocalForDetails(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+
+      if (item.type === "country") {
+        detailsHTML = `
+          <div class="schedule-type country-prayer">Country Prayer Focus</div>
+          <h2>${item.flag ? `<img src="${item.flag}" alt="flag"/>` : ""} ${safe(item.name)}</h2>
+          <div class="info">
+            <p><strong>Location:</strong> ${safe(item.location)}</p>
+            <p><strong>Capital:</strong> ${safe(item.capital)}</p>
+            <p><strong>Population:</strong> ${safe(item.population)}</p>
+            <p><strong>Head of State:</strong> ${safe(item.headOfState)}</p>
+            <p><strong>Official Language:</strong> ${safe(item.officialLanguage)}</p>
+            <p><strong>Languages:</strong> ${safe(item.languages)}</p>
+            <p><strong>People Groups:</strong> ${safe(item.peopleGroups)}</p>
+            <p><strong>Least Reached People Groups:</strong> ${safe(item.leastReachedPeopleGroups)}</p>
+            <p><strong>Largest Religion:</strong> ${safe(item.largestReligion)}</p>
+            <p><strong>Christian Population:</strong> ${safe(item.christianPopulation)}</p>
+            <p><strong>Prayer Slot:</strong> ${prayerScheduleLocalDisplay}</p>
+            <p><strong>Region:</strong> ${safe(item.region)}</p>
+          </div>
+          <iframe 
+            width="100%" height="300" style="border:0; border-radius:8px; margin-top:1rem;"
+            src="https://www.google.com/maps?q=${encodeURIComponent(item.name)}&output=embed" 
+            allowfullscreen loading="lazy">
+          </iframe>
+        `;
+      } else {
+        detailsHTML = `
+          <div class="schedule-type topic-prayer">Topic Prayer Focus</div>
+          <h2>${safe(item.icon, "📌")} ${safe(item.name)}</h2>
+          <div class="info">
+            <p><strong>Description:</strong> ${safe(item.description, "—")}</p>
+            <p><strong>Prayer Slot:</strong> ${prayerScheduleLocalDisplay}</p>
+          </div>
+        `;
+      }
+
+      if (Array.isArray(item.prayerPoints) && item.prayerPoints.length) {
+        item.prayerPoints.forEach((pp) => {
+          detailsHTML += `
+            <div class="prayer-category">
+              <h3>${safe(pp.category)} <span>&#9656;</span></h3>
+              <ul>
+                ${(pp.points || []).map(p => `<li>${p}</li>`).join("")}
+              </ul>
+            </div>
+          `;
+        });
+      }
+
+      countryDetails.innerHTML = detailsHTML;
+      countryDetails.style.display = "block";
+      countryDetails.scrollIntoView({ behavior: "smooth" });
+      activeItemId = item.name;
+
+      document.querySelectorAll(".prayer-category h3").forEach(h3 => {
+        h3.onclick = () => {
+          const ul = h3.nextElementSibling;
+          const arrow = h3.querySelector("span");
+          if (ul.style.display === "block") {
+            ul.style.display = "none";
+            arrow.style.transform = "rotate(0deg)";
+          } else {
+            ul.style.display = "block";
+            arrow.style.transform = "rotate(90deg)";
+          }
+        };
+      });
+    }
+
+    // Helper: has the user interacted with search/filters?
+    function isUserFiltering() {
+      return (
+        (searchBox.value || "").trim().length > 0 ||
+        typeFilter.value !== "all" ||
+        regionFilter.value !== "all" ||
+        dayOfWeekFilter.value !== "all"
+      );
+    }
+
+    // Show nothing (just a hint) until the user interacts
+    function filterItems() {
+      if (!isUserFiltering()) {
+        countryList.innerHTML = `
+          <p style="margin:0.5rem 0; opacity:0.8;">
+            Type in the search box or use the filters to see items.
+          </p>`;
+        countryDetails.style.display = "none";
+        return;
+      }
+
+      const searchTerm = (searchBox.value || "").toLowerCase();
+      const selectedType = typeFilter.value;
+      const selectedRegion = regionFilter.value;
+      const selectedDay = dayOfWeekFilter.value;
+
+      const filtered = prayerItems.filter((item) => {
+        const matchesType = selectedType === "all" || item.type === selectedType;
+        const matchesRegion =
+          selectedRegion === "all" ||
+          (item.type === "country" && item.region === selectedRegion) ||
+          item.type === "topic";
+        const matchesDay = selectedDay === "all" || item.dayOfWeek === selectedDay;
+        const matchesSearch =
+          item.name.toLowerCase().includes(searchTerm) ||
+          (item.description && item.description.toLowerCase().includes(searchTerm));
+        return matchesType && matchesRegion && matchesDay && matchesSearch;
+      });
+
+      renderItemList(filtered);
+    }
+
+    searchBox.addEventListener("input", filterItems);
+    typeFilter.addEventListener("change", filterItems);
+    regionFilter.addEventListener("change", filterItems);
+    dayOfWeekFilter.addEventListener("change", filterItems);
+
+    function updatePrayerDisplay() {
+      const now = moment.tz("Asia/Kolkata");
+      const allUpcomingPrayerSlots = prayerItems.map(item => parsePrayerSlot(item));
+      const relevantSlots = allUpcomingPrayerSlots
+        .filter(slot => slot.endMoment.isAfter(now))
+        .sort((a, b) => a.startMoment - b.startMoment);
+
+      const currentPrayers = [];
+      let upcomingPrayers = [];
+
+      relevantSlots.forEach(slot => {
+        const isCurrentlyActive = now.isSameOrAfter(slot.startMoment) && now.isBefore(slot.endMoment);
+        if (isCurrentlyActive) currentPrayers.push(slot);
+      });
+
+      if (currentPrayers.length > 0) {
+        const currentPrayerNames = currentPrayers.map(item => {
+          const typeLabel = item.type === "country" ? "" : (item.icon || "");
+          return `${typeLabel} ${item.name}`.trim();
+        }).join(', ');
+        const latestCurrentEndTimeDisplay = currentPrayers.reduce((latest, item) => moment.max(latest, item.endMoment), now);
+        currentPrayer.innerHTML = `<strong>Currently Praying:</strong> ${currentPrayerNames} (Until ${latestCurrentEndTimeDisplay.clone().tz(moment.tz.guess()).format("hh:mm A z")})`;
+      } else {
+        currentPrayer.innerHTML = "<strong>Currently Praying:</strong> No active prayer session";
+      }
+
+      upcomingPrayers = relevantSlots
+        .filter(slot => slot.startMoment.isSame(now, 'day') && slot.startMoment.isAfter(now));
+
+      if (upcomingPrayers.length > 0) {
+        const upcomingHtml = upcomingPrayers.map(item => {
+          const typeLabel = item.type === "country" ? "" : (item.icon || "");
+          const localStart = item.startMoment.clone().tz(moment.tz.guess());
+          const localEnd = item.endMoment.clone().tz(moment.tz.guess());
+          return `<div class="upcoming-prayer-item">${typeLabel} ${item.name} (${localStart.format("ddd, hh:mm A")} - ${localEnd.format("hh:mm A z")})</div>`;
+        }).join('');
+        scrollingUpcoming.innerHTML = upcomingHtml;
+      } else {
+        scrollingUpcoming.innerHTML = `<div class="upcoming-prayer-item">No upcoming prayer sessions</div>`;
+      }
+    }
+
+    // Initial: show hint, then schedule updates periodically
+    filterItems();
+    updatePrayerDisplay();
+    setInterval(updatePrayerDisplay, 30000);
   </script>
 
   <!-- Load items from API and refresh UI -->
   <script>
-    // Your existing JavaScript code remains unchanged
+    const API_ITEMS_URL = "https://prayer-api-go1t.onrender.com/api/items";
+    async function loadItemsFromApi() {
+      try {
+        const list = document.getElementById("countryList");
+        // Only show a loading message if the user already interacted
+        if (list && isUserFiltering()) list.innerHTML = "<p>Loading items…</p>";
+
+        const res = await fetch(API_ITEMS_URL, { cache: "no-store" });
+        const data = await res.json();
+        if (data.ok && Array.isArray(data.items)) {
+          prayerItems.length = 0;
+          prayerItems.push(...data.items);
+          filterItems();         // will still show hint until user interacts
+          updatePrayerDisplay(); // schedule continues to work
+        } else {
+          if (list && isUserFiltering()) list.innerHTML = "<p>Could not load items</p>";
+          console.warn("Unexpected /api/items response:", data);
+        }
+      } catch (e) {
+        const list = document.getElementById("countryList");
+        if (list && isUserFiltering()) list.innerHTML = "<p>Failed to load items</p>";
+        console.warn("Failed to load items:", e);
+      }
+    }
+    loadItemsFromApi();
   </script>
 
   <!-- About Us and Daily Reflection toggle -->
   <script>
-    // Your existing JavaScript code remains unchanged
+    document.addEventListener('DOMContentLoaded', function() {
+      const aboutUsBtn = document.getElementById('aboutUsBtn');
+      const aboutUsDetails = document.getElementById('aboutUsDetails');
+      const dailyReflectionBtn = document.getElementById('dailyReflectionBtn'); 
+      const dailyReflectionDetails = document.getElementById('dailyReflectionDetails');
+
+      function toggleVisibility(button, detailsDiv) {
+        if (detailsDiv.id === 'aboutUsDetails' && dailyReflectionDetails.style.display === 'block') {
+          dailyReflectionDetails.style.display = 'none';
+        } else if (detailsDiv.id === 'dailyReflectionDetails' && aboutUsDetails.style.display === 'block') {
+          aboutUsDetails.style.display = 'none';
+        }
+        if (detailsDiv.style.display === 'none' || detailsDiv.style.display === '') {
+          detailsDiv.style.display = 'block';
+          detailsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          detailsDiv.style.display = 'none';
+        }
+      }
+
+      if (aboutUsBtn && aboutUsDetails) {
+        aboutUsBtn.addEventListener('click', function() {
+          toggleVisibility(aboutUsBtn, aboutUsDetails);
+        });
+      }
+      if (dailyReflectionBtn && dailyReflectionDetails) {
+        dailyReflectionBtn.addEventListener('click', function() {
+          toggleVisibility(dailyReflectionBtn, dailyReflectionDetails);
+        });
+      }
+    });
   </script>
 
   <!-- Backend status banner -->
   <script>
-    // Your existing JavaScript code remains unchanged
+    const API_BASE = "https://prayer-api-go1t.onrender.com"; // Your Render URL
+
+    function setBanner(text, bg, border) {
+      let el = document.getElementById("backend-status");
+      if (!el) {
+        el = document.createElement("div");
+        el.id = "backend-status";
+        el.style.cssText =
+          "max-width:800px;margin:0.5rem auto;padding:0.5rem 1rem;border-radius:8px;font-size:0.9rem;";
+        document.querySelector('header').insertAdjacentElement('afterend', el);
+      }
+      el.style.background = bg;
+      el.style.borderLeft = "4px solid " + border;
+      el.style.color = "#111827";
+      el.textContent = text;
+    }
+
+    setBanner("Checking backend…", "#eef2ff", "#6366f1");
+
+    (async () => {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 8000);
+        const res = await fetch(API_BASE + "/api/health", {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+        const data = await res.json();
+        if (data && data.ok) {
+          if (data.dbConnected) {
+            setBanner("Backend: Online (DB connected)", "#ecfdf5", "#10b981");
+          } else {
+            setBanner("Backend: Online (DB not connected)", "#FEF9C3", "#F59E0B");
+          }
+        } else {
+          setBanner("Backend: Online (unexpected response)", "#FEF3C7", "#F59E0B");
+        }
+      } catch (e) {
+        console.warn("Backend check failed:", e);
+        setBanner("Backend: Offline", "#fef2f2", "#ef4444");
+      }
+    })();
   </script>
 </body>
 </html>

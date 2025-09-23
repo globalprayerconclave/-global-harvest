@@ -189,6 +189,49 @@
       text-align: center;
     }
 
+    .topic-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      border-left: 4px solid #0d9488;
+      cursor: pointer;
+    }
+
+    .topic-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      background: #f0fdf4;
+    }
+
+    .topic-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .topic-icon {
+      font-size: 1.2rem;
+    }
+
+    .topic-time {
+      background: #ccfbf1;
+      color: #0d9488;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      min-width: 140px;
+      text-align: center;
+    }
+
     .no-results {
       text-align: center;
       padding: 2rem;
@@ -208,6 +251,38 @@
       padding-bottom: 0.5rem;
       border-bottom: 2px solid #e2e8f0;
       margin-bottom: 0.5rem;
+    }
+
+    .day-section {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .day-header {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #7c3aed;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(90deg, #f3e8ff, #e9d5ff);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #7c3aed;
+    }
+
+    .time-slot {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+
+    .time-header {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
     }
 
     .country-details {
@@ -815,7 +890,7 @@
       return localTime.format(format);
     }
 
-    // UPDATED: Function to render items in vertical alphabetical order
+    // UPDATED: Function to render items based on selected filter
     function renderItemList(data) {
       countryList.innerHTML = "";
       countryDetails.style.display = "none";
@@ -825,7 +900,112 @@
         return;
       }
 
-      // Filter only countries if needed
+      const selectedDay = dayOfWeekFilter.value;
+      const selectedType = typeFilter.value;
+
+      // If a specific day is selected, show items grouped by time slots
+      if (selectedDay !== "all") {
+        renderDayView(data, selectedDay);
+      } 
+      // If countries are selected, show alphabetically
+      else if (selectedType === "country" || (selectedType === "all" && selectedDay === "all")) {
+        renderCountryView(data);
+      }
+      // For other cases, show simple list
+      else {
+        renderSimpleView(data);
+      }
+    }
+
+    // Render day view with time slots
+    function renderDayView(data, selectedDay) {
+      const dayItems = data.filter(item => item.dayOfWeek === selectedDay);
+      
+      if (dayItems.length === 0) {
+        countryList.innerHTML = `<div class='no-results'>No items scheduled for ${selectedDay}.</div>`;
+        return;
+      }
+
+      // Sort by time
+      dayItems.sort((a, b) => {
+        const timeA = a.startTime || "00:00";
+        const timeB = b.startTime || "00:00";
+        return timeA.localeCompare(timeB);
+      });
+
+      const daySection = document.createElement('div');
+      daySection.className = 'day-section';
+      
+      const dayHeader = document.createElement('div');
+      dayHeader.className = 'day-header';
+      dayHeader.textContent = `${selectedDay} Schedule`;
+      daySection.appendChild(dayHeader);
+
+      // Group by time slots
+      const timeSlots = {};
+      dayItems.forEach(item => {
+        const timeKey = item.startTime || "00:00";
+        if (!timeSlots[timeKey]) {
+          timeSlots[timeKey] = [];
+        }
+        timeSlots[timeKey].push(item);
+      });
+
+      // Render each time slot
+      Object.keys(timeSlots).sort().forEach(timeKey => {
+        const timeSlotDiv = document.createElement('div');
+        timeSlotDiv.className = 'time-slot';
+        
+        const timeHeader = document.createElement('div');
+        timeHeader.className = 'time-header';
+        
+        const [hour, minute] = timeKey.split(':');
+        const timeMoment = moment().hour(parseInt(hour)).minute(parseInt(minute));
+        timeHeader.textContent = `🕒 ${timeMoment.format('hh:mm A')}`;
+        
+        timeSlotDiv.appendChild(timeHeader);
+
+        // Render items in this time slot
+        timeSlots[timeKey].forEach(item => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = item.type === 'country' ? 'country-item' : 'topic-item';
+          itemDiv.addEventListener('click', () => toggleItemDetails(item));
+          
+          const nameDiv = document.createElement('div');
+          nameDiv.className = item.type === 'country' ? 'country-name' : 'topic-name';
+          
+          if (item.type === 'country' && item.flag) {
+            const flagImg = document.createElement('img');
+            flagImg.src = item.flag;
+            flagImg.alt = `${item.name} flag`;
+            flagImg.className = 'country-flag';
+            nameDiv.appendChild(flagImg);
+          } else if (item.type === 'topic' && item.icon) {
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'topic-icon';
+            iconSpan.textContent = item.icon;
+            nameDiv.appendChild(iconSpan);
+          }
+          
+          nameDiv.appendChild(document.createTextNode(item.name));
+          
+          const typeBadge = document.createElement('div');
+          typeBadge.className = item.type === 'country' ? 'country-time' : 'topic-time';
+          typeBadge.textContent = item.type === 'country' ? 'Country' : 'Topic';
+          
+          itemDiv.appendChild(nameDiv);
+          itemDiv.appendChild(typeBadge);
+          timeSlotDiv.appendChild(itemDiv);
+        });
+
+        daySection.appendChild(timeSlotDiv);
+      });
+
+      countryList.appendChild(daySection);
+    }
+
+    // Render country view alphabetically
+    function renderCountryView(data) {
       const countries = data.filter(item => item.type === "country");
       
       if (countries.length === 0) {
@@ -882,6 +1062,41 @@
         });
         
         countryList.appendChild(section);
+      });
+    }
+
+    // Render simple view for other cases
+    function renderSimpleView(data) {
+      data.forEach((item) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = item.type === 'country' ? 'country-item' : 'topic-item';
+        itemDiv.addEventListener('click', () => toggleItemDetails(item));
+        
+        const nameDiv = document.createElement('div');
+        nameDiv.className = item.type === 'country' ? 'country-name' : 'topic-name';
+        
+        if (item.type === 'country' && item.flag) {
+          const flagImg = document.createElement('img');
+          flagImg.src = item.flag;
+          flagImg.alt = `${item.name} flag`;
+          flagImg.className = 'country-flag';
+          nameDiv.appendChild(flagImg);
+        } else if (item.type === 'topic' && item.icon) {
+          const iconSpan = document.createElement('span');
+          iconSpan.className = 'topic-icon';
+          iconSpan.textContent = item.icon;
+          nameDiv.appendChild(iconSpan);
+        }
+        
+        nameDiv.appendChild(document.createTextNode(item.name));
+        
+        const timeDiv = document.createElement('div');
+        timeDiv.className = item.type === 'country' ? 'country-time' : 'topic-time';
+        timeDiv.textContent = getItemDisplayTime(item);
+        
+        itemDiv.appendChild(nameDiv);
+        itemDiv.appendChild(timeDiv);
+        countryList.appendChild(itemDiv);
       });
     }
 
@@ -994,7 +1209,7 @@
       if (!isUserFiltering()) {
         countryList.innerHTML = `
           <div class="no-results">
-            Type in the search box or use the filters to see countries.
+            Type in the search box or use the filters to see items.
           </div>`;
         countryDetails.style.display = "none";
         return;

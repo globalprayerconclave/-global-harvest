@@ -133,32 +133,82 @@
       min-width: 200px;
     }
 
+    /* UPDATED: Country list now displays vertically with better styling */
     .country-list {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.75rem;
       padding: 1rem;
-      justify-content: center;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
-    .country-btn {
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.2s ease;
+    .country-item {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      line-height: 1.2;
+      background: white;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      border-left: 4px solid #2563eb;
+      cursor: pointer;
     }
-    .country-btn .item-name { font-weight: bold; font-size: 1em; }
-    .country-btn .item-time { font-size: 0.8em; opacity: 0.8; }
-    .country-btn:hover { background: #1d4ed8; }
+
+    .country-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      background: #f8fafc;
+    }
+
+    .country-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .country-flag {
+      width: 24px;
+      height: 16px;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+
+    .country-time {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .alphabet-section {
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .alphabet-header {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #7c3aed;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 0.5rem;
+    }
 
     .country-details {
       max-width: 800px;
@@ -765,26 +815,73 @@
       return localTime.format(format);
     }
 
+    // UPDATED: Function to render items in vertical alphabetical order
     function renderItemList(data) {
       countryList.innerHTML = "";
       countryDetails.style.display = "none";
+      
       if (!data || data.length === 0) {
-        countryList.innerHTML = "<p>No items found matching your criteria.</p>";
+        countryList.innerHTML = "<div class='no-results'>No items found matching your criteria.</div>";
         return;
       }
-      data.forEach((item) => {
-        const btn = document.createElement("button");
-        btn.className = "country-btn";
-        const itemNameSpan = document.createElement('span');
-        itemNameSpan.className = 'item-name';
-        itemNameSpan.textContent = item.name;
-        const itemTimeSpan = document.createElement('span');
-        itemTimeSpan.className = 'item-time';
-        itemTimeSpan.textContent = getItemDisplayTime(item);
-        btn.appendChild(itemNameSpan);
-        btn.appendChild(itemTimeSpan);
-        btn.addEventListener("click", () => toggleItemDetails(item));
-        countryList.appendChild(btn);
+
+      // Filter only countries if needed
+      const countries = data.filter(item => item.type === "country");
+      
+      if (countries.length === 0) {
+        countryList.innerHTML = "<div class='no-results'>No countries found matching your criteria.</div>";
+        return;
+      }
+
+      // Sort countries alphabetically
+      countries.sort((a, b) => a.name.localeCompare(b.name));
+      
+      // Group by first letter
+      const groupedCountries = {};
+      countries.forEach(country => {
+        const firstLetter = country.name.charAt(0).toUpperCase();
+        if (!groupedCountries[firstLetter]) {
+          groupedCountries[firstLetter] = [];
+        }
+        groupedCountries[firstLetter].push(country);
+      });
+
+      // Render alphabetically grouped countries
+      Object.keys(groupedCountries).sort().forEach(letter => {
+        const section = document.createElement('div');
+        section.className = 'alphabet-section';
+        
+        const header = document.createElement('div');
+        header.className = 'alphabet-header';
+        header.textContent = letter;
+        section.appendChild(header);
+        
+        groupedCountries[letter].forEach(item => {
+          const countryItem = document.createElement('div');
+          countryItem.className = 'country-item';
+          countryItem.addEventListener('click', () => toggleItemDetails(item));
+          
+          const nameDiv = document.createElement('div');
+          nameDiv.className = 'country-name';
+          if (item.flag) {
+            const flagImg = document.createElement('img');
+            flagImg.src = item.flag;
+            flagImg.alt = `${item.name} flag`;
+            flagImg.className = 'country-flag';
+            nameDiv.appendChild(flagImg);
+          }
+          nameDiv.appendChild(document.createTextNode(item.name));
+          
+          const timeDiv = document.createElement('div');
+          timeDiv.className = 'country-time';
+          timeDiv.textContent = getItemDisplayTime(item);
+          
+          countryItem.appendChild(nameDiv);
+          countryItem.appendChild(timeDiv);
+          section.appendChild(countryItem);
+        });
+        
+        countryList.appendChild(section);
       });
     }
 
@@ -896,9 +993,9 @@
     function filterItems() {
       if (!isUserFiltering()) {
         countryList.innerHTML = `
-          <p style="margin:0.5rem 0; opacity:0.8;">
-            Type in the search box or use the filters to see items.
-          </p>`;
+          <div class="no-results">
+            Type in the search box or use the filters to see countries.
+          </div>`;
         countryDetails.style.display = "none";
         return;
       }
@@ -984,7 +1081,7 @@
       try {
         const list = document.getElementById("countryList");
         // Only show a loading message if the user already interacted
-        if (list && isUserFiltering()) list.innerHTML = "<p>Loading items…</p>";
+        if (list && isUserFiltering()) list.innerHTML = "<div class='no-results'>Loading items…</div>";
 
         const res = await fetch(API_ITEMS_URL, { cache: "no-store" });
         const data = await res.json();
@@ -994,12 +1091,12 @@
           filterItems();         // will still show hint until user interacts
           updatePrayerDisplay(); // schedule continues to work
         } else {
-          if (list && isUserFiltering()) list.innerHTML = "<p>Could not load items</p>";
+          if (list && isUserFiltering()) list.innerHTML = "<div class='no-results'>Could not load items</div>";
           console.warn("Unexpected /api/items response:", data);
         }
       } catch (e) {
         const list = document.getElementById("countryList");
-        if (list && isUserFiltering()) list.innerHTML = "<p>Failed to load items</p>";
+        if (list && isUserFiltering()) list.innerHTML = "<div class='no-results'>Failed to load items</div>";
         console.warn("Failed to load items:", e);
       }
     }

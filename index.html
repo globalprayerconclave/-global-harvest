@@ -76,14 +76,45 @@
       transform: translateY(-2px);
     }
 
+    /* UPDATED: contemporary colors + typography for description ONLY (no layout changes) */
     .description {
+      /* subtle layered gradient with soft violet/indigo accents */
+      background:
+        radial-gradient(1200px 280px at 0% 0%, rgba(124, 58, 237, 0.06), transparent 60%),
+        radial-gradient(1000px 240px at 100% 100%, rgba(99, 102, 241, 0.06), transparent 60%),
+        linear-gradient(180deg, #faf8ff 0%, #f6f7ff 100%);
+      /* refined type (safe fallbacks) */
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: #0f172a;   /* slate-900 */
+      line-height: 1.7;
+      /* preserve your original layout properties */
       text-align: justify;
       padding: 0.5rem;
-      background: #f8fafc;
-      font-size: 0.95rem;
-      color: #444;
       overflow: hidden;
     }
+    .description h3 {
+      margin: 0 0 0.25rem 0;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background-image: linear-gradient(90deg, #7c3aed, #2563eb); /* violet → blue */
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important; /* overrides inline purple to show gradient text */
+    }
+    .description p {
+      color: #334155;        /* slate-700 */
+      font-size: 1.05rem;    /* subtle polish */
+      letter-spacing: 0.1px; /* micro-tracking */
+      text-align: justify;
+      margin: 0 0 0.8rem 0;
+    }
+    .description a {
+      color: #6d28d9; /* violet-700 */
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+    }
+    /* END description polish */
 
     .controls {
       display: flex;
@@ -285,6 +316,179 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.2);
     }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    /* UPDATED: Contemporary styling for Immediate Prayer Needs */
+    #urgentRequests {
+      max-width: 800px;
+      margin: 1rem auto;
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: 
+        radial-gradient(600px 140px at 0% 0%, rgba(220, 38, 38, 0.08), transparent 70%),
+        radial-gradient(600px 140px at 100% 100%, rgba(244, 63, 94, 0.08), transparent 70%),
+        linear-gradient(180deg, #fff8f8 0%, #fff1f2 100%);
+      border-left: 6px solid #dc2626;
+      box-shadow: 
+        0 6px 20px rgba(220, 38, 38, 0.12),
+        0 0 0 1px rgba(220, 38, 38, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #urgentRequests::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    #urgentRequests h3 {
+      margin: 0 0 1rem 0;
+      color: #991b1b;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    #urgentRequests h3::before {
+      content: '❗';
+      font-size: 1.2em;
+    }
+    
+    #urgentList {
+      position: relative;
+      z-index: 1;
+    }
+    
+    #urgentList > div {
+      margin-bottom: 1rem;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 12px;
+      border-left: 4px solid #ef4444;
+      box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.05),
+        0 1px 0 rgba(255, 255, 255, 0.8) inset;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    #urgentList > div:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    }
+    
+    #urgentList > div:last-child {
+      margin-bottom: 0;
+    }
+    
+    #urgentList strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #dc2626;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    #urgentList div div {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    
+    #urgentList a {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.4rem 0.8rem;
+      background: rgba(220, 38, 38, 0.1);
+      color: #dc2626;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+    }
+    
+    #urgentList a:hover {
+      background: rgba(220, 38, 38, 0.15);
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+    }
+    
+    #urgentList a + a {
+      margin-left: 0.5rem;
+    }
+
+    /* Palette helpers */ 
+    :root{ 
+      --gh-slate-900:#0f172a; 
+      --gh-slate-700:#334155; 
+      --gh-violet:#7c3aed; 
+      --gh-indigo:#2563eb; 
+      --gh-amber:#f59e0b; 
+      --gh-rose:#dc2626; 
+    } 
+    
+    /* Currently Praying: soft indigo/violet wash */
+    .current-prayer{ 
+      background: radial-gradient(500px 120px at 0% 0%, rgba(124,58,237,0.10), transparent 70%), radial-gradient(600px 140px at 100% 100%, rgba(37,99,235,0.10), transparent 70%), linear-gradient(180deg,#eef2ff 0%,#f5f3ff 100%) !important; 
+      color:var(--gh-slate-900); 
+      border-left:4px solid var(--gh-violet); 
+      box-shadow:0 6px 20px rgba(79,70,229,0.12); 
+    } 
+    
+    /* Upcoming: warm, subtle amber texture + refined chips */
+    .upcoming-prayers{ 
+      background: radial-gradient(600px 140px at 0% 100%, rgba(245,158,11,0.08), transparent 70%), radial-gradient(600px 140px at 100% 0%, rgba(251,191,36,0.08), transparent 70%), linear-gradient(180deg,#fffbeb 0%,#fff7ed 100%) !important; 
+      border-left:4px solid var(--gh-amber); 
+      box-shadow:0 6px 20px rgba(245,158,11,0.10); 
+    } 
+    
+    .upcoming-prayer-item{ 
+      background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); 
+      border:1px solid rgba(15,23,42,0.06); 
+      box-shadow:0 1px 2px rgba(15,23,42,0.06); 
+    } 
+    
+    /* Search area (controls): soft glassy panel and polished inputs */
+    .controls{ 
+      background: radial-gradient(700px 160px at 0% 0%, rgba(124,58,237,0.05), transparent 70%), radial-gradient(700px 160px at 100% 100%, rgba(37,99,235,0.05), transparent 70%), linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%); 
+      border-top:1px solid rgba(15,23,42,0.05); 
+      border-bottom:1px solid rgba(15,23,42,0.05); 
+    } 
+    
+    .controls input, .controls select{ 
+      background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); 
+      border:1px solid rgba(99,102,241,0.25); 
+      box-shadow: 0 1px 2px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.6); 
+      color:var(--gh-slate-900); 
+      transition:box-shadow .2s ease, border-color .2s ease, background .2s ease; 
+    } 
+    
+    .controls input::placeholder{ 
+      color:#64748b; 
+    } 
+    
+    .controls input:focus, .controls select:focus{ 
+      outline:none; 
+      border-color:var(--gh-violet); 
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.20), 0 1px 2px rgba(15,23,42,0.06); 
+      background:linear-gradient(180deg,#ffffff 0%,#f9fafb 100%); 
+    }
   </style>
 </head>
 <body>
@@ -351,12 +555,6 @@
     <p>As we continue to expand and mobilize prayer across the world, we need your support. Whether it's 1000 Rupees or 10,000 a month, your contribution makes a tremendous difference.</p>
     <p>Our estimated budget for the rest of the year 2025 is approximately 40 Lakhs Indian Rupees, and your prayerful giving will help sustain and grow this vital prayer ministry.</p>
 
-    <h3 style="color: darkviolet;">How to Contribute</h3>
-    <ul>
-      <li><strong>UPI:</strong> <a href="upi://pay?pa=jimglobaltask@okhdfcbank&pn=Global%20Prayer%20Conclave&mc=0000&tid=YOUR_TRANSACTION_ID&tr=YOUR_TRANSACTION_REF&tn=Donation%20for%20Prayer%20Ministry">Click here to pay</a></li>
-      <li>Bank Transfers: Global Associates, Acc.No: 18200 2000 03958, Federal Bank, IFSC: FDRL0001820</li>
-    </ul>
-
     <h3 style="color: darkviolet;">Book a Prayer Slot</h3>
     <p>Interested in joining our prayer leadership, suggesting a nation/topic, or collaborating with us?</p>
     <ul>
@@ -383,14 +581,14 @@
     <p>Jacob experiences profound loneliness after losing his support system, realizing that true companionship comes from God alone. In moments of isolation, we often learn that people may fail us, but it is God who remains steadfast and supportive through our darkest times. Trusting in God, especially during our lowest points, enables us to find strength and solace.</p>
     <p>Jacob's story illustrates the power of perseverance in seeking God's blessings, as demonstrated when he insists, 'I will not let you go unless you bless me.' He learns that true blessings come from God rather than through deceit, and his determination is evident in his commitment to work hard for Rachel. Ultimately, his struggles lead to God renaming him Israel, symbolizing his transformation through persistence.</p>
     <p>Through Jacob's struggle with God, he received a new identity as Israel, symbolizing the transformation that occurs when one is determined to seek God's touch and blessings. This message encourages listeners to seek their own new identities after facing shame and disappointment, with the promise that they will be lifted and blessed by God.</p>
-    <p>God offers a new identity, transforming Jacob into Israel, and desires an intimate relationship with each of us. He encourages us to move beyond referring to Him through others like Abraham and Isaac, urging us to call Him 'my God' and embrace a personal connection. This closeness, built on humility and personal reflection, can profoundly impact our lives, just as Jacob’s blessing did despite his limp.</p>
+    <p>God offers a new identity, transforming Jacob into Israel, and desires an intimate relationship with each of us. He encourages us to move beyond referring to Him through others like Abraham and Isaac, urging us to call Him 'my God' and embrace a personal connection. This closeness, built on humility and personal reflection, can profoundly impact our lives, just as Jacob's blessing did despite his limp.</p>
     <p>The dislocation of Jacob's hip symbolized his humility and deepened his relationship with God; rather than questioning God's actions, he accepted his pain with a joyful heart, recognizing the blessings that accompanied his struggles. This example from Jacob's life encourages us to embrace humility and seek an intimate, personal relationship with God, demonstrating determination even in hardship.</p>
     <p>𝒥𝐼𝑀</p>
     <div class="video-container">
       <iframe width="560" height="315" src="https://www.youtube.com/embed/yVD9Pje2yVs?si=LFI0XBGRzcUn1Zkx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
     <p style="margin-top: 1rem;">
-      𝓜𝓪𝔂 𝔂𝓸𝓾𝓻 𝓱𝓮𝓪𝓻𝓽 𝓫𝓮 𝓯𝓲𝓵𝓵𝓮𝓭 𝔀𝓲𝓽𝓱 𝓹𝓮𝓪𝓬𝓮 𝓪𝓷𝓭 𝓻𝓮𝓷𝓮𝔀𝓮𝓭 𝓼𝓽𝓻𝓮𝝰𝓰𝓽𝓱 𝓪𝓼 𝔂𝓸𝓾 𝔀𝓪𝓵𝓴 𝔀𝓲𝓽𝓱 𝓗𝓲𝓶 𝓽𝓸𝓭𝓪𝔂.
+      𝓜𝓪𝔂 𝔂𝓸𝓾𝓻 𝓱𝓮𝓪𝓻𝓽 𝓫𝓮 𝓯𝓲𝓵𝓵𝓮𝓭 𝔀𝓲𝓽𝓱 𝓹𝓮𝓪𝓬𝓮 𝓪𝓷𝓭 𝓻𝓮𝓷𝓮𝔀𝓮𝓭 𝓼𝓽𝓻𝓮𝓷𝓰𝓽𝓱 𝓪𝓼 𝔂𝓸𝓾 𝔀𝓪𝓵𝓴 𝔀𝓲𝓽𝓱 𝓗𝓲𝓶 𝓽𝓸𝓭𝓪𝔂.
     </p>
     <div class="contact-info">
       <p>Blessings from the Global Harvest Team <span class="emoji">🙏</span></p>
@@ -409,9 +607,9 @@
     </div>
   </section>
 
-  <!-- URGENT PRAYER REQUESTS -->
-  <section id="urgentRequests" style="max-width:800px;margin:1rem auto;padding:0.75rem 1rem;background:skyblue;border-radius:12px;border:1px solid #f87171;">
-    <h3 style="margin:0 0 0.5rem 0;color:#b91c1c;">Immediate Prayer Needs</h3>
+  <!-- UPDATED: Immediate Prayer Needs with contemporary styling -->
+  <section id="urgentRequests">
+    <h3>Immediate Prayer Needs</h3>
     <div id="urgentList">Loading urgent requests...</div>
   </section>
 
@@ -486,11 +684,11 @@
         }
         container.innerHTML = urgentRequestsData.map(req => {
           const linksHtml = (req.links || []).map(l => {
-            return `<a href="${l.url}" target="_blank" rel="noopener" style="display:block;margin-top:6px;color:#2563eb;text-decoration:underline;">${l.text}</a>`;
+            return `<a href="${l.url}" target="_blank" rel="noopener">${l.text}</a>`;
           }).join('');
-          return `<div style="margin-bottom:10px;padding:10px;background:#fff;border-left:4px solid #dc2626;border-radius:6px;">
-                    <strong style="display:block;margin-bottom:6px;">${req.title}</strong>
-                    <div style="font-size:0.95rem;color:#333;">${req.description}</div>
+          return `<div>
+                    <strong>${req.title}</strong>
+                    <div>${req.description}</div>
                     ${linksHtml}
                   </div>`;
         }).join('');

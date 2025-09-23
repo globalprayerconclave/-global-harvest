@@ -76,14 +76,45 @@
       transform: translateY(-2px);
     }
 
+    /* UPDATED: contemporary colors + typography for description ONLY (no layout changes) */
     .description {
+      /* subtle layered gradient with soft violet/indigo accents */
+      background:
+        radial-gradient(1200px 280px at 0% 0%, rgba(124, 58, 237, 0.06), transparent 60%),
+        radial-gradient(1000px 240px at 100% 100%, rgba(99, 102, 241, 0.06), transparent 60%),
+        linear-gradient(180deg, #faf8ff 0%, #f6f7ff 100%);
+      /* refined type (safe fallbacks) */
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: #0f172a;   /* slate-900 */
+      line-height: 1.7;
+      /* preserve your original layout properties */
       text-align: justify;
       padding: 0.5rem;
-      background: #f8fafc;
-      font-size: 0.95rem;
-      color: #444;
       overflow: hidden;
     }
+    .description h3 {
+      margin: 0 0 0.25rem 0;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background-image: linear-gradient(90deg, #7c3aed, #2563eb); /* violet → blue */
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important; /* overrides inline purple to show gradient text */
+    }
+    .description p {
+      color: #334155;        /* slate-700 */
+      font-size: 1.05rem;    /* subtle polish */
+      letter-spacing: 0.1px; /* micro-tracking */
+      text-align: justify;
+      margin: 0 0 0.8rem 0;
+    }
+    .description a {
+      color: #6d28d9; /* violet-700 */
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+    }
+    /* END description polish */
 
     .controls {
       display: flex;

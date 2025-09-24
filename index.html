@@ -831,32 +831,67 @@
     // Now API-driven
     const prayerItems = []; // filled from API
 
-    function parsePrayerSlot(item) {
+    // UPDATED: Function to convert IST time to user's local time
+    function convertISTtoLocal(dayOfWeek, startTime, durationMinutes = 60) {
       try {
-        const { dayOfWeek, startTime, durationMinutes } = item;
-        const [hour, minute] = startTime.split(':').map(Number);
-        const now = moment.tz("Asia/Kolkata");
+        // Map day names to numbers (0=Sunday, 1=Monday, etc.)
         const dayMap = {
           "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
           "Thursday": 4, "Friday": 5, "Saturday": 6
         };
+        
         const targetDayIndex = dayMap[dayOfWeek];
-        let scheduledMoment = now.clone()
+        const [hour, minute] = startTime.split(':').map(Number);
+        
+        // Create moment in IST timezone for the scheduled time
+        const now = moment.tz("Asia/Kolkata");
+        let scheduledMomentIST = now.clone()
           .startOf('week')
           .add(targetDayIndex, 'days')
           .hour(hour)
           .minute(minute)
-          .second(0).millisecond(0);
-        const scheduledEndMomentCandidate = scheduledMoment.clone().add(durationMinutes || 60, 'minutes');
+          .second(0)
+          .millisecond(0);
+        
+        // Check if this time has already passed this week
+        const scheduledEndMomentCandidate = scheduledMomentIST.clone().add(durationMinutes, 'minutes');
         if (scheduledEndMomentCandidate.isBefore(now)) {
-          scheduledMoment.add(1, 'week');
+          scheduledMomentIST.add(1, 'week');
         }
-        const finalStartMoment = scheduledMoment;
-        const finalEndMoment = finalStartMoment.clone().add(durationMinutes || 60, 'minutes');
-        return { ...item, startMoment: finalStartMoment, endMoment: finalEndMoment };
+        
+        // Convert to user's local timezone
+        const localStart = scheduledMomentIST.clone().tz(moment.tz.guess());
+        const localEnd = localStart.clone().add(durationMinutes, 'minutes');
+        
+        return {
+          start: localStart,
+          end: localEnd,
+          displayTime: `${localStart.format("ddd, hh:mm A")} - ${localEnd.format("hh:mm A")}`,
+          displayTimeWithZone: `${localStart.format("ddd, hh:mm A")} - ${localEnd.format("hh:mm A z")}`
+        };
+      } catch (e) {
+        console.error("Error converting IST to local time:", e);
+        return {
+          start: moment(),
+          end: moment().add(1, 'hour'),
+          displayTime: "Time conversion error",
+          displayTimeWithZone: "Time conversion error"
+        };
+      }
+    }
+
+    function parsePrayerSlot(item) {
+      try {
+        const { dayOfWeek, startTime, durationMinutes } = item;
+        const timeConversion = convertISTtoLocal(dayOfWeek, startTime, durationMinutes || 60);
+        return { 
+          ...item, 
+          startMoment: timeConversion.start, 
+          endMoment: timeConversion.end 
+        };
       } catch (e) {
         console.error("Error in parsePrayerSlot for item:", item?.name, e);
-        const defaultStart = moment.tz("Asia/Kolkata").add(1, 'hour');
+        const defaultStart = moment();
         return { ...item, startMoment: defaultStart, endMoment: defaultStart.clone().add(30, 'minutes') };
       }
     }
@@ -872,22 +907,10 @@
 
     let activeItemId = null;
 
+    // UPDATED: Function to get display time in user's local timezone
     function getItemDisplayTime(item) {
-      const [hour, minute] = (item.startTime || "00:00").split(':').map(Number);
-      const dayMap = {
-        "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
-        "Thursday": 4, "Friday": 5, "Saturday": 6
-      };
-      const targetDayIndex = dayMap[item.dayOfWeek || "Sunday"];
-      let scheduledMomentIST = moment.tz("Asia/Kolkata")
-        .startOf('week')
-        .add(targetDayIndex, 'days')
-        .hour(hour)
-        .minute(minute)
-        .second(0).millisecond(0);
-      const localTime = scheduledMomentIST.clone().tz(moment.tz.guess());
-      const format = dayOfWeekFilter.value === "all" ? "ddd, hh:mm A" : "hh:mm A";
-      return localTime.format(format);
+      const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+      return timeConversion.displayTime;
     }
 
     // UPDATED: Function to render items based on selected filter
@@ -926,7 +949,7 @@
         return;
       }
 
-      // Sort by time
+      // Sort by IST time (original schedule time) to maintain proper order
       dayItems.sort((a, b) => {
         const timeA = a.startTime || "00:00";
         const timeB = b.startTime || "00:00";
@@ -938,13 +961,15 @@
       
       const dayHeader = document.createElement('div');
       dayHeader.className = 'day-header';
-      dayHeader.textContent = `${selectedDay} Schedule`;
+      dayHeader.textContent = `${selectedDay} Schedule (Displayed in your local time)`;
       daySection.appendChild(dayHeader);
 
-      // Group by time slots
+      // Group by time slots (using local time for display)
       const timeSlots = {};
       dayItems.forEach(item => {
-        const timeKey = item.startTime || "00:00";
+        const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+        const timeKey = timeConversion.start.format("HH:mm"); // Use 24-hour format for grouping
+        
         if (!timeSlots[timeKey]) {
           timeSlots[timeKey] = [];
         }
@@ -959,14 +984,16 @@
         const timeHeader = document.createElement('div');
         timeHeader.className = 'time-header';
         
-        const [hour, minute] = timeKey.split(':');
-        const timeMoment = moment().hour(parseInt(hour)).minute(parseInt(minute));
-        timeHeader.textContent = `🕒 ${timeMoment.format('hh:mm A')}`;
+        // Convert 24-hour format back to display format
+        const timeMoment = moment(timeKey, "HH:mm");
+        timeHeader.textContent = `🕒 ${timeMoment.format('hh:mm A')} (Your Local Time)`;
         
         timeSlotDiv.appendChild(timeHeader);
 
         // Render items in this time slot
         timeSlots[timeKey].forEach(item => {
+          const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+          
           const itemDiv = document.createElement('div');
           itemDiv.className = item.type === 'country' ? 'country-item' : 'topic-item';
           itemDiv.addEventListener('click', () => toggleItemDetails(item));
@@ -989,12 +1016,13 @@
           
           nameDiv.appendChild(document.createTextNode(item.name));
           
-          const typeBadge = document.createElement('div');
-          typeBadge.className = item.type === 'country' ? 'country-time' : 'topic-time';
-          typeBadge.textContent = item.type === 'country' ? 'Country' : 'Topic';
+          const timeDiv = document.createElement('div');
+          timeDiv.className = item.type === 'country' ? 'country-time' : 'topic-time';
+          timeDiv.textContent = timeConversion.displayTime;
+          timeDiv.title = `Original IST time: ${item.dayOfWeek}, ${item.startTime}`;
           
           itemDiv.appendChild(nameDiv);
-          itemDiv.appendChild(typeBadge);
+          itemDiv.appendChild(timeDiv);
           timeSlotDiv.appendChild(itemDiv);
         });
 
@@ -1037,6 +1065,8 @@
         section.appendChild(header);
         
         groupedCountries[letter].forEach(item => {
+          const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+          
           const countryItem = document.createElement('div');
           countryItem.className = 'country-item';
           countryItem.addEventListener('click', () => toggleItemDetails(item));
@@ -1054,7 +1084,8 @@
           
           const timeDiv = document.createElement('div');
           timeDiv.className = 'country-time';
-          timeDiv.textContent = getItemDisplayTime(item);
+          timeDiv.textContent = timeConversion.displayTime;
+          timeDiv.title = `Original IST time: ${item.dayOfWeek}, ${item.startTime}`;
           
           countryItem.appendChild(nameDiv);
           countryItem.appendChild(timeDiv);
@@ -1068,6 +1099,8 @@
     // Render simple view for other cases
     function renderSimpleView(data) {
       data.forEach((item) => {
+        const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+        
         const itemDiv = document.createElement('div');
         itemDiv.className = item.type === 'country' ? 'country-item' : 'topic-item';
         itemDiv.addEventListener('click', () => toggleItemDetails(item));
@@ -1092,7 +1125,8 @@
         
         const timeDiv = document.createElement('div');
         timeDiv.className = item.type === 'country' ? 'country-time' : 'topic-time';
-        timeDiv.textContent = getItemDisplayTime(item);
+        timeDiv.textContent = timeConversion.displayTime;
+        timeDiv.title = `Original IST time: ${item.dayOfWeek}, ${item.startTime}`;
         
         itemDiv.appendChild(nameDiv);
         itemDiv.appendChild(timeDiv);
@@ -1100,17 +1134,10 @@
       });
     }
 
-    function convertISTtoLocalForDetails(dayOfWeek, startTime, durationMinutes, format = "ddd, hh:mm A") {
-      try {
-        const tempItem = { dayOfWeek, startTime, durationMinutes, name: "Temporary Item", type: "temp"};
-        const { startMoment, endMoment } = parsePrayerSlot(tempItem);
-        const localStart = startMoment.clone().tz(moment.tz.guess());
-        const localEnd = endMoment.clone().tz(moment.tz.guess());
-        return `${localStart.format(format)} - ${localEnd.format("hh:mm A z")}`;
-      } catch (e) {
-        console.error("Error converting time for details:", e);
-        return `${dayOfWeek}, ${startTime} IST`;
-      }
+    // UPDATED: Function to convert time for details view
+    function convertISTtoLocalForDetails(dayOfWeek, startTime, durationMinutes) {
+      const timeConversion = convertISTtoLocal(dayOfWeek, startTime, durationMinutes);
+      return timeConversion.displayTimeWithZone;
     }
 
     function safe(val, fallback = "—") {
@@ -1124,6 +1151,7 @@
         return;
       }
       let detailsHTML = "";
+      // UPDATED: Use local time conversion for details
       const prayerScheduleLocalDisplay = convertISTtoLocalForDetails(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
 
       if (item.type === "country") {
@@ -1141,7 +1169,8 @@
             <p><strong>Least Reached People Groups:</strong> ${safe(item.leastReachedPeopleGroups)}</p>
             <p><strong>Largest Religion:</strong> ${safe(item.largestReligion)}</p>
             <p><strong>Christian Population:</strong> ${safe(item.christianPopulation)}</p>
-            <p><strong>Prayer Slot:</strong> ${prayerScheduleLocalDisplay}</p>
+            <p><strong>Prayer Slot (Your Local Time):</strong> ${prayerScheduleLocalDisplay}</p>
+            <p><strong>Original IST Time:</strong> ${item.dayOfWeek}, ${item.startTime} IST</p>
             <p><strong>Region:</strong> ${safe(item.region)}</p>
           </div>
           <iframe 
@@ -1156,7 +1185,8 @@
           <h2>${safe(item.icon, "📌")} ${safe(item.name)}</h2>
           <div class="info">
             <p><strong>Description:</strong> ${safe(item.description, "—")}</p>
-            <p><strong>Prayer Slot:</strong> ${prayerScheduleLocalDisplay}</p>
+            <p><strong>Prayer Slot (Your Local Time):</strong> ${prayerScheduleLocalDisplay}</p>
+            <p><strong>Original IST Time:</strong> ${item.dayOfWeek}, ${item.startTime} IST</p>
           </div>
         `;
       }
@@ -1242,7 +1272,7 @@
     dayOfWeekFilter.addEventListener("change", filterItems);
 
     function updatePrayerDisplay() {
-      const now = moment.tz("Asia/Kolkata");
+      const now = moment();
       const allUpcomingPrayerSlots = prayerItems.map(item => parsePrayerSlot(item));
       const relevantSlots = allUpcomingPrayerSlots
         .filter(slot => slot.endMoment.isAfter(now))
@@ -1262,7 +1292,7 @@
           return `${typeLabel} ${item.name}`.trim();
         }).join(', ');
         const latestCurrentEndTimeDisplay = currentPrayers.reduce((latest, item) => moment.max(latest, item.endMoment), now);
-        currentPrayer.innerHTML = `<strong>Currently Praying:</strong> ${currentPrayerNames} (Until ${latestCurrentEndTimeDisplay.clone().tz(moment.tz.guess()).format("hh:mm A z")})`;
+        currentPrayer.innerHTML = `<strong>Currently Praying:</strong> ${currentPrayerNames} (Until ${latestCurrentEndTimeDisplay.format("hh:mm A z")})`;
       } else {
         currentPrayer.innerHTML = "<strong>Currently Praying:</strong> No active prayer session";
       }
@@ -1273,9 +1303,7 @@
       if (upcomingPrayers.length > 0) {
         const upcomingHtml = upcomingPrayers.map(item => {
           const typeLabel = item.type === "country" ? "" : (item.icon || "");
-          const localStart = item.startMoment.clone().tz(moment.tz.guess());
-          const localEnd = item.endMoment.clone().tz(moment.tz.guess());
-          return `<div class="upcoming-prayer-item">${typeLabel} ${item.name} (${localStart.format("ddd, hh:mm A")} - ${localEnd.format("hh:mm A z")})</div>`;
+          return `<div class="upcoming-prayer-item">${typeLabel} ${item.name} (${item.startMoment.format("ddd, hh:mm A")} - ${item.endMoment.format("hh:mm A z")})</div>`;
         }).join('');
         scrollingUpcoming.innerHTML = upcomingHtml;
       } else {

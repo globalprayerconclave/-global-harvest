@@ -76,18 +76,15 @@
       transform: translateY(-2px);
     }
 
-    /* UPDATED: contemporary colors + typography for description ONLY (no layout changes) */
+    /* Updated contemporary color texture for description only */
     .description {
-      /* subtle layered gradient with soft violet/indigo accents */
       background:
         radial-gradient(1200px 280px at 0% 0%, rgba(124, 58, 237, 0.06), transparent 60%),
         radial-gradient(1000px 240px at 100% 100%, rgba(99, 102, 241, 0.06), transparent 60%),
         linear-gradient(180deg, #faf8ff 0%, #f6f7ff 100%);
-      /* refined type (safe fallbacks) */
       font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      color: #0f172a;   /* slate-900 */
+      color: #0f172a;
       line-height: 1.7;
-      /* preserve your original layout properties */
       text-align: justify;
       padding: 0.5rem;
       overflow: hidden;
@@ -96,32 +93,37 @@
       margin: 0 0 0.25rem 0;
       font-weight: 800;
       letter-spacing: 0.02em;
-      background-image: linear-gradient(90deg, #7c3aed, #2563eb); /* violet → blue */
+      background-image: linear-gradient(90deg, #7c3aed, #2563eb);
       -webkit-background-clip: text;
       background-clip: text;
-      color: transparent !important; /* overrides inline purple to show gradient text */
+      color: transparent !important;
     }
     .description p {
-      color: #334155;        /* slate-700 */
-      font-size: 1.05rem;    /* subtle polish */
-      letter-spacing: 0.1px; /* micro-tracking */
+      color: #334155;
+      font-size: 1.05rem;
+      letter-spacing: 0.1px;
       text-align: justify;
       margin: 0 0 0.8rem 0;
     }
     .description a {
-      color: #6d28d9; /* violet-700 */
+      color: #6d28d9;
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1.5px;
     }
-    /* END description polish */
 
+    /* Controls color texture */
     .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       justify-content: center;
-      background: #f1f5f9;
+      background:
+        radial-gradient(700px 160px at 0% 0%, rgba(124,58,237,0.05), transparent 70%),
+        radial-gradient(700px 160px at 100% 100%, rgba(37,99,235,0.05), transparent 70%),
+        linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);
+      border-top:1px solid rgba(15,23,42,0.05);
+      border-bottom:1px solid rgba(15,23,42,0.05);
       padding: 1rem;
     }
 
@@ -129,11 +131,23 @@
     .controls select {
       padding: 0.5rem;
       border-radius: 8px;
-      border: 1px solid #d1d5db;
+      background: linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);
+      border: 1px solid rgba(99,102,241,0.25);
+      box-shadow: 0 1px 2px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
       min-width: 200px;
+      color:#0f172a;
+      transition:box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .controls input::placeholder { color:#64748b; }
+    .controls input:focus,
+    .controls select:focus {
+      outline:none;
+      border-color:#7c3aed;
+      box-shadow:0 0 0 3px rgba(124,58,237,0.20), 0 1px 2px rgba(15,23,42,0.06);
+      background:linear-gradient(180deg,#ffffff 0%,#f9fafb 100%);
     }
 
-    /* UPDATED: Country list now displays vertically with better styling */
+    /* Country/topic list (your enhanced styles kept) */
     .country-list {
       display: flex;
       flex-direction: column;
@@ -142,8 +156,7 @@
       max-width: 800px;
       margin: 0 auto;
     }
-
-    .country-item {
+    .country-item, .topic-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -152,17 +165,14 @@
       padding: 1rem 1.25rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       transition: all 0.3s ease;
-      border-left: 4px solid #2563eb;
       cursor: pointer;
     }
+    .country-item { border-left: 4px solid #2563eb; }
+    .topic-item   { border-left: 4px solid #0d9488; }
+    .country-item:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); background: #f8fafc; }
+    .topic-item:hover   { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); background: #f0fdf4; }
 
-    .country-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-      background: #f8fafc;
-    }
-
-    .country-name {
+    .country-name, .topic-name {
       font-weight: 600;
       font-size: 1.1rem;
       color: #1e293b;
@@ -170,17 +180,10 @@
       align-items: center;
       gap: 0.5rem;
     }
+    .country-flag { width: 24px; height: 16px; border-radius: 2px; object-fit: cover; }
+    .topic-icon { font-size: 1.2rem; }
 
-    .country-flag {
-      width: 24px;
-      height: 16px;
-      border-radius: 2px;
-      object-fit: cover;
-    }
-
-    .country-time {
-      background: #e0f2fe;
-      color: #0369a1;
+    .country-time, .topic-time {
       padding: 0.4rem 0.8rem;
       border-radius: 6px;
       font-size: 0.9rem;
@@ -188,49 +191,8 @@
       min-width: 140px;
       text-align: center;
     }
-
-    .topic-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
-      border-left: 4px solid #0d9488;
-      cursor: pointer;
-    }
-
-    .topic-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-      background: #f0fdf4;
-    }
-
-    .topic-name {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #1e293b;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .topic-icon {
-      font-size: 1.2rem;
-    }
-
-    .topic-time {
-      background: #ccfbf1;
-      color: #0d9488;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      min-width: 140px;
-      text-align: center;
-    }
+    .country-time { background: #e0f2fe; color: #0369a1; }
+    .topic-time   { background: #ccfbf1; color: #0d9488; }
 
     .no-results {
       text-align: center;
@@ -239,51 +201,20 @@
       font-style: italic;
     }
 
-    .alphabet-section {
-      margin-top: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
+    .alphabet-section { margin-top: 1.5rem; margin-bottom: 0.5rem; }
     .alphabet-header {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #7c3aed;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e2e8f0;
-      margin-bottom: 0.5rem;
+      font-size: 1.3rem; font-weight: 700; color: #7c3aed;
+      padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; margin-bottom: 0.5rem;
     }
 
-    .day-section {
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-
+    .day-section { margin-top: 2rem; margin-bottom: 1rem; }
     .day-header {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #7c3aed;
-      padding: 0.75rem 1rem;
-      background: linear-gradient(90deg, #f3e8ff, #e9d5ff);
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border-left: 4px solid #7c3aed;
+      font-size: 1.4rem; font-weight: 700; color: #7c3aed;
+      padding: 0.75rem 1rem; background: linear-gradient(90deg, #f3e8ff, #e9d5ff);
+      border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #7c3aed;
     }
-
-    .time-slot {
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: #f8fafc;
-      border-radius: 8px;
-    }
-
-    .time-header {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #374151;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #e5e7eb;
-    }
+    .time-slot { margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 8px; }
+    .time-header { font-size: 1.1rem; font-weight: 600; color: #374151; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; }
 
     .country-details {
       max-width: 800px;
@@ -300,70 +231,24 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .country-details img {
-      width: 40px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }
+    .country-details img { width: 40px; border-radius: 4px; border: 1px solid #ddd; }
     .info p { margin: 0.3rem 0; }
 
-    .prayer-category {
-      margin-top: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+    .prayer-category { margin-top: 1rem; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
     .prayer-category h3 {
-      margin: 0;
-      padding: 0.5rem 1rem;
-      color: #1d4ed8;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-      background: #f1f5f9;
+      margin: 0; padding: 0.5rem 1rem; color: #1d4ed8; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; user-select: none; background: #f1f5f9;
     }
     .prayer-category h3 span { transition: transform 0.3s ease; display: inline-block; }
-    .prayer-category ul {
-      margin: 0;
-      padding: 0.5rem 1.5rem;
-      list-style: disc;
-      display: none;
-    }
+    .prayer-category ul { margin: 0; padding: 0.5rem 1.5rem; list-style: disc; display: none; }
     .prayer-category ul li { margin-bottom: 0.3rem; font-size: 1rem; color: #444; }
 
-    .schedule-type {
-      background: #f1f5f9;
-      padding: 0.5rem 1rem;
-      text-align: center;
-      font-weight: bold;
-      border-radius: 8px;
-      margin: 0.5rem auto;
-      max-width: 800px;
-    }
+    .schedule-type { background: #f1f5f9; padding: 0.5rem 1rem; text-align: center; font-weight: bold; border-radius: 8px; margin: 0.5rem auto; max-width: 800px; }
     .topic-prayer { background: #e0f2fe; border-left: 4px solid #0284c7; }
     .country-prayer { background: #f0fdf4; border-left: 4px solid #16a34a; }
 
-    .upcoming-prayers-container {
-      display: flex;
-      flex-wrap: wrap;
-      overflow-x: visible;
-      padding-bottom: 5px;
-      animation: none;
-      min-width: unset;
-    }
-    .upcoming-prayer-item {
-      flex: 0 0 auto;
-      padding: 0.3rem 0.8rem;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      background: #fff;
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      white-space: nowrap;
-      font-size: 0.9em;
-    }
+    .upcoming-prayers-container { display: flex; flex-wrap: wrap; overflow-x: visible; padding-bottom: 5px; animation: none; min-width: unset; }
+    .upcoming-prayer-item { flex: 0 0 auto; padding: 0.3rem 0.8rem; margin-right: 0.5rem; margin-bottom: 0.5rem; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); white-space: nowrap; font-size: 0.9em; }
     #scrollingUpcoming { display: flex; animation: none; }
     .upcoming-prayers-wrapper { overflow: visible; white-space: normal; animation: none; }
 
@@ -401,78 +286,77 @@
       opacity: 0.5; transform: rotate(20deg);
       pointer-events: none;
     }
-    #aboutUsDetails h2, #dailyReflectionDetails h2 {
-      margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1rem;
-    }
+    #aboutUsDetails h2, #dailyReflectionDetails h2 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1rem; }
     #dailyReflectionDetails h2 {
-      color: #6A0DAD; font-size: 1.5rem; text-align: center;
-      border-bottom: 2px solid #FFD700; padding-bottom: 1rem; margin-bottom: 1.8rem;
-      font-family: "Georgia", serif; text-shadow: 1px 1px 3px rgba(106, 13, 173, 0.2);
+      color: #6A0DAD; font-size: 1.5rem; text-align: center; border-bottom: 2px solid #FFD700; padding-bottom: 1rem; margin-bottom: 1.8rem; font-family: "Georgia", serif; text-shadow: 1px 1px 3px rgba(106, 13, 173, 0.2);
     }
     #aboutUsDetails p, #dailyReflectionDetails p { line-height: 1.6; margin-bottom: 1rem; }
     #dailyReflectionDetails p { font-size: 1.15rem; text-align: justify; color: #333333; margin-bottom: 1.2rem; }
-    #dailyReflectionDetails p strong {
-      color: #4C1D95; font-style: italic; font-weight: 700; display: block; margin-top: 0.5rem;
-      font-size: 1.25rem; text-shadow: 0.5px 0.5px 2px rgba(76, 29, 149, 0.2);
-    }
+    #dailyReflectionDetails p strong { color: #4C1D95; font-style: italic; font-weight: 700; display: block; margin-top: 0.5rem; font-size: 1.25rem; text-shadow: 0.5px 0.5px 2px rgba(76, 29, 149, 0.2); }
 
     #aboutUsDetails ul, #dailyReflectionDetails ul { list-style: none; padding: 0; margin-bottom: 1rem; }
     #aboutUsDetails ul li, #dailyReflectionDetails ul li { margin-bottom: 0.5rem; }
     #aboutUsDetails ul li a, #dailyReflectionDetails ul li a { color: #2563eb; text-decoration: none; }
     #aboutUsDetails ul li a:hover, #dailyReflectionDetails ul li a:hover { text-decoration: underline; }
 
-    #aboutUsDetails .contact-info, #dailyReflectionDetails .contact-info {
-      margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem;
-    }
+    #aboutUsDetails .contact-info, #dailyReflectionDetails .contact-info { margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem; }
     #dailyReflectionDetails .contact-info { border-top: 1px dashed #FFD700; padding-top: 1.5rem; margin-top: 2rem; }
-    #aboutUsDetails .contact-info p, #dailyReflectionDetails .contact-info p {
-      font-size: 0.9rem; color: #555; text-align: center;
-    }
+    #aboutUsDetails .contact-info p, #dailyReflectionDetails .contact-info p { font-size: 0.9rem; color: #555; text-align: center; }
     #dailyReflectionDetails .contact-info p .emoji { font-size: 1.2em; vertical-align: middle; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .video-container {
       position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;
       background: #000; margin-bottom: 1.5rem; border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.2);
     }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* UPDATED: Contemporary styling for Immediate Prayer Needs with expandable functionality */
+    /* Current/Upcoming/Immediate textures */
+    .current-prayer{
+      background:
+        radial-gradient(500px 120px at 0% 0%, rgba(124,58,237,0.10), transparent 70%),
+        radial-gradient(600px 140px at 100% 100%, rgba(37,99,235,0.10), transparent 70%),
+        linear-gradient(180deg,#eef2ff 0%,#f5f3ff 100%) !important;
+      color:#0f172a;
+      border-left:4px solid #7c3aed;
+      box-shadow:0 6px 20px rgba(79,70,229,0.12);
+    }
+    .upcoming-prayers{
+      background:
+        radial-gradient(600px 140px at 0% 100%, rgba(245,158,11,0.08), transparent 70%),
+        radial-gradient(600px 140px at 100% 0%, rgba(251,191,36,0.08), transparent 70%),
+        linear-gradient(180deg,#fffbeb 0%,#fff7ed 100%) !important;
+      border-left:4px solid #f59e0b;
+      box-shadow:0 6px 20px rgba(245,158,11,0.10);
+    }
+    .upcoming-prayer-item{
+      background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);
+      border:1px solid rgba(15,23,42,0.06);
+      box-shadow:0 1px 2px rgba(15,23,42,0.06);
+    }
+
+    /* Immediate Prayer Needs panel (visual only; markup below) */
     #urgentRequests {
       max-width: 800px;
       margin: 1rem auto;
       padding: 1.5rem;
       border-radius: 16px;
-      background: 
+      background:
         radial-gradient(600px 140px at 0% 0%, rgba(220, 38, 38, 0.08), transparent 70%),
         radial-gradient(600px 140px at 100% 100%, rgba(244, 63, 94, 0.08), transparent 70%),
         linear-gradient(180deg, #fff8f8 0%, #fff1f2 100%);
       border-left: 6px solid #dc2626;
-      box-shadow: 
+      box-shadow:
         0 6px 20px rgba(220, 38, 38, 0.12),
         0 0 0 1px rgba(220, 38, 38, 0.08);
       position: relative;
       overflow: hidden;
     }
-    
-    #urgentRequests::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    
     #urgentRequests h3 {
       margin: 0 0 1rem 0;
       color: #991b1b;
@@ -484,186 +368,46 @@
       align-items: center;
       gap: 0.5rem;
     }
-    
     #urgentRequests h3::before {
       content: '❗';
       font-size: 1.2em;
     }
-    
-    #urgentList {
-      position: relative;
-      z-index: 1;
-    }
-    
+    #urgentList { position: relative; z-index: 1; }
     .urgent-item {
       margin-bottom: 1rem;
       background: rgba(255, 255, 255, 0.85);
       border-radius: 12px;
       border-left: 4px solid #ef4444;
-      box-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.05),
-        0 1px 0 rgba(255, 255, 255, 0.8) inset;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       overflow: hidden;
     }
-    
-    .urgent-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.08),
-        0 1px 0 rgba(255, 255, 255, 0.8) inset;
-    }
-    
-    .urgent-item:last-child {
-      margin-bottom: 0;
-    }
-    
+    .urgent-item:last-child { margin-bottom: 0; }
+    .urgent-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 1px 0 rgba(255,255,255,0.8) inset; }
     .urgent-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem;
-      cursor: pointer;
-      user-select: none;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem; cursor: pointer; user-select: none;
     }
-    
-    .urgent-header strong {
-      color: #dc2626;
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin: 0;
-    }
-    
-    .urgent-toggle {
-      font-size: 1.2rem;
-      color: #dc2626;
-      transition: transform 0.3s ease;
-    }
-    
-    .urgent-content {
-      padding: 0 1.25rem 1.25rem;
-      display: none;
-    }
-    
-    .urgent-content.expanded {
-      display: block;
-    }
-    
-    .urgent-description {
-      font-size: 0.95rem;
-      color: #444;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-    }
-    
-    .prayer-points {
-      margin-top: 1rem;
-      border-top: 1px solid rgba(220, 38, 38, 0.1);
-      padding-top: 1rem;
-    }
-    
-    .prayer-points h4 {
-      margin: 0 0 0.5rem 0;
-      color: #991b1b;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    
-    .prayer-points ul {
-      margin: 0;
-      padding-left: 1.2rem;
-    }
-    
-    .prayer-points li {
-      margin-bottom: 0.5rem;
-      color: #555;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    
-    .urgent-links {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-    
+    .urgent-header strong { color:#dc2626; font-size: 1.1rem; font-weight: 600; margin: 0; }
+    .urgent-toggle { font-size: 1.2rem; color:#dc2626; transition: transform 0.3s ease; }
+    .urgent-content { padding: 0 1.25rem 1.25rem; display: none; }
+    .urgent-content.expanded { display: block; }
+    .urgent-description { font-size: 0.95rem; color: #444; line-height: 1.5; margin-bottom: 1rem; }
+    .prayer-points { margin-top: 1rem; border-top: 1px solid rgba(220, 38, 38, 0.1); padding-top: 1rem; }
+    .prayer-points h4 { margin: 0 0 0.5rem 0; color: #991b1b; font-size: 1rem; font-weight: 600; }
+    .prayer-points ul { margin: 0; padding-left: 1.2rem; }
+    .prayer-points li { margin-bottom: 0.5rem; color: #555; font-size: 0.9rem; line-height: 1.4; }
+    .urgent-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
     .urgent-links a {
-      display: inline-block;
-      padding: 0.4rem 0.8rem;
-      background: rgba(220, 38, 38, 0.1);
-      color: #dc2626;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
+      display: inline-block; padding: 0.4rem 0.8rem;
+      background: rgba(220, 38, 38, 0.1); color: #dc2626; text-decoration: none;
+      border-radius: 6px; font-size: 0.9rem; font-weight: 500; transition: all 0.2s ease;
       border: 1px solid rgba(220, 38, 38, 0.2);
     }
-    
     .urgent-links a:hover {
-      background: rgba(220, 38, 38, 0.15);
-      text-decoration: none;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
-    }
-
-    /* Palette helpers */ 
-    :root{ 
-      --gh-slate-900:#0f172a; 
-      --gh-slate-700:#334155; 
-      --gh-violet:#7c3aed; 
-      --gh-indigo:#2563eb; 
-      --gh-amber:#f59e0b; 
-      --gh-rose:#dc2626; 
-    } 
-    
-    /* Currently Praying: soft indigo/violet wash */
-    .current-prayer{ 
-      background: radial-gradient(500px 120px at 0% 0%, rgba(124,58,237,0.10), transparent 70%), radial-gradient(600px 140px at 100% 100%, rgba(37,99,235,0.10), transparent 70%), linear-gradient(180deg,#eef2ff 0%,#f5f3ff 100%) !important; 
-      color:var(--gh-slate-900); 
-      border-left:4px solid var(--gh-violet); 
-      box-shadow:0 6px 20px rgba(79,70,229,0.12); 
-    } 
-    
-    /* Upcoming: warm, subtle amber texture + refined chips */
-    .upcoming-prayers{ 
-      background: radial-gradient(600px 140px at 0% 100%, rgba(245,158,11,0.08), transparent 70%), radial-gradient(600px 140px at 100% 0%, rgba(251,191,36,0.08), transparent 70%), linear-gradient(180deg,#fffbeb 0%,#fff7ed 100%) !important; 
-      border-left:4px solid var(--gh-amber); 
-      box-shadow:0 6px 20px rgba(245,158,11,0.10); 
-    } 
-    
-    .upcoming-prayer-item{ 
-      background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); 
-      border:1px solid rgba(15,23,42,0.06); 
-      box-shadow:0 1px 2px rgba(15,23,42,0.06); 
-    } 
-    
-    /* Search area (controls): soft glassy panel and polished inputs */
-    .controls{ 
-      background: radial-gradient(700px 160px at 0% 0%, rgba(124,58,237,0.05), transparent 70%), radial-gradient(700px 160px at 100% 100%, rgba(37,99,235,0.05), transparent 70%), linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%); 
-      border-top:1px solid rgba(15,23,42,0.05); 
-      border-bottom:1px solid rgba(15,23,42,0.05); 
-    } 
-    
-    .controls input, .controls select{ 
-      background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); 
-      border:1px solid rgba(99,102,241,0.25); 
-      box-shadow: 0 1px 2px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.6); 
-      color:var(--gh-slate-900); 
-      transition:box-shadow .2s ease, border-color .2s ease, background .2s ease; 
-    } 
-    
-    .controls input::placeholder{ 
-      color:#64748b; 
-    } 
-    
-    .controls input:focus, .controls select:focus{ 
-      outline:none; 
-      border-color:var(--gh-violet); 
-      box-shadow: 0 0 0 3px rgba(124,58,237,0.20), 0 1px 2px rgba(15,23,42,0.06); 
-      background:linear-gradient(180deg,#ffffff 0%,#f9fafb 100%); 
+      background: rgba(220, 38, 38, 0.15); text-decoration: none;
+      transform: translateY(-1px); box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
     }
   </style>
 </head>
@@ -757,14 +501,14 @@
     <p>Jacob experiences profound loneliness after losing his support system, realizing that true companionship comes from God alone. In moments of isolation, we often learn that people may fail us, but it is God who remains steadfast and supportive through our darkest times. Trusting in God, especially during our lowest points, enables us to find strength and solace.</p>
     <p>Jacob's story illustrates the power of perseverance in seeking God's blessings, as demonstrated when he insists, 'I will not let you go unless you bless me.' He learns that true blessings come from God rather than through deceit, and his determination is evident in his commitment to work hard for Rachel. Ultimately, his struggles lead to God renaming him Israel, symbolizing his transformation through persistence.</p>
     <p>Through Jacob's struggle with God, he received a new identity as Israel, symbolizing the transformation that occurs when one is determined to seek God's touch and blessings. This message encourages listeners to seek their own new identities after facing shame and disappointment, with the promise that they will be lifted and blessed by God.</p>
-    <p>God offers a new identity, transforming Jacob into Israel, and desires an intimate relationship with each of us. He encourages us to move beyond referring to Him through others like Abraham and Isaac, urging us to call Him 'my God' and embrace a personal connection. This closeness, built on humility and personal reflection, can profoundly impact our lives, just as Jacob's blessing did despite his limp.</p>
+    <p>God offers a new identity, transforming Jacob into Israel, and desires an intimate relationship with each of us. He encourages us to move beyond referring to Him through others like Abraham and Isaac, urging us to call Him 'my God' and embrace a personal connection. This closeness, built on humility and personal reflection, can profoundly impact our lives, just as Jacob’s blessing did despite his limp.</p>
     <p>The dislocation of Jacob's hip symbolized his humility and deepened his relationship with God; rather than questioning God's actions, he accepted his pain with a joyful heart, recognizing the blessings that accompanied his struggles. This example from Jacob's life encourages us to embrace humility and seek an intimate, personal relationship with God, demonstrating determination even in hardship.</p>
     <p>𝒥𝐼𝑀</p>
     <div class="video-container">
       <iframe width="560" height="315" src="https://www.youtube.com/embed/yVD9Pje2yVs?si=LFI0XBGRzcUn1Zkx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
     <p style="margin-top: 1rem;">
-      𝓜𝓪𝔂 𝔂𝓸𝓾𝓻 𝓱𝓮𝓪𝓻𝓽 𝓫𝓮 𝓯𝓲𝓵𝓵𝓮𝓭 𝔀𝓲𝓽𝓱 𝓹𝓮𝓪𝓬𝓮 𝓪𝓷𝓭 𝓻𝓮𝓷𝓮𝔀𝓮𝓭 𝓼𝓽𝓻𝓮𝓷𝓰𝓽𝓱 𝓪𝓼 𝔂𝓸𝓾 𝔀𝓪𝓵𝓴 𝔀𝓲𝓽𝓱 𝓗𝓲𝓶 𝓽𝓸𝓭𝓪𝔂.
+      𝓜𝓪𝔂 𝔂𝓸𝓾𝓻 𝓱𝓮𝓪𝓻𝓽 𝓫𝓮 𝓯𝓲𝓵𝓵𝓮𝓭 𝔀𝓲𝓽𝓱 𝓹𝓮𝓪𝓬𝓮 𝓪𝓷𝓭 𝓻𝓮𝓷𝓮𝔀𝓮𝓭 𝓼𝓽𝓻𝓮𝝰𝓰𝓽𝓱 𝓪𝓼 𝔂𝓸𝓾 𝔀𝓪𝓵𝓴 𝔀𝓲𝓽𝓱 𝓗𝓲𝓶 𝓽𝓸𝓭𝓪𝔂.
     </p>
     <div class="contact-info">
       <p>Blessings from the Global Harvest Team <span class="emoji">🙏</span></p>
@@ -783,7 +527,7 @@
     </div>
   </section>
 
-  <!-- UPDATED: Immediate Prayer Needs with expandable sections and prayer points -->
+  <!-- Immediate Prayer Needs -->
   <section id="urgentRequests">
     <h3>Immediate Prayer Needs</h3>
     <div id="urgentList">Loading urgent requests...</div>
@@ -830,82 +574,50 @@
   <section class="country-list" id="countryList"></section>
   <section class="country-details" id="countryDetails" style="display:none;"></section>
 
-  <!-- Urgent requests (static for now) - UPDATED WITH EXPANDABLE FUNCTIONALITY -->
+  <!-- Urgent requests: fetch from API and render (expandable) -->
   <script>
     (function(){
-      const urgentRequestsData = [
-        {
-          title: "Earthquake — Afghanistan",
-          description: "A strong earthquake has affected communities. Pray for rescue teams, survivors, and relief efforts.",
-          prayerPoints: [
-            "Pray for the safety and effectiveness of rescue teams working in difficult conditions.",
-            "Pray for comfort and healing for those who have lost loved ones or been injured.",
-            "Pray for adequate shelter, food, and medical supplies to reach affected communities.",
-            "Pray for wisdom for government and aid organizations in coordinating relief efforts.",
-            "Pray for spiritual comfort and hope to be found amidst the devastation."
-          ],
-          links: [
-            { text: "Watch: Earthquake Hits Afghanistan", url: "https://www.youtube.com/watch?v=FLriPFyEe4A" },
-            { text: "Read: Relief Updates", url: "https://example.com/earthquake-relief" }
-          ]
-        },
-        {
-          title: "Conflict / Displacement — Myanmar",
-          description: "Rising conflict has displaced families. Pray for peace, protection, and humanitarian access.",
-          prayerPoints: [
-            "Pray for an immediate ceasefire and peaceful resolution to conflicts.",
-            "Pray for protection over civilians caught in conflict zones.",
-            "Pray for adequate humanitarian aid to reach those in need.",
-            "Pray for wisdom and compassion for leaders on all sides of the conflict.",
-            "Pray for reconciliation and healing in divided communities."
-          ],
-          links: [
-            { text: "Watch: Situation Update", url: "https://www.youtube.com/watch?v=EXAMPLE2" },
-            { text: "Read: Humanitarian Report", url: "https://example.com/conflict-update" }
-          ]
-        }
-      ];
-      
-      function renderUrgentRequests() {
+      const API_URGENT_URL = "https://prayer-api-go1t.onrender.com/api/urgent?active=true&limit=20";
+
+      function renderUrgentRequests(items) {
         const container = document.getElementById('urgentList');
         if (!container) return;
-        
-        if (!urgentRequestsData || urgentRequestsData.length === 0) {
+
+        if (!items || !items.length) {
           container.innerHTML = "<p style='margin:0'>No urgent requests at this time.</p>";
           return;
         }
-        
-        container.innerHTML = urgentRequestsData.map(req => {
-          const prayerPointsHtml = (req.prayerPoints || []).map(point => 
-            `<li>${point}</li>`
-          ).join('');
-          
-          const linksHtml = (req.links || []).map(l => {
-            return `<a href="${l.url}" target="_blank" rel="noopener">${l.text}</a>`;
-          }).join('');
-          
-          return `<div class="urgent-item">
-                    <div class="urgent-header">
-                      <strong>${req.title}</strong>
-                      <span class="urgent-toggle">+</span>
-                    </div>
-                    <div class="urgent-content">
-                      <div class="urgent-description">${req.description}</div>
-                      <div class="prayer-points">
-                        <h4>Prayer Points:</h4>
-                        <ul>${prayerPointsHtml}</ul>
-                      </div>
-                      <div class="urgent-links">${linksHtml}</div>
-                    </div>
-                  </div>`;
+
+        container.innerHTML = items.map(req => {
+          const prayerPoints = Array.isArray(req.prayerPoints) ? req.prayerPoints : [];
+          const links = Array.isArray(req.links) ? req.links : [];
+
+          const prayerPointsHtml = prayerPoints.map(p => `<li>${p}</li>`).join('');
+          const linksHtml = links.map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.text}</a>`).join('');
+
+          return `
+            <div class="urgent-item">
+              <div class="urgent-header">
+                <strong>${req.title}</strong>
+                <span class="urgent-toggle">+</span>
+              </div>
+              <div class="urgent-content">
+                <div class="urgent-description">${req.description || ""}</div>
+                ${prayerPoints.length ? `
+                  <div class="prayer-points">
+                    <h4>Prayer Points:</h4>
+                    <ul>${prayerPointsHtml}</ul>
+                  </div>` : ``}
+                ${links.length ? `<div class="urgent-links">${linksHtml}</div>` : ``}
+              </div>
+            </div>`;
         }).join('');
-        
-        // Add click handlers for expandable functionality
+
+        // Expand/collapse handlers
         document.querySelectorAll('.urgent-header').forEach(header => {
           header.addEventListener('click', function() {
             const content = this.nextElementSibling;
             const toggle = this.querySelector('.urgent-toggle');
-            
             if (content.classList.contains('expanded')) {
               content.classList.remove('expanded');
               toggle.textContent = '+';
@@ -916,8 +628,25 @@
           });
         });
       }
-      
-      renderUrgentRequests();
+
+      async function loadUrgentRequests() {
+        const container = document.getElementById('urgentList');
+        try {
+          container.innerHTML = "Loading urgent requests...";
+          const res = await fetch(API_URGENT_URL, { cache: 'no-store' });
+          const data = await res.json();
+          if (data && data.ok) {
+            renderUrgentRequests(data.items || []);
+          } else {
+            container.innerHTML = "<p>Could not load urgent requests.</p>";
+          }
+        } catch (e) {
+          console.warn("Urgent fetch error:", e);
+          container.innerHTML = "<p>Failed to load urgent requests.</p>";
+        }
+      }
+
+      loadUrgentRequests();
     })();
   </script>
 
@@ -925,43 +654,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
 
-  <!-- Main app logic -->
+  <!-- Main app logic (unchanged, API-driven items) -->
   <script>
-    // Now API-driven
     const prayerItems = []; // filled from API
 
-    // UPDATED: Function to convert IST time to user's local time
+    // Convert IST to user's local
     function convertISTtoLocal(dayOfWeek, startTime, durationMinutes = 60) {
       try {
-        // Map day names to numbers (0=Sunday, 1=Monday, etc.)
-        const dayMap = {
-          "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
-          "Thursday": 4, "Friday": 5, "Saturday": 6
-        };
-        
+        const dayMap = { "Sunday":0,"Monday":1,"Tuesday":2,"Wednesday":3,"Thursday":4,"Friday":5,"Saturday":6 };
         const targetDayIndex = dayMap[dayOfWeek];
         const [hour, minute] = startTime.split(':').map(Number);
-        
-        // Create moment in IST timezone for the scheduled time
         const now = moment.tz("Asia/Kolkata");
-        let scheduledMomentIST = now.clone()
-          .startOf('week')
-          .add(targetDayIndex, 'days')
-          .hour(hour)
-          .minute(minute)
-          .second(0)
-          .millisecond(0);
-        
-        // Check if this time has already passed this week
+        let scheduledMomentIST = now.clone().startOf('week').add(targetDayIndex, 'days').hour(hour).minute(minute).second(0).millisecond(0);
         const scheduledEndMomentCandidate = scheduledMomentIST.clone().add(durationMinutes, 'minutes');
-        if (scheduledEndMomentCandidate.isBefore(now)) {
-          scheduledMomentIST.add(1, 'week');
-        }
-        
-        // Convert to user's local timezone
+        if (scheduledEndMomentCandidate.isBefore(now)) scheduledMomentIST.add(1,'week');
         const localStart = scheduledMomentIST.clone().tz(moment.tz.guess());
         const localEnd = localStart.clone().add(durationMinutes, 'minutes');
-        
         return {
           start: localStart,
           end: localEnd,
@@ -969,29 +677,19 @@
           displayTimeWithZone: `${localStart.format("ddd, hh:mm A")} - ${localEnd.format("hh:mm A z")}`
         };
       } catch (e) {
-        console.error("Error converting IST to local time:", e);
-        return {
-          start: moment(),
-          end: moment().add(1, 'hour'),
-          displayTime: "Time conversion error",
-          displayTimeWithZone: "Time conversion error"
-        };
+        console.error("IST->Local error:", e);
+        return { start: moment(), end: moment().add(1,'hour'), displayTime:"", displayTimeWithZone:"" };
       }
     }
 
     function parsePrayerSlot(item) {
       try {
-        const { dayOfWeek, startTime, durationMinutes } = item;
-        const timeConversion = convertISTtoLocal(dayOfWeek, startTime, durationMinutes || 60);
-        return { 
-          ...item, 
-          startMoment: timeConversion.start, 
-          endMoment: timeConversion.end 
-        };
+        const t = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+        return { ...item, startMoment: t.start, endMoment: t.end };
       } catch (e) {
-        console.error("Error in parsePrayerSlot for item:", item?.name, e);
-        const defaultStart = moment();
-        return { ...item, startMoment: defaultStart, endMoment: defaultStart.clone().add(30, 'minutes') };
+        console.error("parsePrayerSlot error:", e);
+        const d = moment();
+        return { ...item, startMoment: d, endMoment: d.clone().add(30,'minutes') };
       }
     }
 
@@ -1006,17 +704,15 @@
 
     let activeItemId = null;
 
-    // UPDATED: Function to get display time in user's local timezone
     function getItemDisplayTime(item) {
-      const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
-      return timeConversion.displayTime;
+      const t = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+      return t.displayTime;
     }
 
-    // UPDATED: Function to render items based on selected filter
+    // Views
     function renderItemList(data) {
       countryList.innerHTML = "";
       countryDetails.style.display = "none";
-      
       if (!data || data.length === 0) {
         countryList.innerHTML = "<div class='no-results'>No items found matching your criteria.</div>";
         return;
@@ -1025,101 +721,70 @@
       const selectedDay = dayOfWeekFilter.value;
       const selectedType = typeFilter.value;
 
-      // If a specific day is selected, show items grouped by time slots
       if (selectedDay !== "all") {
         renderDayView(data, selectedDay);
-      } 
-      // If countries are selected, show alphabetically
-      else if (selectedType === "country" || (selectedType === "all" && selectedDay === "all")) {
+      } else if (selectedType === "country" || (selectedType === "all" && selectedDay === "all")) {
         renderCountryView(data);
-      }
-      // For other cases, show simple list
-      else {
+      } else {
         renderSimpleView(data);
       }
     }
 
-    // Render day view with time slots
     function renderDayView(data, selectedDay) {
       const dayItems = data.filter(item => item.dayOfWeek === selectedDay);
-      
       if (dayItems.length === 0) {
         countryList.innerHTML = `<div class='no-results'>No items scheduled for ${selectedDay}.</div>`;
         return;
       }
-
-      // Sort by IST time (original schedule time) to maintain proper order
-      dayItems.sort((a, b) => {
-        const timeA = a.startTime || "00:00";
-        const timeB = b.startTime || "00:00";
-        return timeA.localeCompare(timeB);
-      });
+      dayItems.sort((a,b) => (a.startTime||"00:00").localeCompare(b.startTime||"00:00"));
 
       const daySection = document.createElement('div');
       daySection.className = 'day-section';
-      
       const dayHeader = document.createElement('div');
       dayHeader.className = 'day-header';
       dayHeader.textContent = `${selectedDay} Schedule (Displayed in your local time)`;
       daySection.appendChild(dayHeader);
 
-      // Group by time slots (using local time for display)
       const timeSlots = {};
       dayItems.forEach(item => {
-        const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
-        const timeKey = timeConversion.start.format("HH:mm"); // Use 24-hour format for grouping
-        
-        if (!timeSlots[timeKey]) {
-          timeSlots[timeKey] = [];
-        }
+        const t = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+        const timeKey = t.start.format("HH:mm");
+        if (!timeSlots[timeKey]) timeSlots[timeKey] = [];
         timeSlots[timeKey].push(item);
       });
 
-      // Render each time slot
       Object.keys(timeSlots).sort().forEach(timeKey => {
         const timeSlotDiv = document.createElement('div');
         timeSlotDiv.className = 'time-slot';
-        
         const timeHeader = document.createElement('div');
         timeHeader.className = 'time-header';
-        
-        // Convert 24-hour format back to display format
-        const timeMoment = moment(timeKey, "HH:mm");
-        timeHeader.textContent = `🕒 ${timeMoment.format('hh:mm A')} (Your Local Time)`;
-        
+        timeHeader.textContent = `🕒 ${moment(timeKey,"HH:mm").format('hh:mm A')} (Your Local Time)`;
         timeSlotDiv.appendChild(timeHeader);
 
-        // Render items in this time slot
         timeSlots[timeKey].forEach(item => {
-          const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
-          
+          const t = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
           const itemDiv = document.createElement('div');
           itemDiv.className = item.type === 'country' ? 'country-item' : 'topic-item';
           itemDiv.addEventListener('click', () => toggleItemDetails(item));
-          
+
           const nameDiv = document.createElement('div');
           nameDiv.className = item.type === 'country' ? 'country-name' : 'topic-name';
-          
           if (item.type === 'country' && item.flag) {
             const flagImg = document.createElement('img');
-            flagImg.src = item.flag;
-            flagImg.alt = `${item.name} flag`;
-            flagImg.className = 'country-flag';
+            flagImg.src = item.flag; flagImg.alt = `${item.name} flag`; flagImg.className = 'country-flag';
             nameDiv.appendChild(flagImg);
           } else if (item.type === 'topic' && item.icon) {
             const iconSpan = document.createElement('span');
-            iconSpan.className = 'topic-icon';
-            iconSpan.textContent = item.icon;
+            iconSpan.className = 'topic-icon'; iconSpan.textContent = item.icon;
             nameDiv.appendChild(iconSpan);
           }
-          
           nameDiv.appendChild(document.createTextNode(item.name));
-          
+
           const timeDiv = document.createElement('div');
           timeDiv.className = item.type === 'country' ? 'country-time' : 'topic-time';
-          timeDiv.textContent = timeConversion.displayTime;
+          timeDiv.textContent = t.displayTime;
           timeDiv.title = `Original IST time: ${item.dayOfWeek}, ${item.startTime}`;
-          
+
           itemDiv.appendChild(nameDiv);
           itemDiv.appendChild(timeDiv);
           timeSlotDiv.appendChild(itemDiv);
@@ -1131,117 +796,84 @@
       countryList.appendChild(daySection);
     }
 
-    // Render country view alphabetically
     function renderCountryView(data) {
       const countries = data.filter(item => item.type === "country");
-      
       if (countries.length === 0) {
         countryList.innerHTML = "<div class='no-results'>No countries found matching your criteria.</div>";
         return;
       }
-
-      // Sort countries alphabetically
-      countries.sort((a, b) => a.name.localeCompare(b.name));
-      
-      // Group by first letter
-      const groupedCountries = {};
-      countries.forEach(country => {
-        const firstLetter = country.name.charAt(0).toUpperCase();
-        if (!groupedCountries[firstLetter]) {
-          groupedCountries[firstLetter] = [];
-        }
-        groupedCountries[firstLetter].push(country);
+      countries.sort((a,b) => a.name.localeCompare(b.name));
+      const grouped = {};
+      countries.forEach(c => {
+        const L = c.name.charAt(0).toUpperCase();
+        if (!grouped[L]) grouped[L] = [];
+        grouped[L].push(c);
       });
 
-      // Render alphabetically grouped countries
-      Object.keys(groupedCountries).sort().forEach(letter => {
+      Object.keys(grouped).sort().forEach(letter => {
         const section = document.createElement('div');
         section.className = 'alphabet-section';
-        
         const header = document.createElement('div');
         header.className = 'alphabet-header';
         header.textContent = letter;
         section.appendChild(header);
-        
-        groupedCountries[letter].forEach(item => {
-          const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
-          
-          const countryItem = document.createElement('div');
-          countryItem.className = 'country-item';
-          countryItem.addEventListener('click', () => toggleItemDetails(item));
-          
+
+        grouped[letter].forEach(item => {
+          const t = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+          const div = document.createElement('div');
+          div.className = 'country-item';
+          div.addEventListener('click', () => toggleItemDetails(item));
           const nameDiv = document.createElement('div');
           nameDiv.className = 'country-name';
           if (item.flag) {
             const flagImg = document.createElement('img');
-            flagImg.src = item.flag;
-            flagImg.alt = `${item.name} flag`;
-            flagImg.className = 'country-flag';
+            flagImg.src = item.flag; flagImg.alt = `${item.name} flag`; flagImg.className = 'country-flag';
             nameDiv.appendChild(flagImg);
           }
           nameDiv.appendChild(document.createTextNode(item.name));
-          
           const timeDiv = document.createElement('div');
           timeDiv.className = 'country-time';
-          timeDiv.textContent = timeConversion.displayTime;
+          timeDiv.textContent = t.displayTime;
           timeDiv.title = `Original IST time: ${item.dayOfWeek}, ${item.startTime}`;
-          
-          countryItem.appendChild(nameDiv);
-          countryItem.appendChild(timeDiv);
-          section.appendChild(countryItem);
+          div.appendChild(nameDiv); div.appendChild(timeDiv); section.appendChild(div);
         });
-        
+
         countryList.appendChild(section);
       });
     }
 
-    // Render simple view for other cases
     function renderSimpleView(data) {
-      data.forEach((item) => {
-        const timeConversion = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
-        
-        const itemDiv = document.createElement('div');
-        itemDiv.className = item.type === 'country' ? 'country-item' : 'topic-item';
-        itemDiv.addEventListener('click', () => toggleItemDetails(item));
-        
+      data.forEach(item => {
+        const t = convertISTtoLocal(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+        const div = document.createElement('div');
+        div.className = item.type === 'country' ? 'country-item' : 'topic-item';
+        div.addEventListener('click', () => toggleItemDetails(item));
         const nameDiv = document.createElement('div');
         nameDiv.className = item.type === 'country' ? 'country-name' : 'topic-name';
-        
         if (item.type === 'country' && item.flag) {
           const flagImg = document.createElement('img');
-          flagImg.src = item.flag;
-          flagImg.alt = `${item.name} flag`;
-          flagImg.className = 'country-flag';
+          flagImg.src = item.flag; flagImg.alt = `${item.name} flag`; flagImg.className = 'country-flag';
           nameDiv.appendChild(flagImg);
         } else if (item.type === 'topic' && item.icon) {
           const iconSpan = document.createElement('span');
-          iconSpan.className = 'topic-icon';
-          iconSpan.textContent = item.icon;
+          iconSpan.className = 'topic-icon'; iconSpan.textContent = item.icon;
           nameDiv.appendChild(iconSpan);
         }
-        
         nameDiv.appendChild(document.createTextNode(item.name));
-        
         const timeDiv = document.createElement('div');
         timeDiv.className = item.type === 'country' ? 'country-time' : 'topic-time';
-        timeDiv.textContent = timeConversion.displayTime;
+        timeDiv.textContent = t.displayTime;
         timeDiv.title = `Original IST time: ${item.dayOfWeek}, ${item.startTime}`;
-        
-        itemDiv.appendChild(nameDiv);
-        itemDiv.appendChild(timeDiv);
-        countryList.appendChild(itemDiv);
+        div.appendChild(nameDiv); div.appendChild(timeDiv); countryList.appendChild(div);
       });
     }
 
-    // UPDATED: Function to convert time for details view
     function convertISTtoLocalForDetails(dayOfWeek, startTime, durationMinutes) {
-      const timeConversion = convertISTtoLocal(dayOfWeek, startTime, durationMinutes);
-      return timeConversion.displayTimeWithZone;
+      const t = convertISTtoLocal(dayOfWeek, startTime, durationMinutes);
+      return t.displayTimeWithZone;
     }
 
-    function safe(val, fallback = "—") {
-      return (val === undefined || val === null || val === "") ? fallback : val;
-    }
+    function safe(v, f="—") { return (v===undefined || v===null || v==="") ? f : v; }
 
     function toggleItemDetails(item) {
       if (activeItemId === item.name) {
@@ -1249,12 +881,11 @@
         activeItemId = null;
         return;
       }
-      let detailsHTML = "";
-      // UPDATED: Use local time conversion for details
-      const prayerScheduleLocalDisplay = convertISTtoLocalForDetails(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+      const tDisplay = convertISTtoLocalForDetails(item.dayOfWeek, item.startTime, item.durationMinutes || 60);
+      let html = "";
 
       if (item.type === "country") {
-        detailsHTML = `
+        html = `
           <div class="schedule-type country-prayer">Country Prayer Focus</div>
           <h2>${item.flag ? `<img src="${item.flag}" alt="flag"/>` : ""} ${safe(item.name)}</h2>
           <div class="info">
@@ -1268,42 +899,37 @@
             <p><strong>Least Reached People Groups:</strong> ${safe(item.leastReachedPeopleGroups)}</p>
             <p><strong>Largest Religion:</strong> ${safe(item.largestReligion)}</p>
             <p><strong>Christian Population:</strong> ${safe(item.christianPopulation)}</p>
-            <p><strong>Prayer Slot (Your Local Time):</strong> ${prayerScheduleLocalDisplay}</p>
+            <p><strong>Prayer Slot (Your Local Time):</strong> ${tDisplay}</p>
             <p><strong>Original IST Time:</strong> ${item.dayOfWeek}, ${item.startTime} IST</p>
             <p><strong>Region:</strong> ${safe(item.region)}</p>
           </div>
-          <iframe 
-            width="100%" height="300" style="border:0; border-radius:8px; margin-top:1rem;"
-            src="https://www.google.com/maps?q=${encodeURIComponent(item.name)}&output=embed" 
-            allowfullscreen loading="lazy">
-          </iframe>
+          <iframe width="100%" height="300" style="border:0; border-radius:8px; margin-top:1rem;"
+            src="https://www.google.com/maps?q=${encodeURIComponent(item.name)}&output=embed"
+            allowfullscreen loading="lazy"></iframe>
         `;
       } else {
-        detailsHTML = `
+        html = `
           <div class="schedule-type topic-prayer">Topic Prayer Focus</div>
-          <h2>${safe(item.icon, "📌")} ${safe(item.name)}</h2>
+          <h2>${safe(item.icon,"📌")} ${safe(item.name)}</h2>
           <div class="info">
-            <p><strong>Description:</strong> ${safe(item.description, "—")}</p>
-            <p><strong>Prayer Slot (Your Local Time):</strong> ${prayerScheduleLocalDisplay}</p>
+            <p><strong>Description:</strong> ${safe(item.description,"—")}</p>
+            <p><strong>Prayer Slot (Your Local Time):</strong> ${tDisplay}</p>
             <p><strong>Original IST Time:</strong> ${item.dayOfWeek}, ${item.startTime} IST</p>
           </div>
         `;
       }
 
       if (Array.isArray(item.prayerPoints) && item.prayerPoints.length) {
-        item.prayerPoints.forEach((pp) => {
-          detailsHTML += `
+        item.prayerPoints.forEach(pp => {
+          html += `
             <div class="prayer-category">
               <h3>${safe(pp.category)} <span>&#9656;</span></h3>
-              <ul>
-                ${(pp.points || []).map(p => `<li>${p}</li>`).join("")}
-              </ul>
-            </div>
-          `;
+              <ul>${(pp.points||[]).map(p => `<li>${p}</li>`).join("")}</ul>
+            </div>`;
         });
       }
 
-      countryDetails.innerHTML = detailsHTML;
+      countryDetails.innerHTML = html;
       countryDetails.style.display = "block";
       countryDetails.scrollIntoView({ behavior: "smooth" });
       activeItemId = item.name;
@@ -1312,18 +938,12 @@
         h3.onclick = () => {
           const ul = h3.nextElementSibling;
           const arrow = h3.querySelector("span");
-          if (ul.style.display === "block") {
-            ul.style.display = "none";
-            arrow.style.transform = "rotate(0deg)";
-          } else {
-            ul.style.display = "block";
-            arrow.style.transform = "rotate(90deg)";
-          }
+          if (ul.style.display === "block") { ul.style.display = "none"; arrow.style.transform = "rotate(0deg)"; }
+          else { ul.style.display = "block"; arrow.style.transform = "rotate(90deg)"; }
         };
       });
     }
 
-    // Helper: has the user interacted with search/filters?
     function isUserFiltering() {
       return (
         (searchBox.value || "").trim().length > 0 ||
@@ -1333,32 +953,22 @@
       );
     }
 
-    // Show nothing (just a hint) until the user interacts
     function filterItems() {
       if (!isUserFiltering()) {
-        countryList.innerHTML = `
-          <div class="no-results">
-            Type in the search box or use the filters to see items.
-          </div>`;
+        countryList.innerHTML = `<div class="no-results">Type in the search box or use the filters to see items.</div>`;
         countryDetails.style.display = "none";
         return;
       }
-
       const searchTerm = (searchBox.value || "").toLowerCase();
       const selectedType = typeFilter.value;
       const selectedRegion = regionFilter.value;
       const selectedDay = dayOfWeekFilter.value;
 
-      const filtered = prayerItems.filter((item) => {
+      const filtered = prayerItems.filter(item => {
         const matchesType = selectedType === "all" || item.type === selectedType;
-        const matchesRegion =
-          selectedRegion === "all" ||
-          (item.type === "country" && item.region === selectedRegion) ||
-          item.type === "topic";
+        const matchesRegion = selectedRegion === "all" || (item.type === "country" && item.region === selectedRegion) || item.type === "topic";
         const matchesDay = selectedDay === "all" || item.dayOfWeek === selectedDay;
-        const matchesSearch =
-          item.name.toLowerCase().includes(searchTerm) ||
-          (item.description && item.description.toLowerCase().includes(searchTerm));
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm) || (item.description && item.description.toLowerCase().includes(searchTerm));
         return matchesType && matchesRegion && matchesDay && matchesSearch;
       });
 
@@ -1372,74 +982,57 @@
 
     function updatePrayerDisplay() {
       const now = moment();
-      const allUpcomingPrayerSlots = prayerItems.map(item => parsePrayerSlot(item));
-      const relevantSlots = allUpcomingPrayerSlots
-        .filter(slot => slot.endMoment.isAfter(now))
-        .sort((a, b) => a.startMoment - b.startMoment);
+      const slots = prayerItems.map(item => parsePrayerSlot(item));
+      const relevant = slots.filter(s => s.endMoment.isAfter(now)).sort((a,b) => a.startMoment - b.startMoment);
 
-      const currentPrayers = [];
-      let upcomingPrayers = [];
-
-      relevantSlots.forEach(slot => {
-        const isCurrentlyActive = now.isSameOrAfter(slot.startMoment) && now.isBefore(slot.endMoment);
-        if (isCurrentlyActive) currentPrayers.push(slot);
+      const current = [];
+      relevant.forEach(s => {
+        if (now.isSameOrAfter(s.startMoment) && now.isBefore(s.endMoment)) current.push(s);
       });
 
-      if (currentPrayers.length > 0) {
-        const currentPrayerNames = currentPrayers.map(item => {
-          const typeLabel = item.type === "country" ? "" : (item.icon || "");
-          return `${typeLabel} ${item.name}`.trim();
-        }).join(', ');
-        const latestCurrentEndTimeDisplay = currentPrayers.reduce((latest, item) => moment.max(latest, item.endMoment), now);
-        currentPrayer.innerHTML = `<strong>Currently Praying:</strong> ${currentPrayerNames} (Until ${latestCurrentEndTimeDisplay.format("hh:mm A z")})`;
+      if (current.length > 0) {
+        const names = current.map(i => `${i.type === "country" ? "" : (i.icon || "")} ${i.name}`.trim()).join(", ");
+        const latestEnd = current.reduce((latest, i) => moment.max(latest, i.endMoment), now);
+        currentPrayer.innerHTML = `<strong>Currently Praying:</strong> ${names} (Until ${latestEnd.format("hh:mm A z")})`;
       } else {
         currentPrayer.innerHTML = "<strong>Currently Praying:</strong> No active prayer session";
       }
 
-      upcomingPrayers = relevantSlots
-        .filter(slot => slot.startMoment.isSame(now, 'day') && slot.startMoment.isAfter(now));
-
-      if (upcomingPrayers.length > 0) {
-        const upcomingHtml = upcomingPrayers.map(item => {
-          const typeLabel = item.type === "country" ? "" : (item.icon || "");
-          return `<div class="upcoming-prayer-item">${typeLabel} ${item.name} (${item.startMoment.format("ddd, hh:mm A")} - ${item.endMoment.format("hh:mm A z")})</div>`;
-        }).join('');
-        scrollingUpcoming.innerHTML = upcomingHtml;
+      const upcoming = relevant.filter(s => s.startMoment.isSame(now, 'day') && s.startMoment.isAfter(now));
+      if (upcoming.length > 0) {
+        scrollingUpcoming.innerHTML = upcoming.map(i => {
+          return `<div class="upcoming-prayer-item">${i.type === "country" ? "" : (i.icon || "")} ${i.name} (${i.startMoment.format("ddd, hh:mm A")} - ${i.endMoment.format("hh:mm A z")})</div>`;
+        }).join("");
       } else {
         scrollingUpcoming.innerHTML = `<div class="upcoming-prayer-item">No upcoming prayer sessions</div>`;
       }
     }
 
-    // Initial: show hint, then schedule updates periodically
     filterItems();
     updatePrayerDisplay();
     setInterval(updatePrayerDisplay, 30000);
   </script>
 
-  <!-- Load items from API and refresh UI -->
+  <!-- Load items from API -->
   <script>
     const API_ITEMS_URL = "https://prayer-api-go1t.onrender.com/api/items";
     async function loadItemsFromApi() {
       try {
         const list = document.getElementById("countryList");
-        // Only show a loading message if the user already interacted
         if (list && isUserFiltering()) list.innerHTML = "<div class='no-results'>Loading items…</div>";
-
         const res = await fetch(API_ITEMS_URL, { cache: "no-store" });
         const data = await res.json();
         if (data.ok && Array.isArray(data.items)) {
           prayerItems.length = 0;
           prayerItems.push(...data.items);
-          filterItems();         // will still show hint until user interacts
-          updatePrayerDisplay(); // schedule continues to work
+          filterItems();
+          updatePrayerDisplay();
         } else {
           if (list && isUserFiltering()) list.innerHTML = "<div class='no-results'>Could not load items</div>";
-          console.warn("Unexpected /api/items response:", data);
         }
       } catch (e) {
         const list = document.getElementById("countryList");
         if (list && isUserFiltering()) list.innerHTML = "<div class='no-results'>Failed to load items</div>";
-        console.warn("Failed to load items:", e);
       }
     }
     loadItemsFromApi();
@@ -1450,7 +1043,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const aboutUsBtn = document.getElementById('aboutUsBtn');
       const aboutUsDetails = document.getElementById('aboutUsDetails');
-      const dailyReflectionBtn = document.getElementById('dailyReflectionBtn'); 
+      const dailyReflectionBtn = document.getElementById('dailyReflectionBtn');
       const dailyReflectionDetails = document.getElementById('dailyReflectionDetails');
 
       function toggleVisibility(button, detailsDiv) {
@@ -1482,8 +1075,7 @@
 
   <!-- Backend status banner -->
   <script>
-    const API_BASE = "https://prayer-api-go1t.onrender.com"; // Your Render URL
-
+    const API_BASE = "https://prayer-api-go1t.onrender.com";
     function setBanner(text, bg, border) {
       let el = document.getElementById("backend-status");
       if (!el) {
@@ -1498,25 +1090,17 @@
       el.style.color = "#111827";
       el.textContent = text;
     }
-
     setBanner("Checking backend…", "#eef2ff", "#6366f1");
-
     (async () => {
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 8000);
-        const res = await fetch(API_BASE + "/api/health", {
-          cache: "no-store",
-          signal: controller.signal
-        });
+        const res = await fetch(API_BASE + "/api/health", { cache: "no-store", signal: controller.signal });
         clearTimeout(timeout);
         const data = await res.json();
         if (data && data.ok) {
-          if (data.dbConnected) {
-            setBanner("Backend: Online (DB connected)", "#ecfdf5", "#10b981");
-          } else {
-            setBanner("Backend: Online (DB not connected)", "#FEF9C3", "#F59E0B");
-          }
+          if (data.dbConnected) setBanner("Backend: Online (DB connected)", "#ecfdf5", "#10b981");
+          else setBanner("Backend: Online (DB not connected)", "#FEF9C3", "#F59E0B");
         } else {
           setBanner("Backend: Online (unexpected response)", "#FEF3C7", "#F59E0B");
         }

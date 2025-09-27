@@ -438,11 +438,11 @@
     .video-container {
       position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;
       background: #000; margin-bottom: 1.5rem; border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.3);
     }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* UPDATED: Contemporary styling for Immediate Prayer Needs */
+    /* UPDATED: Contemporary styling for Immediate Prayer Needs with expandable functionality */
     #urgentRequests {
       max-width: 800px;
       margin: 1rem auto;
@@ -495,9 +495,8 @@
       z-index: 1;
     }
     
-    #urgentList > div {
+    .urgent-item {
       margin-bottom: 1rem;
-      padding: 1.25rem;
       background: rgba(255, 255, 255, 0.85);
       border-radius: 12px;
       border-left: 4px solid #ef4444;
@@ -506,36 +505,92 @@
         0 1px 0 rgba(255, 255, 255, 0.8) inset;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
+      overflow: hidden;
     }
     
-    #urgentList > div:hover {
+    .urgent-item:hover {
       transform: translateY(-2px);
       box-shadow: 
         0 4px 12px rgba(0, 0, 0, 0.08),
         0 1px 0 rgba(255, 255, 255, 0.8) inset;
     }
     
-    #urgentList > div:last-child {
+    .urgent-item:last-child {
       margin-bottom: 0;
     }
     
-    #urgentList strong {
-      display: block;
-      margin-bottom: 0.5rem;
+    .urgent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    .urgent-header strong {
       color: #dc2626;
       font-size: 1.1rem;
       font-weight: 600;
+      margin: 0;
     }
     
-    #urgentList div div {
+    .urgent-toggle {
+      font-size: 1.2rem;
+      color: #dc2626;
+      transition: transform 0.3s ease;
+    }
+    
+    .urgent-content {
+      padding: 0 1.25rem 1.25rem;
+      display: none;
+    }
+    
+    .urgent-content.expanded {
+      display: block;
+    }
+    
+    .urgent-description {
       font-size: 0.95rem;
       color: #444;
       line-height: 1.5;
+      margin-bottom: 1rem;
     }
     
-    #urgentList a {
+    .prayer-points {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(220, 38, 38, 0.1);
+      padding-top: 1rem;
+    }
+    
+    .prayer-points h4 {
+      margin: 0 0 0.5rem 0;
+      color: #991b1b;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .prayer-points ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    
+    .prayer-points li {
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .urgent-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    
+    .urgent-links a {
       display: inline-block;
-      margin-top: 0.75rem;
       padding: 0.4rem 0.8rem;
       background: rgba(220, 38, 38, 0.1);
       color: #dc2626;
@@ -547,15 +602,11 @@
       border: 1px solid rgba(220, 38, 38, 0.2);
     }
     
-    #urgentList a:hover {
+    .urgent-links a:hover {
       background: rgba(220, 38, 38, 0.15);
       text-decoration: none;
       transform: translateY(-1px);
       box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
-    }
-    
-    #urgentList a + a {
-      margin-left: 0.5rem;
     }
 
     /* Palette helpers */ 
@@ -732,7 +783,7 @@
     </div>
   </section>
 
-  <!-- UPDATED: Immediate Prayer Needs with contemporary styling -->
+  <!-- UPDATED: Immediate Prayer Needs with expandable sections and prayer points -->
   <section id="urgentRequests">
     <h3>Immediate Prayer Needs</h3>
     <div id="urgentList">Loading urgent requests...</div>
@@ -779,47 +830,93 @@
   <section class="country-list" id="countryList"></section>
   <section class="country-details" id="countryDetails" style="display:none;"></section>
 
-  <!-- Urgent requests (static for now) -->
+  <!-- Urgent requests (static for now) - UPDATED WITH EXPANDABLE FUNCTIONALITY -->
   <script>
     (function(){
       const urgentRequestsData = [
         {
           title: "Earthquake — Afghanistan",
-          description: "A strong earthquake has affected communities". 
-           <p>Pray for rescue teams<p>
-           <p>survivors, and relief efforts.<p>,
+          description: "A strong earthquake has affected communities. Pray for rescue teams, survivors, and relief efforts.",
+          prayerPoints: [
+            "Pray for the safety and effectiveness of rescue teams working in difficult conditions.",
+            "Pray for comfort and healing for those who have lost loved ones or been injured.",
+            "Pray for adequate shelter, food, and medical supplies to reach affected communities.",
+            "Pray for wisdom for government and aid organizations in coordinating relief efforts.",
+            "Pray for spiritual comfort and hope to be found amidst the devastation."
+          ],
           links: [
             { text: "Watch: Earthquake Hits Afghanistan", url: "https://www.youtube.com/watch?v=FLriPFyEe4A" },
             { text: "Read: Relief Updates", url: "https://example.com/earthquake-relief" }
           ]
         },
         {
-          title: "Conflict / Displacement — [Example Country]",
+          title: "Conflict / Displacement — Myanmar",
           description: "Rising conflict has displaced families. Pray for peace, protection, and humanitarian access.",
+          prayerPoints: [
+            "Pray for an immediate ceasefire and peaceful resolution to conflicts.",
+            "Pray for protection over civilians caught in conflict zones.",
+            "Pray for adequate humanitarian aid to reach those in need.",
+            "Pray for wisdom and compassion for leaders on all sides of the conflict.",
+            "Pray for reconciliation and healing in divided communities."
+          ],
           links: [
             { text: "Watch: Situation Update", url: "https://www.youtube.com/watch?v=EXAMPLE2" },
             { text: "Read: Humanitarian Report", url: "https://example.com/conflict-update" }
           ]
         }
       ];
+      
       function renderUrgentRequests() {
         const container = document.getElementById('urgentList');
         if (!container) return;
+        
         if (!urgentRequestsData || urgentRequestsData.length === 0) {
           container.innerHTML = "<p style='margin:0'>No urgent requests at this time.</p>";
           return;
         }
+        
         container.innerHTML = urgentRequestsData.map(req => {
+          const prayerPointsHtml = (req.prayerPoints || []).map(point => 
+            `<li>${point}</li>`
+          ).join('');
+          
           const linksHtml = (req.links || []).map(l => {
             return `<a href="${l.url}" target="_blank" rel="noopener">${l.text}</a>`;
           }).join('');
-          return `<div>
-                    <strong>${req.title}</strong>
-                    <div>${req.description}</div>
-                    ${linksHtml}
+          
+          return `<div class="urgent-item">
+                    <div class="urgent-header">
+                      <strong>${req.title}</strong>
+                      <span class="urgent-toggle">+</span>
+                    </div>
+                    <div class="urgent-content">
+                      <div class="urgent-description">${req.description}</div>
+                      <div class="prayer-points">
+                        <h4>Prayer Points:</h4>
+                        <ul>${prayerPointsHtml}</ul>
+                      </div>
+                      <div class="urgent-links">${linksHtml}</div>
+                    </div>
                   </div>`;
         }).join('');
+        
+        // Add click handlers for expandable functionality
+        document.querySelectorAll('.urgent-header').forEach(header => {
+          header.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const toggle = this.querySelector('.urgent-toggle');
+            
+            if (content.classList.contains('expanded')) {
+              content.classList.remove('expanded');
+              toggle.textContent = '+';
+            } else {
+              content.classList.add('expanded');
+              toggle.textContent = '−';
+            }
+          });
+        });
       }
+      
       renderUrgentRequests();
     })();
   </script>
